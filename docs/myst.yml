@@ -1,7 +1,7 @@
 # See docs at: https://mystmd.org/guide/frontmatter
 version: 1
 project:
-  id: 1da7938d-f393-41cf-bb25-d61ab365660c
+  id: qiime2-amplicon-docs
   # title:
   # description:
   # keywords: []
@@ -50,7 +50,7 @@ project:
         - file: back-matter/intro.md
 
 site:
-  template: book-theme
+  template: https://github.com/ebolyen/myst-book-theme-poc.git
   options:
       folders: true
   # options:

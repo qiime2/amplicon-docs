@@ -11,11 +11,10 @@ build:
     python: "mambaforge-latest"
   jobs:
     create_environment:
-      - conda env create -p .envs/ --file environment-files/readthedocs.yml
-      - ls .envs/bin/
+      - conda env create -p .env/ --file environment-files/readthedocs.yml
     build:
       html:
-        - PATH=$(pwd)/.envs/bin/:$PATH make html
+        - PATH=$(pwd)/.env/bin/:$PATH make html
         - mkdir -p $READTHEDOCS_OUTPUT
         - cp -a docs/_build/* $READTHEDOCS_OUTPUT/
 

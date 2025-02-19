@@ -3,3 +3,4 @@ docs/references/q2doc.bib
 docs/_build/
 docs/data/
 .locks/
+docs/deblur.log

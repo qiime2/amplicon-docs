@@ -45,7 +45,7 @@ Here's the first QIIME 2 command that you should run in this tutorial:
 sample_metadata_viz, = use.action(
   use.UsageAction(plugin_id='metadata',
                   action_id='tabulate'),
-  use.UsageInputs(metadata=sample_metadata),
+  use.UsageInputs(input=sample_metadata),
   use.UsageOutputNames(visualization='sample_metadata_viz')
 )
 :::
@@ -59,6 +59,7 @@ Navigate to QIIME 2 View, and drag and drop the visualization that was created t
 
 Download the sequence reads that we'll use in this analysis.
 In this tutorial we'll work with a small subset of the complete sequence data so that the commands will run quickly.
+
 
 :::{describe-usage}
 def emp_factory():
@@ -76,20 +77,21 @@ def emp_factory():
     fmt = EMPSingleEndDirFmt(mode='w')
 
     with tempfile.TemporaryDirectory() as tmpdir:
-    bc_fp = os.path.join(tmpdir, 'barcodes.fastq.gz')
-    bc_fn, _ = request.urlretrieve(bc_url, bc_fp)
+        bc_fp = os.path.join(tmpdir, 'barcodes.fastq.gz')
+        bc_fn, _ = request.urlretrieve(bc_url, bc_fp)
 
-    seqs_fp = os.path.join(tmpdir, 'sequences.fastq.gz')
-    seqs_fn, _ = request.urlretrieve(seqs_url, seqs_fp)
+        seqs_fp = os.path.join(tmpdir, 'sequences.fastq.gz')
+        seqs_fn, _ = request.urlretrieve(seqs_url, seqs_fp)
 
-    fmt.barcodes.write_data(bc_fn, FastqGzFormat)
-    fmt.sequences.write_data(seqs_fn, FastqGzFormat)
+        fmt.barcodes.write_data(bc_fn, FastqGzFormat)
+        fmt.sequences.write_data(seqs_fn, FastqGzFormat)
 
     fmt.validate()
     return fmt
 
 raw_seqs = use.init_format('emp-single-end-sequences', emp_factory)
 :::
+
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data.
 So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
@@ -98,6 +100,7 @@ The semantic type of this QIIME 2 artifact is `EMPSingleEndSequences`.
 `EMPSingleEndSequences` QIIME 2 artifacts contain sequences that are multiplexed, meaning that the sequences have not yet been assigned to samples (where the `barcodes.fastq.gz` contains the barcode read associated with each sequence in `sequences.fastq.gz`.)
 To learn about how to import sequence data in other formats, see the `importing data tutorial <importing>`{.interpreted-text role="doc"}.
 
+
 :::{describe-usage}
 emp_single_end_sequences = use.import_from_format(
     'emp_single_end_sequences',
@@ -105,11 +108,13 @@ emp_single_end_sequences = use.import_from_format(
     raw_seqs)
 :::
 
+
+<!-- This worked in the old docs, but doesn't seem to anymore.
 It is possible to check the UUID, type, and format of your newly-imported sequences, confirming that your import worked as expected:
 
 :::{describe-usage}
 use.peek(emp_single_end_sequences)
-:::
+::: -->
 
 :::{tip}
 Links are included to view and download precomputed QIIME 2 artifacts and visualizations created by commands in the documentation.

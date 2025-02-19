@@ -14,6 +14,7 @@ build:
       - conda env create -p .env/ --file environment-files/readthedocs.yml
     build:
       html:
+        - PATH=$(pwd)/.env/bin/:$PATH make autodoc
         - PATH=$(pwd)/.env/bin/:$PATH make html
         - mkdir -p $READTHEDOCS_OUTPUT
         - cp -a docs/_build/* $READTHEDOCS_OUTPUT/

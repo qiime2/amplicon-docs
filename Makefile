@@ -1,5 +1,7 @@
-html:
+autodoc:
 	cd docs/references && q2doc autodoc --no-validate .
+
+html:
 	cd docs && jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
 

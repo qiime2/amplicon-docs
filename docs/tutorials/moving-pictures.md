@@ -100,21 +100,12 @@ The semantic type of this QIIME 2 artifact is `EMPSingleEndSequences`.
 `EMPSingleEndSequences` QIIME 2 artifacts contain sequences that are multiplexed, meaning that the sequences have not yet been assigned to samples (where the `barcodes.fastq.gz` contains the barcode read associated with each sequence in `sequences.fastq.gz`.)
 To learn about how to import sequence data in other formats, see the `importing data tutorial <importing>`{.interpreted-text role="doc"}.
 
-
 :::{describe-usage}
 emp_single_end_sequences = use.import_from_format(
     'emp_single_end_sequences',
     'EMPSingleEndSequences',
     raw_seqs)
 :::
-
-
-<!-- This worked in the old docs, but doesn't seem to anymore.
-It is possible to check the UUID, type, and format of your newly-imported sequences, confirming that your import worked as expected:
-
-:::{describe-usage}
-use.peek(emp_single_end_sequences)
-::: -->
 
 :::{tip}
 Links are included to view and download precomputed QIIME 2 artifacts and visualizations created by commands in the documentation.
@@ -284,15 +275,24 @@ use.action(
 
 If you'd like to continue the tutorial using this `FeatureTable` (as opposed to the DADA2 feature table generated in *Option 1*), run the following commands.
 
-:::{describe-usage}
-use.comment('q2cli:')
-use.comment('mv rep-seqs-deblur.qza rep-seqs.qza')
-use.comment('mv table-deblur.qza table.qza')
-use.comment('')
-use.comment('Artifact API:')
-use.comment('table = table_deblur')
-use.comment('rep_seqs = rep_seqs_deblur')
+::::{tab-set}
+
+:::{tab-item} [Command Line]
+:sync: cli
+```shell
+mv rep-seqs-deblur.qza rep-seqs.qza
+mv table-deblur.qza table.qza
+```
 :::
+
+:::{tab-item} [Python API]
+:sync: python
+```python
+table = table_deblur
+rep_seqs = rep_seqs_deblur
+```
+:::
+::::
 
 ## FeatureTable and FeatureData summaries
 
@@ -700,11 +700,11 @@ gut_table, = use.action(
                     action_id='filter_samples'),
     use.UsageInputs(table=table_dada2,
                     metadata=sample_metadata,
-                    where='\[body-site\]="gut"'),
+                    where='[body-site]="gut"'),
     use.UsageOutputNames(filtered_table='gut_table'))
 :::
 
-ANCOM-BC operates on a FeatureTable\[Frequency\] QIIME 2 artifact.
+ANCOM-BC operates on a `FeatureTable[Frequency]` QIIME 2 artifact.
 We can run ANCOM-BC on the subject column to determine what features differ in abundance across gut samples of the two subjects.
 
 :::{describe-usage}

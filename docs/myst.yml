@@ -28,13 +28,17 @@ project:
     - title: How To Guides
       children:
         - file: how-to-guides/intro.md
+        - file: how-to-guides/install.md
+        - pattern: how-to-guides/*.md
     - title: Explanations
       children:
         - file: explanations/intro.md
-        - file: explanations/beginners-guide.md
     - title: References
       children:
         - file: references/intro.md
+        - file: references/getting-started.md
+        - file: references/experienced-researchers.md
+        - file: references/plugin-reference-intro.md
         - title: Plugin Reference
           children:
             - title: Plugins

@@ -1,3 +1,4 @@
+(moving-pictures-tutorial)=
 # *Moving Pictures* tutorial
 
 :::{note}

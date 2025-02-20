@@ -1,4 +1,5 @@
 (plugin-reference-intro)=
 # Available plugins
 
-Placeholder!
+:::{describe-deployment}
+:::

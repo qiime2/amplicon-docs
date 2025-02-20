@@ -11,7 +11,7 @@ Based on our website analytics, these are the topics users are most frequently l
 - **New to QIIME 2?**
   We recommend that you read @getting-started for a high-level discussion about what QIIME 2 is and the resources that are available to you for learning.
 
-- **Trying or learning?**
+- **Learning, or just exploring?**
   The @moving-pictures-tutorial is the resource that most users start with to learn how to use QIIME 2.
   It's written for readers who are also new to microbiome analysis.
   If you want to try or learn QIIME 2, we recommend starting with the @moving-pictures-tutorial.
@@ -32,9 +32,10 @@ Based on our website analytics, these are the topics users are most frequently l
 - **Need to import or export data?**
   See @how-to-import-export.
 
-- **Need help?**
+- **Need technical support?**
   Head over to the [QIIME 2 Forum](https://forum.qiime2.org), where you can browse nearly 10 years of discussion, questions, and answers related to microbiome data science with QIIME 2.
-  It's also where we make important [Announcements](https://forum.qiime2.org/c/announcements/8).
+  You can ask your own questions if you don't find existing answers, or give back by answering someone else's questions when you're ready.
+  "The Forum" is also where we make important [Announcements](https://forum.qiime2.org/c/announcements/8) - if you register for a (free) account, you can get those announcements by email.
   For the most up-to-date information on how to get help with QIIME 2, as a user or developer, see [here](https://github.com/qiime2/.github/blob/main/SUPPORT.md).
 
 For other topics, read on...
@@ -84,7 +85,7 @@ Initial support for the development of QIIME 2 was provided through a [grant](ht
 
 ## Citing QIIME 2
 
-If you use QIIME 2 in your work, please cite [Bolyen, Dillon, Rideout, Bokulich, et al (2019)](https://doi.org/10.1038/s41587-019-0209-9), as well as the underlying tools that are used by QIIME 2.
+If you use QIIME 2 in your work, please cite [Bolyen, Rideout, Dillon, Bokulich, et al (2019)](https://doi.org/10.1038/s41587-019-0209-9), as well as the underlying tools that are used by QIIME 2.
 To get the list of relevant citations, load a QIIME 2 Result (i.e., a `.qza` or `.qzv`) file with [QIIME 2 View](https://view.qiime2.org) and navigate to the *Citations* tab.
 
 ## License

@@ -38,7 +38,7 @@ project:
         - file: references/intro.md
         - file: references/getting-started.md
         - file: references/experienced-researchers.md
-        - file: references/plugin-reference-intro.md
+        - file: references/available-plugins.md
         - title: Plugin Reference
           children:
             - title: Plugins

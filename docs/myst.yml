@@ -29,17 +29,26 @@ project:
       children:
         - file: how-to-guides/intro.md
         - file: how-to-guides/install.md
-        - pattern: how-to-guides/*.md
+        - file: how-to-guides/import-export.md
+        - file: how-to-guides/merge-paired-end-reads.md
+        - file: how-to-guides/merge-multiple-sequencing-runs.md
+        - file: how-to-guides/train-a-feature-classifier.md
+        - file: how-to-guides/cluster-reads-into-otus.md
     - title: Explanations
       children:
         - file: explanations/intro.md
+        - file: explanations/getting-started.md
+        - pattern: explanations/experienced-researchers.md
+        - pattern: explanations/some-theory.md
     - title: References
       children:
         - file: references/intro.md
-        - file: references/getting-started.md
-        - file: references/experienced-researchers.md
         - file: references/available-plugins.md
-        - title: Plugin Reference
+    - title: Back Matter
+      children:
+        - file: back-matter/intro.md
+        - file: back-matter/glossary.md
+        - title: Plugin Index
           children:
             - title: Plugins
               children:
@@ -47,10 +56,6 @@ project:
             - title: Artifacts
               children:
                 - pattern: references/plugin-reference/artifacts/*.md
-    - title: Back Matter
-      children:
-        - file: back-matter/glossary.md
-        - file: back-matter/intro.md
 
 site:
   template: https://github.com/ebolyen/myst-book-theme-poc.git

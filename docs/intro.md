@@ -1,4 +1,6 @@
-# Welcome!
+# Microbiome marker gene analysis with QIIME 2
+
+Welcome! 👋
 
 This is the primary documentation introducing the use of QIIME 2 for marker gene (i.e., amplicon) based microbiome analysis.
 This site replaces the old QIIME 2 user documentation, `https://docs.qiime2.org`.
@@ -9,28 +11,28 @@ If you're looking for content from the old QIIME 2 user documentation, you can f
 Based on our website analytics, these are the topics users are most frequently looking for in our documentation:
 
 - **New to QIIME 2?**
-  We recommend that you read @getting-started for a high-level discussion about what QIIME 2 is and the resources that are available to you for learning.
+  We recommend that you read [](explanations/getting-started) for a high-level discussion about what QIIME 2 is and the resources that are available to you for learning.
 
 - **Learning, or just exploring?**
-  The @moving-pictures-tutorial is the resource that most users start with to learn how to use QIIME 2.
+  The [](tutorials/moving-pictures) is the resource that most users start with to learn how to use QIIME 2.
   It's written for readers who are also new to microbiome analysis.
-  If you want to try or learn QIIME 2, we recommend starting with the @moving-pictures-tutorial.
+  If you want to try or learn QIIME 2, we recommend starting with the [](tutorials/moving-pictures).
   All of the outputs generated during the tutorial are linked in the tutorial document, so you can also read through it and interact with the results without running any of the commands on your own.
-  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at @experienced-researchers.
+  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](explanations/experienced-researchers).
 
 - **Ready to install QIIME 2?**
-  See @install.
+  See [](how-to-guides/install).
 
 - **Need information on specific tools?**
-  If you're looking for reference material on the plugins and actions installed in the QIIME 2 amplicon distribution, see @plugin-reference-intro.
+  If you're looking for reference material on the plugins and actions installed in the QIIME 2 amplicon distribution, see [](references/available-plugins).
   If you're looking for data resources, such as pre-trained taxonomic classifiers, see our [Data Resources](https://resources.qiime2.org) website.
-  If you're looking for other tools available in other QIIME 2 distributions, see the [QIIME 2 Library](https://library.qiime2.org).
+  If you're looking for other tools available for the QIIME 2 Framework (🌳), see the [QIIME 2 Library](https://library.qiime2.org).
 
 - **Need help with your metadata?**
   See our documentation of the [Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
 
 - **Need to import or export data?**
-  See @how-to-import-export.
+  See [](how-to-guides/import-export).
 
 - **Need technical support?**
   Head over to the [QIIME 2 Forum](https://forum.qiime2.org), where you can browse nearly 10 years of discussion, questions, and answers related to microbiome data science with QIIME 2.
@@ -51,20 +53,18 @@ Each serves a different goal for the reader:
 * - Chapter
   - Purpose
 
-* - Tutorials
+* - [Tutorials](tutorials/intro)
   - Provide a guided exploration of a topic for **learning**.
 
-* - How To Guides
+* - [How To Guides](how-to-guides/intro)
   - Provide step-by-step instructions on how to **accomplish specific goals**.
 
-* - Explanations
+* - [Explanations](explanations/intro)
   - Provide a discussion intended to aid in **understanding** a specific topic.
 
-* - References
-  - Provide specific **information** (e.g., the list of [available plugins](#plugin-reference-intro)).
+* - [References](references/intro)
+  - Provide specific **information** (e.g., the list of [available plugins](references/plugin-reference-intro)).
 :::
-
-You can navigate these sections on the left sidebar.
 
 ## Contributors
 

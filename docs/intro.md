@@ -4,7 +4,7 @@ Welcome! 👋
 
 This is the primary documentation introducing the use of QIIME 2 for marker gene (i.e., amplicon) based microbiome analysis.
 This site replaces the old QIIME 2 user documentation, `https://docs.qiime2.org`.
-If you're looking for content from the old QIIME 2 user documentation, you can find it at https://docs.qiime2.org/2024.10/ (but do [let us know](https://github.com/qiime2/amplicon-docs/issues) what that content is, as we've tried to transition everything that's needed to this site).
+If you're looking for content from the old QIIME 2 user documentation, you can find it at https://docs.qiime2.org/2024.10/ (but do [let us know](https://github.com/qiime2/amplicon-docs/issues) what that content is, as we're trying to transition everything that's needed to this site).
 
 ## Navigating this documentation
 
@@ -18,7 +18,7 @@ Based on our website analytics, these are the topics users are most frequently l
   It's written for readers who are also new to microbiome analysis.
   If you want to try or learn QIIME 2, we recommend starting with the [](tutorials/moving-pictures).
   All of the outputs generated during the tutorial are linked in the tutorial document, so you can also read through it and interact with the results without running any of the commands on your own.
-  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](explanations/experienced-researchers).
+  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](explanations/experienced-researchers) and [](explanations/some-theory).
 
 - **Ready to install QIIME 2?**
   See [](how-to-guides/install).
@@ -36,7 +36,7 @@ Based on our website analytics, these are the topics users are most frequently l
 
 - **Need technical support?**
   Head over to the [QIIME 2 Forum](https://forum.qiime2.org), where you can browse nearly 10 years of discussion, questions, and answers related to microbiome data science with QIIME 2.
-  You can ask your own questions if you don't find existing answers, or give back by answering someone else's questions when you're ready.
+  You can ask your own questions if you don't find existing answers, and give back by answering someone else's questions when you're ready.
   "The Forum" is also where we make important [Announcements](https://forum.qiime2.org/c/announcements/8) - if you register for a (free) account, you can get those announcements by email.
   For the most up-to-date information on how to get help with QIIME 2, as a user or developer, see [here](https://github.com/qiime2/.github/blob/main/SUPPORT.md).
 

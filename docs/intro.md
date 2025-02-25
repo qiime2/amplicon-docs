@@ -63,7 +63,7 @@ Each serves a different goal for the reader:
   - Provide a discussion intended to aid in **understanding** a specific topic.
 
 * - [References](references/intro)
-  - Provide specific **information** (e.g., the list of [available plugins](references/plugin-reference-intro)).
+  - Provide specific **information** (e.g., the list of [available plugins](available-plugins)).
 :::
 
 ## Contributors

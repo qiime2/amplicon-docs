@@ -1,30 +1,29 @@
 (getting-started)=
 # Getting started with QIIME 2
 
-This chapter will briefly introduce a few concepts that you should understand as you start using QIIME 2.
-This chapter is purposefully brief so you can get to the fun stuff soon.
-After reading this chapter you'll understand some key QIIME 2 concepts that will help you learn quickly.
+This chapter will briefly introduce a few concepts that should help you learn QIIME 2 quickly.
 
 ## What is QIIME 2?
 
 To date, most people think of QIIME 2 as a microbiome marker gene (i.e., amplicon) analysis tool.
 That is where the project started, and what its predecessor QIIME 1 was.
-QIIME 2 was a complete rewrite of QIIME 1, where we were attempting to address feature requests from our users as well as reduce challenges that we observed our users encountering on the QIIME 1 Forum and in our workshops.
-This resulted in our developing unique functionality including our decentralized retrospective provenance tracking system, the development of a plugin-based ecosystem of tools, and the ability to use QIIME through interfaces designed to support users with different computational backgrounds.
-Much of this functionality is not unique to microbiome marker gene analysis, but rather general to biological data science, and as result the applications of QIIME 2 are now broader than when we started.
+QIIME 2 began as a complete rewrite of QIIME 1, where we were attempting to address common feature requests from our users and reduce challenges that we saw our users encountering.
+This resulted in our developing unique functionality including our data provenance tracking system, a decentralized plugin-based ecosystem of tools, and the ability to use those through interfaces designed to support users with different computational backgrounds ([](#multiple-interfaces)).
+Much of this functionality is not unique to microbiome marker gene analysis, but rather general to biological data science, and as result the scope of QIIME 2 is now broader than when we started.
 So, what is QIIME 2?
 
 What most people think of as "QIIME 2" is what we refer to in our documentation as the *amplicon distribution of QIIME 2*, or simply the *amplicon distribution*.
 This is the microbiome marker gene analysis toolkit.
 **This documentation site is for the *amplicon distribution* specifically.**
 
-The *amplicon distribution* is built on what we call the QIIME 2 Framework (or *the framework*), and this is in the process of being rebranded for clarity[^q2-rebrand].
+The *amplicon distribution* is built on what we call the QIIME 2 Framework (or *the framework*).
 The framework is where the general-purpose functionality exists, including data provenance tracking, the plugin manager, and more.
 As an end user, you don't really need to know anything about this, but it's helpful to know that it exists and is different from the amplicon distribution to understand the ecosystem of tools.
 The amplicon distribution, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *metagenome distribution*) and [genome-sampler](genome-sampler.readthedocs.io/), are technically *built on top of the QIIME 2 Framework*.
 
 **The amplicon distribution of QIIME 2 includes a suite of plugins that provide broad analytic functionality that supports microbiome marker gene analysis from raw sequencing data through publication quality visualizations and statistics.**
-The plugins that come with the amplicon distribution are listed in this documentation (see [](available-plugins)).
+Any amplicon is supported - not just the 16S rRNA gene.
+The plugins that come with the amplicon distribution are listed in [](available-plugins).
 Other plugins can also be installed independently - your main source for discovery and installation instructions for these is the [QIIME 2 Library](https://library.qiime2.org)[^developing-plugins].
 
 The following sections briefly present some important concepts for understanding QIIME 2 tools.
@@ -33,16 +32,43 @@ Links to where you can learn more are provided[^power-user].
 
 ## Important concepts
 
+### Interfaces
+
+All of QIIME 2's analytic functionality can be accessed through interfaces designed to help specific groups of users work most efficiently ([](#multiple-interfaces)).
+For example, domain scientists without advanced computing backgrounds can using QIIME 2 through graphical interfaces such as Galaxy.
+Power users can work with QIIME 2 on the command line, enabling straight-forward access on high-performance compute clusters and cloud resources.
+Research software engineers and data scientists can use QIIME 2 through its Python 3 API, facilitating development of automated workflows and integration of QIIME 2 tools as a component in other systems.
+The ability to use the same analysis tools through different interfaces is a big part of what makes QIIME 2 **accessible**.
+
+```{figure} ../_static/multiple-interfaces.png
+:label: multiple-interfaces
+:alt: Screenshots of different types of interfaces that can be used to interact with QIIME 2.
+:align: center
+
+Examples of four QIIME 2 interfaces: QIIME 2 View, Galaxy, q2cli, and the Python 3 API.
+```
+
+When you're working with QIIME 2 tutorials, we'll generally provide instructions that enable you to work in different interfaces.
+This will look like the following:
+
+**PICK UP HERE!!**
+
 ### Artifacts and visualizations
 
 One of the first things that new QIIME 2 users often notice is the `.qza` and `.qzv` files that QIIME 2 uses.
-All files generated by QIIME 2 are either `.qza` or `.qzv` files, and **these are simply zip files that store your data alongside some QIIME 2-specific metadata**.
+All files generated by QIIME 2 are either `.qza` or `.qzv` files, and **these are simply `zip` files that store your data alongside some QIIME 2-specific metadata**.
+Here is what you need to know about these:
 
-`.qza` files store QIIME 2 Artifacts on disk.
-QIIME 2 Artifacts represent data that are generated by QIIME 2 and intended to be used by QIIME 2, such as intermediary analysis data.
-`.qzv` files store QIIME 2 Visualizations on disk.
-QIIME 2 Visualizations represent data that are generated by QIIME 2 and intended to be viewed by humans, such as an interactive Visualization.
-Both file types can be loaded with [QIIME 2 View](https://view.qiime2.org).
+- `.qza` files store QIIME 2 Artifacts on disk.
+  QIIME 2 Artifacts represent data that are generated by QIIME 2 and intended to be used by QIIME 2, such as intermediary files in an analysis workflow.
+  `qza` stands for *QIIME Zipped Artifact*.
+- `.qzv` files store QIIME 2 Visualizations on disk.
+  QIIME 2 Visualizations represent data that are generated by QIIME 2 and intended to be viewed by humans, such as an interactive visualization.
+  `qzv` stands for *QIIME Zipped Visualization*.
+- `.qza` and `.qzv` files can be loaded with [QIIME 2 View](https://view.qiime2.org)[^view-options].
+- Because `.qza` and `.qzv` files are simple `zip` files, you can open them with any *unzip* utility, such as WinZip, 7Zip, or `unzip`.
+  You don't need to have QIIME 2 installed to access the information in these files.
+  For example of how to get data out of these files using `unzip`, see [](explanations-archives).
 
 :::{tip} Jargon: Confused by the term "artifact"?
 :class: dropdown
@@ -52,12 +78,18 @@ In QIIME 2 we use the definition of an artifact as an object that was created by
 This is common usage in data science.
 :::
 
-You can unzip `.qza` or `.qzv` files with any *unzip* utility, such as WinZip, 7Zip, or unzip, and you don't need to have QIIME 2 installed to do that.
-Allowing users to access their data *without* QIIME 2 was one of the earliest design goals of the system.
-This ensures that if QIIME 2 isn't available to you for some reason, you can still access any data that you generated with QIIME 2.
-If you want to learn more about QIIME 2 archives, including a demonstration of how to get data out of them, see [](explanations-archives).
-
 ### Data provenance
+
+QIIME 2 was designed to automate the document of analysis workflows for users to ensure that their bioinforamtics work is **reproducible**.
+This enables you, or consumers of your research, to understand exactly what was done in an analysis.
+To achieve this, each QIIME 2 command is recorded when it is run, and that information is stored in the Artifacts and Visualizations that are created[^provenance-in-artifacts].
+This means that unless you remove files from a `.qza` or `.qzv` file, your data's provenance is always stored alongside the data - so whenever you or someone else needs that information, it's there.
+
+In addition to supporting reproducible bioinformatics, data provenance helps others provide you with technical support on the QIIME 2 Forum.
+If you're running into an error or an odd result and request help, someone may ask you to share an Artifact or Visualization so they can view your data provenance.
+This will let them review in exact detail what you did to generate the result, so can make the process of providing support much more efficient.
+
+You can view your data provenance tab using [QIIME 2 View](https://view.qiime2.org) (click the *Provenance* tab after loading your file), or by [using Provenance Replay](https://forum.qiime2.org/t/provenance-replay-beta-release-and-tutorial/23279).
 
 :::{warning}
 QIIME 2 goes to great lengths to ensure that your bioinformatics workflow will be reproducible by you or others in the future.
@@ -68,195 +100,41 @@ Instead of including confidential information in your metadata, you should encod
 For example, subject names should be replaced with anonymized subject identifiers before use with QIIME 2.
 :::
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis metus, imperdiet a gravida feugiat, consequat non est. Praesent vehicula, ipsum sed malesuada elementum, nisi turpis rutrum tortor, lacinia consectetur diam turpis sed diam. Vivamus porttitor scelerisque ante accumsan consequat. In hac habitasse platea dictumst. Phasellus scelerisque lectus vitae urna bibendum, et porttitor diam molestie. Donec ut laoreet mauris, at finibus diam. Morbi erat justo, gravida in mi lacinia, porttitor volutpat risus. Phasellus sem nibh, aliquam eu turpis ac, molestie vestibulum purus. Aliquam erat volutpat. Vivamus ac tincidunt lacus. Aliquam eget auctor dolor. Curabitur posuere mi tellus, nec pharetra felis ultrices vel. Morbi semper placerat nisl varius hendrerit. Proin vitae augue enim.
-
-
-(getting-started:plugins)=
 ### Plugins and actions
 
-People generally think of QIIME 2 as a microbiome bioinformatics system, but the truth is that it's a lot more general purpose than that.
-QIIME 2 is built using a plugin architecture.
-There is a core system, which we call the _QIIME 2 Framework_ or just _The Framework_.
-This handles a lot of the behind-the-scenes work, like tracking data provenance and building `.qza` and `.qzv` files.
 There is no microbiome-specific functionality (or even bioinformatics-specific functionality) in the QIIME 2 Framework.
-All of the analysis functionality comes in the form of plugins to the framework.
-There's only a few things that you need to know about this right now.
-First, your deployment of QIIME 2 will have some collection of plugins installed.
+Rather all of the analysis functionality comes in the form of *plugins* to the framework.
+That includes analytic functionality in the amplicon distribution.
+
 Plugins define actions, which are steps in an analysis workflow.
-For example, the `q2-diversity` QIIME 2 plugin defines actions including `alpha-phylogenetic` and `beta-phylogenetic` which can apply phylogenetic alpha and beta diversity metrics, respectively, to your data.
-If you don't have the `q2-diversity` plugin installed, you won't have access to those actions.
-To find out what QIIME 2 plugins you currently have installed, you can run the following command:
-
-```{code-cell}
-qiime --help
-```
-
-If you want to see what actions are defined by a plugin, you can call `--help` on that plugin.
-For example, to see what actions are available from the `q2-diversity` plugin, you can run the following command:
-
-```{code-cell}
-qiime diversity --help
-```
-
-You should see `alpha-phylogenetic` and `beta-phylogenetic` in that list, among other actions.
-You could go one step further if you'd like to learn about how to use those actions by calling help on the action.
-For example:
-
-```{code-cell}
-qiime diversity alpha-phylogenetic --help
-```
-
-The output that you get from that might look a little mysterious right now.
-When you finish Part 1 of this book, you'll understand how to read that help text and use it learn how to use QIIME 2 actions you've never used before.
-
+For example, the `q2-feature-table` plugin defines the actions listed [here](../references/plugin-reference/plugins/feature-table/index).
+If you did't have the `q2-feature-table` plugin installed, you wouldn't have access to those actions.
 
 Another thing to know about plugins is that anyone can create and distribute them.
-For example, if a graduate student develops some new analysis functionality that they want to use with QIIME 2, that can create their own QIIME 2 plugin.
-If they want others to be able to use it, they can distribute that plugin.
-The [QIIME 2 Library](https://library.qiime2.org) is a website developed by the QIIME 2 team to help with dissemination of plugins.
-It's a great site to visit if you want to discover new analysis functionality.
-Developing and disseminating plugins is covered in Part 3 of this book.
+This is what makes QIIME 2 **extensible**.
+For example, if a graduate student develops some new analysis functionality that they want to use with QIIME 2, they can create their own QIIME 2 plugin[^developing-plugins].
+If they want others to be able to use it, they can distribute that plugin on the [QIIME 2 Library](https://library.qiime2.org), or through any means that they choose.
 
-QIIME 2 actions come in three varieties, as of this writing.
-Methods are a type of QIIME 2 action that generate one or more `.qza` files as output.
-Since `.qza` files are intermediary results in QIIME 2 (as discussed in the previous section), Methods typically represent some sort of processing step in your analysis, such as taxonomic annotation of sequences.
-The `alpha-phylogenetic` and `beta-phylogenetic` actions described above are Methods.
-Visualizers are a type of QIIME 2 action that generate one or more `.qzv` files as output.
-You'll remember that `.qzv` files are terminal results in QIIME 2, so these are steps that terminal in a workflow.
-An example of a QIIME 2 visualizer is the `beta-group-significance` action in the `q2-diversity` plugin, which runs PERMANOVA, ANOSIM, or PERMDISP on your data, and reports the result of the statistical test.
-The third type of action in QIIME 2 is a Pipeline, which can generate one or more `.qza` and/or `.qzv` as output.
-`Pipelines` are special in that they're a type of action that can call other actions.
-They are often used by developers to define simplify common workflows so they can be run by users in a single step.
-For example, the `core-metrics-phylogenetic` action in the `q2-diversity` plugin is a Pipeline that runs both `alpha-phylogenetic` and `beta-phylogenetic`, as well as several other actions, in a single command.
-In total it runs about 20 different actions, so it saves a lot of typing to be able to do achieve that with a single command.
+### Artifact classes
 
+All QIIME 2 Artifacts are assigned exactly one *artifact class*, which includes a semantic description of the data (its *semantic type*) and the file format that is used to store it inside of the `.qza` file.
+When you see Artifacts (or inputs or outputs) described with terms that look like `Phyogeny[Rooted]` or `Phylogeny[Unrooted]`, that is the artifact's Artifact Class.
 
-There's more to know about plugins and actions in QIIME 2, but this will get you started.
+Artifact classes were developed to help users avoid misusing actions, and to discover new methods.
+For example, if an action should only be applied to a rooted phylogenetic tree, the developer of that action can annotate its input as `Phyogeny[Rooted]`.
+This will ensure that if a user mistakenly tries to provide an unrooted phylogenetic tree, QIIME 2 can error out and help the user avoid making a mistake that might waste time or create a misleading result.
+If another action can take a rooted or an unrooted phylogenetic tree, that input would be annotated as `Phyogeny[Rooted | Unrooted]`.
 
+In graphical QIIME 2 interfaces, it's possible to view the available actions based on what Artifact Class(es) they accept as input.
+This can allow a user to query the system with questions like "What actions are available to apply to a rooted phylogenetic tree?", or "What actions are available to create a rooted phylogenetic tree from an unrooted phylogenetic tree?".
 
-(getting-started:types)=
-### Semantic types, data types, and file formats
-
-The next topic that should be briefly covered before you start using QIIME 2 is the notion of types in QIIME 2.
-The term _type_ is overloaded with a few different concepts, so I'll start by talking about two ways that it's commonly used, and then introduce a third way that it's used less frequently but which is important to QIIME 2 (and which could help other systems, in my opinion).
-By disambiguating this concept now I think we'll avoid confusion later, and you'll be in a better place to understand QIIME 2 help text and other documentation.
-
-
-````{margin}
-```{admonition} Video
-[This video](https://www.youtube.com/watch?v=PUsvtJgpNtE) on the QIIME 2 YouTube channel discusses semantic types.
-```
-````
-
-The three kinds of types that are used in QIIME 2 are **file types (more frequently referred to file formats in QIIME 2)**, **data types**, and **semantic types**.
-File types (or formats) refer to what you probably think of when you hear that phrase: the format of a file used to store some data.
-For example, newick is a file type that is used for storing phylogenetic trees.
-Files are used most commonly for archiving data when it's not actively in use.
-Data types refer to how data is represented in a computer's memory (i.e., RAM) while it's actively in use.
-For example, if you are adding a root to an unrooted phylogenetic tree (a concept discussed in Part 2 of this book), you may use a tool like IQTree2.
-You would provide a path to the file containing the unrooted phylogenetic tree to IQTree2, and IQTree2 would load that tree into some _data structure_ in the computer's memory to work on it.
-The data structure or type, that IQTree2 uses internally to represent the phylogenetic tree will be a decision made by the developers of IQTree2.
-If it successfully completes the requested rooting operation, IQTree2 would write the new tree from an internal data type into a new newick-formatted file on the hard disk, and exit.
-As a software user, you shouldn't need to know or care about what data types are used internally by a program - you just care about what file types are used as input and output.
-Computer programmers care a lot about internal data types: choosing an appropriate one has huge impacts on the software.
-
-
-The third _type_ that is important in QIIME 2 is the semantic type of data.
-This is a representation of the _meaning_ of the data, which is not necessarily represented by either a file type or a data type.
-For example, two semantic types used in QIIME 2 are `Phylogeny[Rooted]` and `Phylogeny[Unrooted]`, which are used to represent rooted and unrooted trees, respectively.
-Both rooted and unrooted trees are commonly stored in newick files, and a computer program needs to parse (i.e., load data from a file into a in-memory data structure) to know if a tree is rooted or unrooted.
-For large trees, this can be a slow operation.
-There are some operations, such as rooting a tree, that only make sense to perform on unrooted trees.
-So, if you have a very large tree that you want to root, you may provide a newick file to a program that will perform that rooting.
-If you accidentally provide a rooted tree (say because you have tried rooting it with a few different approaches that you want to evaluate), it may take the program some time to parse the file (say 20 minutes) after which it may fail if it discovers that the tree is already rooted.
-That sort of delayed notification can be very frustrating as a user, since it's easily missed until a lot of time has passed.
-I often will start a long-running command on my university cluster computer just before the weekend.
-I'll typically check on the job for a few minutes, to make sure that it seems to be starting ok.
-I may then leave, in the hope that the job completes over the weekend and I'll have data to work with on Monday morning.
-It's very frustrating to come in Monday morning and find out that my job failed just a few minutes after I left on Friday for a reason that I could have quickly addressed had I known in time.
-
-
-```{warning}
-There's actually a worse outcome than a delayed error from a computer program when inappropriate input is provided.
-When a program fails and provides an error message to the user, whether or not that error message helps the user solve the problem, the program has failed loudly.
-Something went wrong, and it told the user about it.
-The program could instead fail quietly.
-This might happen if the program doesn't realize the input the user provided is in appropriate (e.g., an already rooted tree is provided to a program that roots an unrooted phylogenetic tree), and it runs the rooted tree through its algorithm, misinterprets something because it was provided with the wrong input, and generates an incorrect rooted tree as a result.
-Quiet failures can be very difficult or impossible for a user to detect, because it looks like everything has worked as expected.
-Failing quietly is thus _much_ worse than failing loudly - it could waste many hours of your time, and could even lead to you publishing invalid findings.
-```
-
-QIIME 2 semantic types help with this, because they provide information on what the data in a QIIME 2 `.qza` file means without having to parse anything in the `data` directory.
-All QIIME 2 artifacts have a semantic type associated with them (it's one of the pieces of information stored in the `metadata.yaml` file), and QIIME 2 methods will describe what semantic types they take as input(s), and what semantic types they generate as output(s).
-For example, the `q2-phylogeny` plugin defines a method called `midpoint_root`.
-Call help on this method using the following command:
-
-```{code-cell}
-qiime phylogeny midpoint-root --help
-```
-
-You can see from the resulting help text that this method takes one input, an artifact of semantic type `Phylogeny[Unrooted]`.
-It also generates one output, an artifact of semantic type `Phylogeny[Rooted]`.
-This makes intuitive sense: an action that adds a root to a phylogenetic tree (as described in the help text for this method) takes an unrooted tree as input and generates a rooted tree as output.
-
-
-There is a many-to-many relationship between file types, data types, and semantic types.
-It's possible that a given semantic type could be represented on disk by different file types.
-That's well exemplified by the many different formats that are used to store demultiplexed sequence and sequence quality data.
-For example, this may be in one a few variants of the fastq format, or in the fasta/qual format.
-Additionally, data from multiple samples may be contained in one single file or split into per-sample files.
-Regardless of which of these file formats the data is stored in, QIIME 2 will assign the same semantic type (in this case, `SampleData[SequencesWithQuality]`.
-Similarly, the data type used in memory might differ depending on what operations are to be performed on the data, or based on the preference of the programmer.
-QIIME 2 use the semantic type `FeatureTable[Frequency]` to represent the idea of a feature table that contains counts of features (e.g., bacterial genera) on a per sample basis.
-Many different actions can be applied to `FeatureTable[Frequency]` artifacts in QIIME 2.
-When a plugin developer defines a new action that takes a `FeatureTable[Frequency]` as input, they can choose whether to load the table into a `pandas.DataFrame` or `biom.Table` object, which are two different data types.
-
-```{note}
-That last paragraph was a bit technical.
-Don't worry if you got lost in the details - just take away the idea that there is not a one-to-one relationship between file types, data types, and semantic types in QIIME 2.
-Each kind of type represents different information about the data.
-
-
-The motivation for creating QIIME 2's semantic type system was to avoid issues that can arise from providing inappropriate data to actions.
-The semantic type system also helps users and developers better understand the intent of QIIME 2 actions by assigning meaning to the input and output, and allows for the discovery of new potentially relevant QIIME 2 actions (more on this later).
-Throughout the next few chapters I'll point out semantic types of some inputs and outputs as we come across them.
-Again, there's more to know on this topic, but that learning can be deferred until its needed.
-
-```
-
-## QIIME 2 View
-
-````{margin}
-```{admonition} Video
-[This video](https://t.co/eJbm03cnSa) on the QIIME 2 YouTube channel illustrates how to use QIIME 2 View.
-
-```
-````
-
-QIIME 2 View is a web-based viewer for `.qza` and `.qzv` files.
-If you've never visited QIIME 2 View, take a minute to [go to the website](https://view.qiime2.org) now.
-This site allows for you to view QIIME 2 results on computers that don't have QIIME 2 installed on them, and there are a few examples that you can look at in the gallery on that page.
-I use QIIME 2 View daily, for a few different situations.
-First, if I'm running analyses on a cluster computer than doesn't provide a graphical interface, it's a convenient way to view those results without having to load QIIME 2 on another computer.
-If I have a copy of a `.qza` or `.qzv` file on my local computer (e.g., if I copied it over from the cluster) I can navigate to QIIME 2 View, and drag-and-drop the file on the QIIME 2 View page to look at it.
-Another scenario where this is helpful is if when I'm sharing interactive QIIME 2 results with someone who doesn't have QIIME 2 installed, for example a collaborator.
-I can send them `.qzv` files by email (or use the Dropbox sharing option on QIIME 2 View), and they can load and interact with the results on their computer.
-
-
-```{note}
-When you're using QIIME 2 View, your data isn't uploaded to a server.
-Rather the website acts as an application launcher that allows you to view local files.
-This means that you don't need to be concerned about data privacy issues with QIIME 2 View - the data never leaves your computer.
-
-```
-
-
+If you'd like to learn more about Artifact Classes, see [*Semantic types, data types, file formats, and artifact classes*](https://develop.qiime2.org/en/latest/plugins/explanations/types-of-types.html) in *Developing with QIIME 2*.
 
 ## Next steps
 
 Ok, that's enough discussion about QIIME 2 for now: it's time to start using it.
-Don't worry if you feel like you don't fully understand some of the technical details that were covered in this chapter right now.
-The goal of this chapter was to introduce these ideas, and they'll be revisited throughout this documentation.
+Don't worry if you feel like you don't fully understand some of the details that were covered in this chapter right now.
+The goal of this chapter was to introduce these ideas, and they'll be revisited throughout the documentation.
 
 ### Deploying QIIME 2
 
@@ -267,21 +145,25 @@ I recommend having a working deployment of QIIME 2 when you're ready to start wo
 
 ### Learning with the tutorials
 
-After you have a working installation of QIIME 2, you can read and work through the [](moving-pictures-tutorial).
+After you have a working deployment of QIIME 2, you can read and work through the [](moving-pictures-tutorial).
 This is the resource that most new users start with to learn.
 In this tutorial, you'll carry out a full microbiome analysis, from raw sequence data through visualizations and statistics.
-This is a pretty typical amplicon analysis workflow, so after you understand it, you can adapt it for your own analysis.
+This is a pretty typical amplicon analysis workflow, so after you understand it you can adapt it for your own analysis.
 
 If you'd like to get more of a feel for what QIIME 2 can do before you invest in installing it, we also recommend the [](moving-pictures-tutorial).
-That document has all of the results pre-generated and linked from the document, so as you read you can interact with the `Results` that would be generated by each step.
+That document has all of the results pre-generated and linked from the document, so as you read you can interact with the results that would be generated by each step.
 
+### Getting help
 
-[^q2-rebrand]: We are currently (25 February 2025) preparing to rebrand the QIIME 2 Framework.
- The working title of the new project is `cottonwood`, though that may change.
- After the rebrand, QIIME 2 as a product will still exist, but will be used to refer to the *amplicon distribution of QIIME 2* (which is what most people already think of when they hear *QIIME 2*).
- We hope that this will reduce confusion and support the development of an extensible, accessible, and reproducible ecosystem of biological data science tools.
+Remember, the [QIIME 2 Forum](https://forum.qiime2.org) is where you can get free technical support and connect with other microbiome researchers.
+We look forward to seeing you there!
 
- [^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
+[^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
 
- [^power-user]: When you're ready to learn a lot more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
+[^power-user]: When you're ready to learn a lot more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
   Using QIIME 2 provides information that is relevant across all QIIME 2 distributions and plugins, not just the amplicon distribution.
+
+[^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).
+
+[^provenance-in-artifacts]: Data provenance is some of the metadata that is stored alongside your data in `.qza` and `.qzv` files.
+  Retaining provenance information without a centralized database is one of the reasons why QIIME 2 produces `.qza` and `.qzv` files, as opposed to just outputting data on its own (e.g., in `.fasta` or `.biom` files).

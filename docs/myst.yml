@@ -34,12 +34,15 @@ project:
         - file: how-to-guides/merge-multiple-sequencing-runs.md
         - file: how-to-guides/train-a-feature-classifier.md
         - file: how-to-guides/cluster-reads-into-otus.md
+        - file: how-to-guides/how-to-deploy.md
     - title: Explanations
       children:
         - file: explanations/intro.md
         - file: explanations/getting-started.md
-        - pattern: explanations/experienced-researchers.md
-        - pattern: explanations/some-theory.md
+        - file: explanations/experienced-researchers.md
+        - file: explanations/some-theory.md
+        - file: explanations/why-importing.md
+        - file: explanations/archives.md
     - title: References
       children:
         - file: references/intro.md

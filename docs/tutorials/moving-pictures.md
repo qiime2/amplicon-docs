@@ -1,5 +1,5 @@
 (moving-pictures-tutorial)=
-# *Moving Pictures* tutorial
+# *Moving Pictures* tutorial 🎥
 
 :::{note}
 This guide assumes you have installed the QIIME 2 amplicon distribution, and have activated its conda environment.

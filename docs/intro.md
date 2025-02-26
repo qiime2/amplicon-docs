@@ -11,7 +11,7 @@ If you're looking for content from the old QIIME 2 user documentation, you can f
 Based on our website analytics, these are the topics users are most frequently looking for in our documentation:
 
 - **New to QIIME 2?**
-  We recommend that you read [](explanations/getting-started) for a high-level discussion about what QIIME 2 is and the resources that are available to you for learning.
+  We recommend that all newcomers read [](explanations/getting-started) for a high-level discussion about what QIIME 2 is, an introduction to concepts that will help you understand QIIME 2 quickly, and references to resources you can use for learning.
 
 - **Learning, or just exploring?**
   The [](tutorials/moving-pictures) is the resource that most users start with to learn how to use QIIME 2.

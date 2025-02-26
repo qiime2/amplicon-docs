@@ -51,17 +51,33 @@ The ability to use the same analysis tools through different interfaces is a big
 Examples of four QIIME 2 interfaces: QIIME 2 View, Galaxy, q2cli, and the Python 3 API.
 ```
 
-When you're working with QIIME 2 tutorials, we'll generally provide instructions that enable you to work in different interfaces.
+You're also free to use different interfaces for different steps - QIIME 2 won't care.
+For example, a fairly common workflow is to use the command line (q2cli) for long-running jobs on a high-performance computing system, and then download the results and work with them in a Jupyter Notebook using the Python 3 API for the more exploratory iterative steps of an analysis.
+
+#### Different interface options in tutorials
+
+When you're working with QIIME 2 tutorials, we'll generally provide instructions that enable you to work in different interfaces[^tutorial-interfaces].
 This will look like the following, and you can choose to follow the instructions for the interface that you're currently working with.
 
 :::{describe-usage}
 :scope: getting-started
 
-use.help(use.UsageAction('feature_table', 'summarize'))
+sample_metadata = use.init_metadata_from_url(
+   'sample-metadata',
+   'https://data.qiime2.org/2025.4/tutorials/moving-pictures/sample_metadata.tsv')
+
+sample_metadata_viz, = use.action(
+  use.UsageAction(plugin_id='metadata',
+                  action_id='tabulate'),
+  use.UsageInputs(input=sample_metadata),
+  use.UsageOutputNames(visualization='sample_metadata_viz')
+)
 :::
 
-You're free to use different interfaces for different steps.
-For example, a fairly common workflow among power users is to use the command line interface (q2cli) for long-running jobs on a high-performance computing system, and then download the results and work with them in a Jupyter Notebook using the Python 3 API for the more exploratory iterative steps of an analysis.
+:::{aside}
+Notice that after the command block presented here, there is a link to download or view the result of running that command.
+This enables you to see the output of a QIIME 2 command without running it yourself, so is convenient for exploring the types of outputs that QIIME 2 can create.
+:::
 
 (getting-started:artifacts-and-visualizations)=
 ### Artifacts and visualizations
@@ -175,6 +191,9 @@ That document has all of the results pre-generated and linked from the document,
 
 The [QIIME 2 Forum](https://forum.qiime2.org) is where you can get free technical support and connect with other microbiome researchers.
 We look forward to seeing you there!
+
+[^tutorial-interfaces]: Transitioning all of our tutorials to provide instructions for different interfaces is a work in progress (as of 26 February 2025).
+ In the meantime, some may include only command line instructions.
 
 [^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
 

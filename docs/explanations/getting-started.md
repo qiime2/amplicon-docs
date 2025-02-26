@@ -79,35 +79,40 @@ Here is what you need to know about these:
 - `.qza` and `.qzv` files can be loaded with [QIIME 2 View](https://view.qiime2.org)[^view-options].
 - Because `.qza` and `.qzv` files are simple `zip` files, you can open them with any *unzip* utility, such as WinZip, 7Zip, or `unzip`.
   You don't need to have QIIME 2 installed to access the information in these files.
-  For example of how to get data out of these files using `unzip`, see [](explanations-archives).
+  For an example of how to get data out of these files using `unzip`, see [](explanations-archives).
 
-:::{tip} Jargon: Confused by the term "artifact"?
+:::{tip} Confused by the term "artifact"?
 :class: dropdown
-It has been brought to our attention that the term _artifact_ can be confusing, since it is often used in science to indicate a feature that is not present naturally in a system but rather observed as a result of some technical aspect of studying that system.
-For example, homopolyer runs such as the `A`s in `ACTGTACTAAAAAAAAAAATGCACGTGAC` were commonly reported by some early sequencing instruments to be longer then they were in nature due to the way the sequencing reaction worked: someone might say that this was an *artifact* of that sequencing reaction.
-In QIIME 2 we use the definition of an artifact as an object that was created by some process, like an archaeological artifact.
-This is common usage in data science.
+The term "artifact" has multiple different meanings, so our usage is sometimes confusing for new QIIME 2 users.
+In the context discussed here, "artifact" means *an object made or shaped by some agent or intelligence*.
+This is common usage in data science and software engineering.
+In biology, it is also used to mean *a finding or structure in an experiment or investigation that is not a true feature of the object under observation, but is a result of external action, the test arrangement, or an experimental error.*
+
+The definitions quoted here were obtained [from Wiktionary](https://en.wiktionary.org/wiki/artifact) (accessed 26 Feb 2025), and are used in accordance with the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
 
 (getting-started:provenance)=
 ### Data provenance
 
-QIIME 2 was designed to automate the document of analysis workflows for users to ensure that their bioinforamtics work is **reproducible**.
-This enables you, or consumers of your research, to understand exactly what was done in an analysis.
-To achieve this, each QIIME 2 command is recorded when it is run, and that information is stored in the Artifacts and Visualizations that are created[^provenance-in-artifacts].
-This means that unless you remove files from a `.qza` or `.qzv` file, your data's provenance is always stored alongside the data - so whenever you or someone else needs that information, it's there.
+QIIME 2 was designed to automatically document analysis workflows for users, ensuring that their bioinforamtics work is **reproducible**.
+This allows you, or consumers of your research, to discover exactly how any QIIME 2 result (i.e., Artifact or Visualization) was produced.
 
-In addition to supporting reproducible bioinformatics, data provenance helps others provide you with technical support on the QIIME 2 Forum.
+To achieve this, each QIIME 2 command is recorded when it is run, and that information is stored in all Artifacts and Visualizations that are created[^provenance-in-artifacts].
+This means that unless you remove files from a `.qza` or `.qzv` file, your result's data provenance is always stored alongside the data.
+Whenever you or someone else needs that information, it's there.
+
+In addition to supporting reproducible bioinformatics, data provenance helps others provide you with technical support.
 If you're running into an error or an odd result and request help, someone may ask you to share an Artifact or Visualization so they can view your data provenance.
-This will let them review in exact detail what you did to generate the result, so can make the process of providing support much more efficient.
+This will let them review in exact detail what you did to generate the result, and we've found that this makes the process of providing technical support much more efficient.
 
-You can view your data provenance tab using [QIIME 2 View](https://view.qiime2.org) (click the *Provenance* tab after loading your file), or by [using Provenance Replay](https://forum.qiime2.org/t/provenance-replay-beta-release-and-tutorial/23279).
+You can view your data provenance using [QIIME 2 View](https://view.qiime2.org) (click the *Provenance* tab after loading your file), or by [using Provenance Replay](https://forum.qiime2.org/t/provenance-replay-beta-release-and-tutorial/23279).
 
 :::{warning}
-QIIME 2 goes to great lengths to ensure that your bioinformatics workflow will be reproducible by you or others in the future.
+QIIME 2 goes to great lengths to ensure that your bioinformatics workflow will be reproducible.
 This includes recording information about your analysis inside of your Results' data provenance, and the recorded information includes metadata that you provided to run specific commands.
-We strongly recommend that you never include confidential information, such as Personally Identifying Information (PII) in your QIIME 2 metadata.
+For this and other reasons, we strongly recommend that you **never include confidential information, such as Personally Identifying Information (PII), in your QIIME 2 metadata**.
 **Because QIIME 2 stores metadata in your data provenance, confidential information that you use in a QIIME 2 analysis will persist in downstream Results.**
+
 Instead of including confidential information in your metadata, you should encode it with variables that only authorized individuals have access to.
 For example, subject names should be replaced with anonymized subject identifiers before use with QIIME 2.
 :::
@@ -117,27 +122,26 @@ For example, subject names should be replaced with anonymized subject identifier
 
 There is no microbiome-specific functionality (or even bioinformatics-specific functionality) in the QIIME 2 Framework.
 Rather all of the analysis functionality comes in the form of *plugins* to the framework.
-That includes analytic functionality in the amplicon distribution.
 
-Plugins define actions, which are steps in an analysis workflow.
-For example, the `q2-feature-table` plugin defines the actions listed [here](../references/plugin-reference/plugins/feature-table/index).
+Plugins define actions, which are the individual commands that you'll run in an analysis workflow.
+For example, the `q2-feature-table` plugin, which is included in the amplicon distribution, defines the actions listed [here](../references/plugin-reference/plugins/feature-table/index).
 If you did't have the `q2-feature-table` plugin installed, you wouldn't have access to those actions.
 
 Another thing to know about plugins is that anyone can create and distribute them.
 This is what makes QIIME 2 **extensible**.
-For example, if a graduate student develops some new analysis functionality that they want to use with QIIME 2, they can create their own QIIME 2 plugin[^developing-plugins].
-If they want others to be able to use it, they can distribute that plugin on the [QIIME 2 Library](https://library.qiime2.org), or through any means that they choose.
+For example, if a student develops new analysis functionality that they want to use with QIIME 2, they can create their own QIIME 2 plugin[^developing-plugins].
+If they want others to be able to use it, they can distribute that plugin on the [QIIME 2 Library](https://library.qiime2.org), or through any other means that they choose.
 
 (getting-started:artifact-classes)=
 ### Artifact classes
 
-All QIIME 2 Artifacts are assigned exactly one *artifact class*, which includes a semantic description of the data (its *semantic type*) and the file format that is used to store it inside of the `.qza` file.
-When you see Artifacts (or inputs or outputs) described with terms that look like `Phyogeny[Rooted]` or `Phylogeny[Unrooted]`, that is the artifact's Artifact Class.
+All QIIME 2 artifacts are assigned exactly one *artifact class*, which indicates the semantics of the data (its *semantic type*) and the file format that is used to store it inside of the `.qza` file.
+When you see artifacts (or inputs or outputs to an action) described with terms that look like `Phyogeny[Rooted]` or `Phylogeny[Unrooted]`, that is the Artifact Class.
 
-Artifact classes were developed to help users avoid misusing actions, and to discover new methods.
-For example, if an action should only be applied to a rooted phylogenetic tree, the developer of that action can annotate its input as `Phyogeny[Rooted]`.
-This will ensure that if a user mistakenly tries to provide an unrooted phylogenetic tree, QIIME 2 can error out and help the user avoid making a mistake that might waste time or create a misleading result.
-If another action can take a rooted or an unrooted phylogenetic tree, that input would be annotated as `Phyogeny[Rooted | Unrooted]`.
+Artifact classes were developed to help users avoid misusing actions, and to help them discover new methods.
+For example, if an action should only be applied to a rooted phylogenetic tree, the developer of that action should annotate its input as `Phylogeny[Rooted]`.
+This will ensure that if a user mistakenly tries to provide an unrooted phylogenetic tree, QIIME 2 can error to help the user avoid making a mistake that might waste time or create a misleading result.
+If another action can take a rooted or an unrooted phylogenetic tree, that input would be annotated as `Phylogeny[Rooted | Unrooted]`.
 
 In graphical QIIME 2 interfaces, it's possible to view the available actions based on what Artifact Class(es) they accept as input.
 This can allow a user to query the system with questions like "What actions are available to apply to a rooted phylogenetic tree?", or "What actions are available to create a rooted phylogenetic tree from an unrooted phylogenetic tree?".
@@ -153,8 +157,8 @@ The goal of this chapter was to introduce these ideas, and they'll be revisited 
 ### Deploying QIIME 2
 
 You may now be wondering where and how you'll deploy QIIME 2.
-QIIME 2 can be deployed on your personal computer (e.g., your laptop or desktop computer), a cluster computer such as one owned and maintained by your university or company, or on cloud computing resources such as the Amazon Web Services (AWS) Elastic Compute Cloud (EC2).
-In [](how-to-deploy) these options for deploying QIIME 2 are described, and relevant references to the installation instructions are provided.
+QIIME 2 can be deployed on your personal computer (e.g., your laptop or desktop computer), a cluster computer such as one owned and maintained by your university or company, or on cloud computing resources.
+In [](how-to-deploy) these options for deploying QIIME 2 are described, and relevant references to the installation instructions are referenced.
 I recommend having a working deployment of QIIME 2 when you're ready to start working through tutorials, so you can follow along on your own.
 
 ### Learning with the tutorials
@@ -162,14 +166,14 @@ I recommend having a working deployment of QIIME 2 when you're ready to start wo
 After you have a working deployment of QIIME 2, you can read and work through the [](moving-pictures-tutorial).
 This is the resource that most new users start with to learn.
 In this tutorial, you'll carry out a full microbiome analysis, from raw sequence data through visualizations and statistics.
-This is a pretty typical amplicon analysis workflow, so after you understand it you can adapt it for your own analysis.
+This is a fairly typical amplicon analysis workflow, so after you understand it you can adapt it for your own analysis.
 
 If you'd like to get more of a feel for what QIIME 2 can do before you invest in installing it, we also recommend the [](moving-pictures-tutorial).
 That document has all of the results pre-generated and linked from the document, so as you read you can interact with the results that would be generated by each step.
 
 ### Getting help
 
-Remember, the [QIIME 2 Forum](https://forum.qiime2.org) is where you can get free technical support and connect with other microbiome researchers.
+The [QIIME 2 Forum](https://forum.qiime2.org) is where you can get free technical support and connect with other microbiome researchers.
 We look forward to seeing you there!
 
 [^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).

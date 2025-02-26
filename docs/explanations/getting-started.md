@@ -6,9 +6,9 @@ This chapter will briefly introduce a few concepts that should help you learn QI
 ## What is QIIME 2?
 
 To date, most people think of QIIME 2 as a microbiome marker gene (i.e., amplicon) analysis tool.
-That is where the project started, and what its predecessor QIIME 1 was.
+That is where the project started, and what its predecessor [QIIME 1](https://doi.org/10.1038/nmeth.f.303) was.
 QIIME 2 began as a complete rewrite of QIIME 1, where we were attempting to address common feature requests from our users and reduce challenges that we saw our users encountering.
-This resulted in our developing unique functionality including our data provenance tracking system, a decentralized plugin-based ecosystem of tools, and the ability to use those through interfaces designed to support users with different computational backgrounds ([](#multiple-interfaces)).
+This resulted in our developing unique functionality including our [data provenance tracking system](getting-started:provenance), a [decentralized plugin-based ecosystem of tools](getting-started:plugins), and the ability to use those through [interfaces](getting-started:interfaces) designed to support users with different computational backgrounds ([](#multiple-interfaces)).
 Much of this functionality is not unique to microbiome marker gene analysis, but rather general to biological data science, and as result the scope of QIIME 2 is now broader than when we started.
 So, what is QIIME 2?
 
@@ -19,22 +19,25 @@ This is the microbiome marker gene analysis toolkit.
 The *amplicon distribution* is built on what we call the QIIME 2 Framework (or *the framework*).
 The framework is where the general-purpose functionality exists, including data provenance tracking, the plugin manager, and more.
 As an end user, you don't really need to know anything about this, but it's helpful to know that it exists and is different from the amplicon distribution to understand the ecosystem of tools.
-The amplicon distribution, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *metagenome distribution*) and [genome-sampler](genome-sampler.readthedocs.io/), are technically *built on top of the QIIME 2 Framework*.
+The amplicon distribution, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *metagenome distribution*) and [genome-sampler](https://genome-sampler.readthedocs.io/), are technically *built on top of the QIIME 2 Framework*.
 
 **The amplicon distribution of QIIME 2 includes a suite of plugins that provide broad analytic functionality that supports microbiome marker gene analysis from raw sequencing data through publication quality visualizations and statistics.**
+There is not a single QIIME 2 workflow or command - rather it is a series of steps, and you choose which ones to apply.
+We provide general guidance through tutorials, like the [](moving-pictures-tutorial), and can provide more specific guidance on the [QIIME 2 Forum](https://forum.qiime2.org).
 Any amplicon is supported - not just the 16S rRNA gene.
 The plugins that come with the amplicon distribution are listed in [](available-plugins).
 Other plugins can also be installed independently - your main source for discovery and installation instructions for these is the [QIIME 2 Library](https://library.qiime2.org)[^developing-plugins].
+
+## Important concepts
 
 The following sections briefly present some important concepts for understanding QIIME 2 tools.
 You don't need to fully understand these to start using QIIME 2, but we think it will help you learn and build your bioinformatics skills if you have some brief exposure to these ideas.
 Links to where you can learn more are provided[^power-user].
 
-## Important concepts
-
+(getting-started:interfaces)=
 ### Interfaces
 
-All of QIIME 2's analytic functionality can be accessed through interfaces designed to help specific groups of users work most efficiently ([](#multiple-interfaces)).
+All of QIIME 2's analytic functionality can be accessed through multiple different interfaces, and you can choose to work with the one (or more) of these that you think you'll be most efficient with ([](#multiple-interfaces)).
 For example, domain scientists without advanced computing backgrounds can using QIIME 2 through graphical interfaces such as Galaxy.
 Power users can work with QIIME 2 on the command line, enabling straight-forward access on high-performance compute clusters and cloud resources.
 Research software engineers and data scientists can use QIIME 2 through its Python 3 API, facilitating development of automated workflows and integration of QIIME 2 tools as a component in other systems.
@@ -49,10 +52,18 @@ Examples of four QIIME 2 interfaces: QIIME 2 View, Galaxy, q2cli, and the Python
 ```
 
 When you're working with QIIME 2 tutorials, we'll generally provide instructions that enable you to work in different interfaces.
-This will look like the following:
+This will look like the following, and you can choose to follow the instructions for the interface that you're currently working with.
 
-**PICK UP HERE!!**
+:::{describe-usage}
+:scope: getting-started
 
+use.help(use.UsageAction('feature_table', 'summarize'))
+:::
+
+You're free to use different interfaces for different steps.
+For example, a fairly common workflow among power users is to use the command line interface (q2cli) for long-running jobs on a high-performance computing system, and then download the results and work with them in a Jupyter Notebook using the Python 3 API for the more exploratory iterative steps of an analysis.
+
+(getting-started:artifacts-and-visualizations)=
 ### Artifacts and visualizations
 
 One of the first things that new QIIME 2 users often notice is the `.qza` and `.qzv` files that QIIME 2 uses.
@@ -78,6 +89,7 @@ In QIIME 2 we use the definition of an artifact as an object that was created by
 This is common usage in data science.
 :::
 
+(getting-started:provenance)=
 ### Data provenance
 
 QIIME 2 was designed to automate the document of analysis workflows for users to ensure that their bioinforamtics work is **reproducible**.
@@ -100,6 +112,7 @@ Instead of including confidential information in your metadata, you should encod
 For example, subject names should be replaced with anonymized subject identifiers before use with QIIME 2.
 :::
 
+(getting-started:plugins)=
 ### Plugins and actions
 
 There is no microbiome-specific functionality (or even bioinformatics-specific functionality) in the QIIME 2 Framework.
@@ -115,6 +128,7 @@ This is what makes QIIME 2 **extensible**.
 For example, if a graduate student develops some new analysis functionality that they want to use with QIIME 2, they can create their own QIIME 2 plugin[^developing-plugins].
 If they want others to be able to use it, they can distribute that plugin on the [QIIME 2 Library](https://library.qiime2.org), or through any means that they choose.
 
+(getting-started:artifact-classes)=
 ### Artifact classes
 
 All QIIME 2 Artifacts are assigned exactly one *artifact class*, which includes a semantic description of the data (its *semantic type*) and the file format that is used to store it inside of the `.qza` file.
@@ -160,7 +174,7 @@ We look forward to seeing you there!
 
 [^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
 
-[^power-user]: When you're ready to learn a lot more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
+[^power-user]: When you're ready to learn more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
   Using QIIME 2 provides information that is relevant across all QIIME 2 distributions and plugins, not just the amplicon distribution.
 
 [^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).

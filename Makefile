@@ -5,7 +5,7 @@ html:
 	cd docs && jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
 
-fastmode:
+fast-preview:
 	cd docs && Q2DOC_FASTMODE= jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
 

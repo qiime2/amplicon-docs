@@ -19,6 +19,7 @@ The primers used here are still popular, though more modern ones have been devel
 Typically an Illumina amplicon sequencing run will generate paired end reads (as opposed to the single-end reads used here), and a more modern instrument would be used.
 All of that said, this is a great data set for learning QIIME 2; you shouldn't aim to exactly model the primers and protocol used for data generation though.
 
+(moving-pictures-tutorial:sample-metadata)=
 ## Sample metadata
 
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study.
@@ -211,6 +212,7 @@ use.action(
     use.UsageOutputNames(visualization='stats'))
 :::
 
+(moving-pictures:deblur)=
 ### Option 2: Deblur
 
 [Deblur](http://msystems.asm.org/content/2/2/e00191-16) uses sequence error profiles to associate erroneous sequence reads with the true biological sequence from which they are derived, resulting in high quality sequence variant data.

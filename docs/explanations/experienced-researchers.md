@@ -1,17 +1,13 @@
 (experienced-researchers)=
 # QIIME 2 for experienced microbiome researchers
 
-:::{warning}
-Transfer of this document from `https://docs.qiime2.org` is in progress (as of 20 Feb 2025).
-Expect some problematic formatting.
-🪚
-:::
-
 In this document, we'll go over how to use QIIME 2 to process microbiome data.
 This tutorial is intended for experienced microbiome researchers who already know how to process data and need to know the **QIIME 2 commands pertaining to specific steps in 16S processing**.
-We recommend reading [](getting-started) before this document, as it provides some background information on QIIME 2 itself that is helpful for learning the platform quickly.
 
-[](some-theory) contains a more theoretical overview of microbiome data processing.
+:::{tip}
+We recommend reading [](getting-started) before this document, as it provides some background information on QIIME 2 itself that is helpful for learning the platform quickly.
+[](some-theory) contains a more theoretical overview of microbiome data processing, and can be read either before or after this document.
+:::
 
 ## Why use QIIME 2?
 
@@ -46,16 +42,26 @@ These can make your analysis workflows much quicker.
 
 The processing steps we'll cover in this discussion include:
 
-1.  Importing raw sequence (FASTQ) data into QIIME 2.
-2.  Demultiplexing data (i.e. mapping each sequence to the sample it came from).
-3.  Removing non-biological parts of the sequences (e.g., adapters and primers).
-4.  Performing quality control and:
-    -   denoising sequences with DADA2 or deblur, and/or
-    -   quality filtering, length trimming, and clustering with VSEARCH or dbOTU
-5.  Assigning taxonomy
-6.  Analyzing data and gaining insight into your microbiomes!
+1. Preparing your sample metadata
+1. Importing raw sequence (FASTQ) data into QIIME 2.
+1. Demultiplexing data (i.e. mapping each sequence to the sample it came from).
+1. Removing non-biological parts of the sequences (e.g., adapters and primers).
+1. Performing quality control and:
+  - denoising sequences with DADA2 or deblur, and/or
+  - quality filtering, length trimming, and clustering with VSEARCH or dbOTU
+1. Assigning taxonomy
+1. Analyzing data and gaining insight into your microbiomes!
 
 [](some-theory) and [](available-plugins) can give you ideas for additional possible processing and analysis steps.
+
+### Preparing your metadata
+
+QIIME 2 has little in the way of opinions in terms of how your metadata must be formatted.
+Briefly, the data should be in a tab-separated text file (`.tsv`), where the first row contains metadata column headers, and the first column contains sample ids.
+Sample ids must be unique, and the column header for the first column should be `sample-id` or `id` (there are a few other options as well).
+
+The metadata file format is defined in *Using QIIME 2* [here](https://use.qiime2.org/en/latest/references/metadata.html).
+You can find an example in the *Moving Pictures tutorial* [here](moving-pictures-tutorial:sample-metadata).
 
 ### Importing data into QIIME 2: `qiime tools import`
 
@@ -76,8 +82,8 @@ If you want to import FASTA files or a feature table directly, you can also do t
 ### Demultiplexing sequences
 
 Relevant plugins:
- - [q2-demux](q2-plugin-demux)
- - [q2-cutadapt](q2-plugin-cutadapt)
+ - [`q2-demux`](q2-plugin-demux)
+ - [`q2-cutadapt`](q2-plugin-cutadapt)
 
 If you have reads from multiple samples in the same file, you'll need to demultiplex your sequences.
 
@@ -91,11 +97,12 @@ You can learn more about how `cutadapt` works under the hood by reading their [d
 Note: Currently `q2-demux` and `q2-cutadapt` do not support demultiplexing dual-barcoded paired-end sequences, but only can demultiplex with barcodes in the forward reads.
 For the time being, this type of demultiplexing needs to be done outside of QIIME 2 using other tools, for example [bcl2fastq](https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html).
 
+(experienced-researchers:merging)=
 ### Merging paired end reads
 
 Relevant plugins:
- - [q2-vsearch](q2-plugin-vsearch)
- - [q2-dada2](q2-plugin-dada2)
+ - [`q2-vsearch`](q2-plugin-vsearch)
+ - [`q2-dada2`](q2-plugin-dada2)
 
 Whether or not you need to merge reads depends on how you plan to cluster or denoise your sequences into amplicon sequence variants (ASVs) or operational taxonomic units (OTUs).
 If you plan to use DADA2 to denoise your sequences, do not merge --- [`denoise-paired`](q2-action-dada2-denoise-paired) performs read merging automatically after denoising each sequence.
@@ -103,15 +110,16 @@ If you plan to use deblur or OTU clustering methods next, join your sequences no
 
 If you need to merge your reads, you can use the [`merge-pairs`](q2-action-vsearch-merge-pairs) method.
 
+(experienced-researchers:removing-nonbio-sequences)=
 ### Removing non-biological sequences
 
 Relevant plugins:
- - [q2-cutadapt](q2-plugin-cutadapt)
- - [q2-dada2](q2-plugin-dada2)
+ - [`q2-cutadapt`](q2-plugin-cutadapt)
+ - [`q2-dada2`](q2-plugin-dada2)
 
 If your data contains any non-biological sequences (e.g. primers, sequencing adapters, PCR spacers, etc), you should remove these.
 
-The [q2-cutadapt](q2-plugin-cutadapt) plugin has comprehensive methods for removing non-biological
+The [`q2-cutadapt`](q2-plugin-cutadapt) plugin has comprehensive methods for removing non-biological
 sequences from [paired-end](q2-action-cutadapt-trim-paired) or [single-end](q2-action-cutadapt-trim-single) data.
 
 If you're going to use DADA2 to denoise your sequences, you can remove biological sequences at the same time as you call the denoising function.
@@ -119,388 +127,122 @@ All of DADA2's `denoise` actions have some sort of `--p-trim` parameter you can 
 
 ### Grouping similar sequences
 
-**pick up here!**
-
 There are two main approaches for grouping similar sequences together: denoising and clustering.
-The `overview tutorial <Denoising>`{.interpreted-text role="ref"} provides more in-depth discussion of these approaches.
+[*Some theory: denoising and clustering*](some-theory:denoising-and-clustering) provides more in-depth discussion of these approaches.
 
-Regardless of how you group your sequences, the grouping methods will
-output:
+Regardless of how you group your sequences, the grouping methods will output:
 
-1.  A list of representative sequences for each of your OTUs and/or ASVs
-    (QIIME 2 data format `FeatureData[Sequence]`), and
-2.  A feature table which indicates how many reads of each OTU/sequence
-    variant were observed in each sample.
-(QIIME 2 data format
-    `FeatureTable[Frequency]`)
+1.  A feature table that tabulates counts of each feature (e.g., an amplicon sequence variant) on a per-sample basis (QIIME 2 Artifact Class: `FeatureTable[Frequency]`), and
+1.  A table providing a representative sequence for each feature (QIIME 2 Artifact Class: `FeatureData[Sequence]`).
 
-DADA2 and deblur will also produce a stats summary file with useful
-information regarding the filtering and denoising.
+DADA2 and deblur will also produce a stats summary file with useful information regarding the filtering and denoising.
 
+(experienced-researchers:denoising)=
 ### Denoising
 
-**Relevant plugins**:
+Relevant plugins:
+ - [`q2-dada2`](q2-plugin-dada2)
+ - [`q2-deblur`](q2-plugin-deblur)
 
--   `dada2 </plugins/available/dada2/index>`{.interpreted-text
-    role="doc"}
--   `deblur <../plugins/available/deblur/index>`{.interpreted-text
-    role="doc"}
-
-DADA2 and deblur are currently the two denoising methods available in
-QIIME 2.
-You can read more about the methods in the
-`overview tutorial <Denoising>`{.interpreted-text role="ref"}.
-
-DADA2 and deblur both output exact sequence variants, which supposedly
-represent the true biological sequences present in your data.
-Their
-creators have different terminology for these sequences (DADA2 calls
-them "amplicon sequence variants" (ASVs) and deblur calls them
-"sub-OTUs").
-We'll be using the ASV terminology throughout this
-tutorial to refer to both outputs.
+DADA2 and deblur are currently the two denoising methods available in QIIME 2 and both group sequences into amplicon sequence variants (ASV).
 
 #### Preparing data for denoising
 
-Denoising requires little data preparation.
-Both DADA2 and deblur
-perform quality filtering, denoising, and chimera removal, so you
-shouldn't need to perform any quality screening prior to running them.
-That said, the deblur developers recommend doing an initial
-`quality-filter <moving pictures deblur>`{.interpreted-text role="ref"}
-with default settings prior to using deblur (as illustrated in the
-`"Moving Pictures" tutorial <moving pictures deblur>`{.interpreted-text
-role="ref"}).
-Q-score based filtering is built in to DADA2, so doing
-this [quality-filter]{.title-ref} step prior to denoising with DADA2 is
-unnecessary.
+Both DADA2 and deblur perform quality filtering, denoising, and chimera removal, so you shouldn't need to perform any quality screening prior to running them.
+That said, the deblur developers recommend doing an initial quality screen - this is illustrated in the *Moving Pictures tutorial's* [Deblur section](moving-pictures:deblur).
+No quality filtering step is required before running DADA2.
 
-Both methods have an option to truncate your reads to a constant length
-(which occurs prior to denoising).
-In DADA2, this is the
-[\--p-trunc-len]{.title-ref} parameter; in deblur it's
-[\--p-trim-length]{.title-ref}.
-The truncating parameter is optional for
-both DADA2 and deblur (though if you're using deblur you'll need to
-specify [\--p-trim-length -1]{.title-ref} to disable truncation).
-Reads
-shorter than the truncation length are discarded and reads longer are
-truncated at that position.
-The overview tutorial has more discussion on
-deciding what length you should truncate to.
+Both methods have an option to truncate your reads to a constant length (which occurs prior to denoising).
+In DADA2, this is the `--p-trunc-len` parameter; in deblur it's the `--p-trim-length` parameter.
+The truncating parameter is optional for both DADA2 and deblur (though if you're using deblur you'll need to specify `--p-trim-length -1` to disable truncation).
+Reads shorter than the truncation length are discarded and reads longer are truncated at that position.
 
 #### Denoising with DADA2
 
-The `DADA2 plugin </plugins/available/dada2/index>`{.interpreted-text
-role="doc"} has multiple methods to denoise reads:
+The [q2-dada2](q2-plugin-dada2) has multiple methods to denoise reads:
 
--   `denoise paired-end <../plugins/available/dada2/denoise-paired/>`{.interpreted-text
-    role="doc"} requires unmerged, paired-end reads (i.e. both forward
-    and reverse).
--   `denoise single-end <../plugins/available/dada2/denoise-single/>`{.interpreted-text
-    role="doc"} accepts either single-end or unmerged paired-end data.
-    If you give it unmerged paired-end data, it will only use the
-    forward reads (and do nothing with the reverse reads).
--   `denoise-pyro <../plugins/available/dada2/denoise-pyro/>`{.interpreted-text
-    role="doc"} accepts ion torrent data.
+ - [`denoise-paired`](q2-action-dada2-denoise-paired) requires unmerged, paired-end Illumina reads (i.e. both forward and reverse).
+ - [`denoise-single-end`](q2-action-dada2-denoise-single) accepts either single-end or unmerged, paired-end Illumina reads.
+ If you give it unmerged paired-end data, it will only use the forward reads (and do nothing with the reverse reads).
+ - [`denoise-pyro`](q2-action-dada2-denoise-pyro) accepts ion torrent or 454 data.
+ - [`denoise-css`](q2-action-dada2-denoise-pyro) accepts Pacbio CCS.
 
 Note that DADA2 may be slow on very large datasets.
-You can increase the
-number of threads to use with the `--p-n-threads` parameter.
+You can increase the number of threads to use with the `--p-n-threads` parameter.
 
 #### Denoising with deblur
 
-The `deblur <../plugins/available/deblur/index>`{.interpreted-text
-role="doc"} plugin has two methods to denoise sequences:
+The [`q2-deblur`](q2-plugin-deblur) plugin has two methods to denoise sequences:
 
--   `denoise-16S <../plugins/available/deblur/denoise-16S/>`{.interpreted-text
-    role="doc"} denoises 16S sequences.
--   `denoise-other <../plugins/available/deblur/denoise-other/>`{.interpreted-text
-    role="doc"} denoises other types of sequences.
+ - [`denoise-16S`](q2-action-deblur-denoise-16S) denoises 16S rRNA data.
+ - [`denoise-other`](q2-action-deblur-denoise-other) denoises other types of sequences.
 
-If you use `denoise-16S`, deblur performs an initial positive filtering
-step where it discards any reads which do not have a minimum 60%
-identity similarity to sequences from the 85% OTU GreenGenes database.
+If you use `denoise-16S`, deblur performs an initial positive filtering step where it discards any reads which do not have minimum 60% identity similarity to sequences from the 85% OTU GreenGenes 13_8 database.
 If you don't want to do this step, use the `denoise-other` method.
 
 deblur can currently only denoise single-end reads.
-It will accept
-unmerged paired-end reads as input, it just won't do anything with the
-reverse reads.
-Note that deblur *can* take in *merged* reads and treat
-them as single-end reads, so you might want to merge your reads first if
-you're denoising with deblur.
+It will accept unmerged paired-end reads as input, it just won't do anything with the reverse reads.
+Note that deblur *can* take in *merged* reads and treat them as single-end reads, so you might want to merge your reads first if you're denoising with deblur.
 
 ### OTU Clustering
 
-In this tutorial, we'll cover QIIME 2 methods that perform
-`de novo  <../plugins/available/vsearch/cluster-features-de-novo/>`{.interpreted-text
-role="doc"} and
-`closed reference <../plugins/available/vsearch/cluster-features-closed-reference/>`{.interpreted-text
-role="doc"} clustering.
-The QIIME
-`OTU clustering tutorial <otu-clustering>`{.interpreted-text role="doc"}
-also covers these in more detail.
+Relevant plugins:
+ - [`q2-vsearch`](q2-plugin-vsearch)
 
-To cluster your sequences, you need to make sure that:
+QIIME 2 can also perform OTU clustering using the [`q2-vsearch`](q2-plugin-vsearch) plugin.
+This can include simple dereplication of sequences using [`dereplicate-sequences`](q2-method-vsearch-dereplicate-sequences), or [*de novo*](q2-method-vsearch-cluster-features-de-novo), [closed-reference](q2-method-vsearch-cluster-features-closed-reference), or [open-reference](q2-method-vsearch-cluster-features-open-reference) OTU clustering.
 
--   paired-end reads are merged
--   non-biological sequences are removed
--   reads are all trimmed to the same length
--   low-quality reads are discarded
+Before dereplicating or clustering your sequences, you should ensure that:
 
-We discussed merging paired-end reads and removing non-biological
-sequences above (Sections [Merge reads](#merge reads) and [Remove
-non-biological sequences](#Remove non-biological sequences)).
+-   paired-end reads are merged (see [](experienced-researchers:merging))
+-   non-biological sequences are removed (see [](experienced-researchers:removing-nonbio-sequences))
+-   reads have undergone quality control, either [by denoising](experienced-researchers:denoising) or using [`q2-quality-filter`](q2-plugin-quality-filter)
+-   if you want to strictly dereplicate your sequences, all reads should be trimmed to the same length using [`q2-cutadapt`](q2-plugin-cutadapt)
 
-Once your data are ready, you'll also need to dereplicate your reads
-before clustering.
+For additional information, see [](cluster-reads-into-otus).
 
-#### Length trimming
+### Taxonomic annotation
 
-If for some reason your raw reads are not already all the same length,
-you'll need to trim them to the same length before doing OTU
-clustering.
-There isn't currently a QIIME 2 function to trim reads to
-the same length without doing anything else, though you may be able to
-use functions from the `cutadapt` plugin to do something like that.
-(The
-reason for this is that the
-`QIIME 2 workflow <Denoising>`{.interpreted-text role="ref"} recommends
-first denoising reads - which involves a length trimming step - and then
-optionally passing the ASVs through a clustering algorithm.)
+Relevant plugins:
+ - [`q2-feature-classifier`](q2-plugin-feature-classifier) (also see [Bokulich et al. (2018)](https://doi.org/10.1186/s40168-018-0470-z))
+ - [`rescript`](q2-plugin-rescript) (also see [Robeson et al. (2019)](https://doi.org/10.1371/journal.pcbi.1009581))
 
-#### Quality filtering
+There are two main approaches for assigning taxonomy, each with multiple methods available.
 
-**Relevant plugin**:
-`quality-filter <../plugins/available/quality-filter/index>`{.interpreted-text
-role="doc"}
+The first approach involves aligning reads to reference databases directly:
+ - [BLAST+ local alignment](q2-method-feature-classifier-classify-consensus-blast)
+ - [VSEARCH global alignment](q2-method-feature-classifier-classify-consensus-vsearch)
+ - [BLAST+ local alignment](q2-method-feature-classifier-classify-blast)
+ - [VSEARCH global alignment](q2-method-feature-classifier-classify-vsearch-global)
 
-You can perform different types of quality filtering with the
-`quality filter <../plugins/available/quality-filter/index>`{.interpreted-text
-role="doc"} plugin.
-The [q-score]{.title-ref} method is for single- or
-paired-end sequences as well as joined reads after merging (i.e.
-[SampleData\[PairedEndSequencesWithQuality \| SequencesWithQuality\] \|
-JoinedSequencesWithQuality\]]{.title-ref}).
-The option descriptions for
-each method cover the different types of available quality filtering.
+The second approach uses a machine learning classifier to assign likely taxonomies to reads, and can be used through [`classify-sklearn`](q2-method-feature-classifier-classify-sklearn).
+This method needs a pre-trained model to classify the sequences.
+You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://resources.qiime2.org), or train one yourself as described in [](train-feature-classifier).
+[`rescript`](q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
 
-#### Dereplicating sequences
+## Analyzing data and gaining insight into your microbiomes!
 
-**Relevant plugin**:
-`q2-vsearch <../plugins/available/vsearch/index>`{.interpreted-text
-role="doc"}
+Relevant plugins:
+ - [Many in the amplicon distribution](available-plugins)
+ - [Many more on the QIIME 2 Library](https://library.qiime2.org)
 
-No matter which type of clustering you do, you first need to dereplicate
-your sequences.
-The
-`q2-vsearch <../plugins/available/vsearch/index>`{.interpreted-text
-role="doc"} plugin's method
-`dereplicate-sequences  <../plugins/available/vsearch/dereplicate-sequences/>`{.interpreted-text
-role="doc"} performs this step.
+At this point, you should be ready to analyze your feature table to answer your scientific questions.
+QIIME 2 offers multiple built-in functions to analyze your data.
+If you don't find what you're looking for, you can also [export your data](how-to-import-export:export) for analysis with other tools.
+The [](moving-pictures-tutorial) has good examples of the types of visualizations and statistics that you can apply to your data.
 
-#### de novo clustering
+Some of those include:
+ - [generating taxonomic composition barplots](q2-action-taxa-barplot),
+ - [generating interactive ordination (Emperor) plots](q2-action-emperor-plot),
+ - [calculating common diversity metrics](q2-action-diversity-core-metrics),
+ - [calculating phylogenetic diversity metrics](q2-action-diversity-core-metrics-phylogenetic),
+ - calculating uncommon diversity metrics: approximately [30 alpha diversity metrics](q2-action-diversity-alpha) and [20 beta diversity metrics](q2-action-diversity-beta),
+ - [computing](q2-action-composition-ancombc) and [visualizing](q2-action-composition-da-barplot) differential abundance across sample categories,
+ - [performing longitudinal data analysis](q2-plugin-longitudinal),
+ - developing machine learning tools to predict [categorical](q2-action-sample-classifier-classify-samples) or [continuous](q2-action-sample-classifier-regress-samples) metadata as a function of microbiome composition,
+ - and lots more.
 
-**Relevant plugins**:
+Welcome to the QIIME 2 community!
+If you run into questions, or just want to connect with other microbiome researchers, data scientists, and research software engineers, come visit us on the [QIIME 2 Forum](https:forum.qiime2.org).
 
--   `q2-vsearch <../plugins/available/vsearch/index>`{.interpreted-text
-    role="doc"}
--   [q2-dbotu](https://library.qiime2.org/plugins/q2-dbotu/)
-
-Sequences can be clustered *de novo* based on their genetic similarity
-alone (i.e. with VSEARCH) or based on a combination of their genetic
-similarity and abundance distributions (i.e. with distribution-based
-clustering).
-
--   **Similarity-based clustering.** The [q2-vsearch]{.title-ref} plugin
-    method
-    `cluster-features-de-novo <../plugins/available/vsearch/cluster-features-de-novo/>`{.interpreted-text
-    role="doc"} clusters OTUs.
-You can change the genetic similarity
-    threshold with the `--p-perc-identity` parameter.
-The plugin wraps
-    the VSEARCH `--cluster_size` function.
--   **Distribution-based clustering** incorporates the similarity
-    between sequences and their abundance distribution to identify
-    ecologically meaningful populations.
-You can learn more about this
-    method in the [plugin
-    documentation](https://github.com/cduvallet/q2-dbotu), [original
-    paper](http://dx.doi.org/10.1128/AEM.00342-13), and the
-    [re-implementation update
-    paper](https://doi.org/10.1371/journal.pone.0176335).
-The
-    `call-otus` function in the
-    [q2-dbotu](https://github.com/cduvallet/q2-dbotu) plugin performs
-    distribution-based clustering on input data.
-
-Both of these functions take as input the output of
-`q2-vsearch dereplicate-sequences`, which are dereplicated sequences
-with QIIME 2 data type `'FeatureData[Sequence]'`, and a table of counts
-with QIIME 2 data type `'FeatureTable[Frequency]'`.
-
-#### closed reference clustering
-
-**Relevant plugin**:
-`q2-vsearch <../plugins/available/vsearch/index>`{.interpreted-text
-role="doc"}
-
-Closed reference clustering groups sequences together which match the
-same reference sequence in a database with a certain similarity.
-
-VSEARCH can do closed reference clustering with the
-`cluster-features-closed-reference <../plugins/available/vsearch/cluster-features-closed-reference/>`{.interpreted-text
-role="doc"} method.
-This method wraps the `--usearch_global` VSEARCH
-function.
-You can decide which reference database to cluster against
-with the `--i-reference-sequences` flag.
-The input file to this flag
-should be a `.qza` file containing a fasta file with the sequences to
-use as references, with QIIME 2 data type `FeatureData[Sequence]`.
-Most
-people use GreenGenes or SILVA for 16S rRNA gene sequences, but others
-curate their own databases or use other standard references (e.g.
-UNITE
-for ITS data).
-You can download the references from the links on the
-`QIIME 2 data resources page <marker gene db>`{.interpreted-text
-role="ref"}.
-You'll need to unzip/untar and import them as
-`FeatureData[Sequence]` artifacts, since they're provided as raw data
-files.
-
-### Assigning taxonomy
-
-**Relevant plugin**:
-`feature-classifier <../plugins/available/feature-classifier/index>`{.interpreted-text
-role="doc"}
-
-Assigning taxonomy to ASV or OTU representative sequences is covered in
-the `taxonomy classification
-tutorial <Taxonomy>`{.interpreted-text role="ref"}.
-All taxonomy
-assignment methods are in the
-`feature-classifier plugin <../plugins/available/feature-classifier/index>`{.interpreted-text
-role="doc"}.
-
-There are two main approaches for assigning taxonomy, each with multiple
-methods available.
-
-The first involves aligning reads to reference databases directly:
-
--   `classify-consensus-blast <../plugins/available/feature-classifier/classify-consensus-blast/>`{.interpreted-text
-    role="doc"}: BLAST+ local alignment
--   `classify-consensus-vsearch <../plugins/available/feature-classifier/classify-consensus-vsearch/>`{.interpreted-text
-    role="doc"}: VSEARCH global alignment
-
-Both use the *consensus* approach of taxonomy assignment, which you can
-learn more about in the `overview <Taxonomy>`{.interpreted-text
-role="ref"} and tweak with the `maxaccepts`, `perc-identity`, and
-`min-consensus` parameters.
-
-The second approach uses a machine learning classifier to assign likely
-taxonomies to reads, and can be used through the
-`classify-sklearn <../plugins/available/feature-classifier/classify-sklearn/>`{.interpreted-text
-role="doc"} method.
-
-This method needs a pre-trained model to classify the sequences: you can
-either download one of the pre-trained taxonomy classifiers from the
-`data resources page <../data-resources/>`{.interpreted-text
-role="doc"}, or train one yourself (following the steps outlined in the
-`feature classifier tutorial <feature-classifier>`{.interpreted-text
-role="doc"}).
-(You can also learn a lot more about the specific models
-implemented in [the plugin's associated
-paper](https://doi.org/10.1186/s40168-018-0470-z).)
-
-## Analyze feature table and gain insight
-
-**Relevant plugins**:
-`Many! <../plugins/available/index>`{.interpreted-text role="doc"}
-
-At this point, you should be ready to analyze your feature table to
-answer your scientific questions.
-QIIME 2 offers multiple built-in
-functions to analyze your data, and you can also
-[export](Export%20the%20data) it to do downstream analyses in your
-preferred coding language or software package.
-
-Some general things you can do with QIIME 2 are:
-
--   **Look at the data:** QIIME 2 has a nice
-    `taxa barplot visualizer <../plugins/available/taxa/barplot/>`{.interpreted-text
-    role="doc"} to make visually exploring your data easy.
-You can also
-    visualize your data on a PCoA plot with the
-    `emperor <../plugins/available/emperor/plot/>`{.interpreted-text
-    role="doc"} plugin (after calculating beta diversity between
-    samples).
--   **Build a phylogenetic tree:** QIIME 2 has a
-    `phylogeny <../plugins/available/phylogeny/index>`{.interpreted-text
-    role="doc"} plugin with different tree-building methods.
--   **Calculate alpha diversity of your samples:** the
-    `diversity plugin <../plugins/available/diversity/index>`{.interpreted-text
-    role="doc"} has many [alpha diversity
-    metrics](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282)
-    available through the `alpha` and `alpha-phylogenetic` methods.
--   **Calculate beta diversity between samples:** the
-    `diversity plugin <../plugins/available/diversity/index>`{.interpreted-text
-    role="doc"} also has these metrics available in the `beta`,
-    `beta-phylogenetic`, and `beta-phylogenetic-alt` methods.
-Note that
-    the `diversity core-metrics` and
-    `diversity core-metrics-phylogenetic` pipelines are a handy wrapper
-    for alpha and beta diversity analyses.
-These are described in the
-    `overview tutorial <Diversity>`{.interpreted-text role="ref"}.
--   **Test for differences between samples**, through differential
-    abundance or distribution testing: PERMANOVA, ANOSIM, ANCOM, and
-    ANCOM-BC are some of the relevant methods which are available in
-    QIIME 2.
-PERMANOVA and ANOSIM can be done with the
-    `beta-group-significance <../plugins/available/diversity/beta-group-significance/>`{.interpreted-text
-    role="doc"} method in the `diversity` plugin, and ANCOM and ANCOM-BC
-    are available in the
-    `composition <../plugins/available/composition/index>`{.interpreted-text
-    role="doc"} plugin.
--   **Build machine learning classifiers and regressors to make
-    predictions:** the
-    `q2-sample-classifier <../plugins/available/sample-classifier/index>`{.interpreted-text
-    role="doc"} plugin has several actions for building classifiers and
-    regressors, and the associated
-    `"Predicting sample metadata values with q2-sample-classifier" tutorial <sample-classifier>`{.interpreted-text
-    role="doc"} provides more details.
-
-### Export the data
-
-**Relevant plugin**: `qiime tools export`
-
-If you're a veteran microbiome scientist and don't want to use QIIME 2
-for your analyses, you can extract your feature table and sequences from
-the artifact using the `export <exporting>`{.interpreted-text
-role="doc"} tool.
-While `export` only outputs the data, the
-`extract <export vs extract>`{.interpreted-text role="ref"} tool allows
-you to also extract other metadata such as the citations, provenance
-etc.
-
-Note that this places generically named files (e.g. `feature-table.txt`)
-into the output directory, so you may want to immediately rename the
-files to something more information (or somehow ensure that they stay in
-their original directory)!
-
-You can also use the handy [qiime2R](https://github.com/jbisanz/qiime2R)
-package to import QIIME 2 artifacts directly into R.
-
-## New plugins
-
-You can explore QIIME 2's ever-growing list of
-`plugins <../plugins/available/index>`{.interpreted-text role="doc"} to
-find other methods to apply to your data.
-
-And remember that you can also
-`make your own QIIME 2 plugins <../plugins/developing>`{.interpreted-text
-role="doc"} to add functionality to QIIME 2 and share it with the
-community!
+Have fun! 😎

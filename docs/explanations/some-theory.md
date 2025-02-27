@@ -270,6 +270,7 @@ and demultiplexing raw sequencing data happens to be the most
 frustrating part for most new users 😤. But once you get the hang of it,
 it\'s a piece of cake. 🍰
 
+(some-theory:denoising-and-clustering)=
 ## Denoising and clustering {#Denoising}
 
 Congratulations on getting this far! Denoising and clustering steps are

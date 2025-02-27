@@ -7,6 +7,7 @@ Expect some problematic formatting.
 🪚
 :::
 
+(how-to-import-export:import)=
 ### Importing data into QIIME 2 Artifacts (i.e., `.qza` files)
 
 In order to use QIIME 2, your input data must be stored in *QIIME 2
@@ -598,6 +599,7 @@ names of these formats and types should be self-explanatory enough to
 figure it out. If you have any questions, please post to the [QIIME 2
 Forum](https://forum.qiime2.org) for help!
 
+(how-to-import-export:export)=
 ### Exporting data from QIIME 2 Artifacts (i.e., `.qza` files)
 
 :::: note

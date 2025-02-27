@@ -51,6 +51,7 @@ You may want to begin by creating a directory to work in.
 mkdir qiime2-importing-tutorial cd qiime2-importing-tutorial
 :::
 
+(importing-fastq)=
 #### Sequence data with sequence quality information (i.e. FASTQ) {#importing seqs}
 
 With QIIME 2, there are functions to import different types of FASTQ
@@ -311,6 +312,7 @@ CasavaOneEightSingleLanePerSampleDirFmt \--output-path
 demux-paired-end.qza
 :::
 
+(import-fastq-manifest)=
 ##### \"Fastq manifest\" formats {#manifest file}
 
 The examples above demonstrate how to import multiplexed data (i.e. EMP

@@ -1,12 +1,15 @@
 (experienced-researchers)=
 # QIIME 2 for experienced microbiome researchers
 
-In this document, we'll go over how to use QIIME 2 to process microbiome data.
-This tutorial is intended for experienced microbiome researchers who already know how to process data and need to know the **QIIME 2 commands pertaining to specific steps in 16S processing**.
+This document is intended for experienced microbiome researchers who already know how to process microbiome marker gene data and need to know the QIIME 2 commands pertaining to specific steps.
 
 :::{tip}
 We recommend reading [](getting-started) before this document, as it provides some background information on QIIME 2 itself that is helpful for learning the platform quickly.
 [](some-theory) contains a more theoretical overview of microbiome data processing, and can be read either before or after this document.
+:::
+
+:::{note}
+General updates are planned for this document (see [](https://github.com/qiime2/amplicon-docs/issues/3)).
 :::
 
 ## Why use QIIME 2?
@@ -32,6 +35,7 @@ Writing a QIIME 2 plugin for your methods is a great way to get your methods in 
 That said, here are a couple of tips that should improve your experience in transitioning your workflows to QIIME 2:
 
 **Pro-tip #1: QIIME 2 artifacts are just zip files**.
+They contain your data, as well as some QIIME 2 generated metadata.
 Learn more about these in [](archives).
 
 **Pro-tip #2: The QIIME 2 command line interface tools can be slow because they unzip input data each time you call them.**
@@ -42,15 +46,16 @@ These can make your analysis workflows much quicker.
 
 The processing steps we'll cover in this discussion include:
 
-1. Preparing your sample metadata
-1. Importing raw sequence (FASTQ) data into QIIME 2.
-1. Demultiplexing data (i.e. mapping each sequence to the sample it came from).
-1. Removing non-biological parts of the sequences (e.g., adapters and primers).
-1. Performing quality control and:
+- Preparing your sample metadata
+- Importing raw sequence (FASTQ) data into QIIME 2.
+- Demultiplexing data (i.e. mapping each sequence to the sample it came from).
+- Removing non-biological parts of the sequences (e.g., adapters and primers).
+- Performing quality control and:
   - denoising sequences with DADA2 or deblur, and/or
   - quality filtering, length trimming, and clustering with VSEARCH or dbOTU
-1. Assigning taxonomy
-1. Analyzing data and gaining insight into your microbiomes!
+- Assigning taxonomy
+- Generating phylogenetic trees
+- Analyzing data and gaining insight into your microbiomes!
 
 [](some-theory) and [](available-plugins) can give you ideas for additional possible processing and analysis steps.
 
@@ -70,8 +75,8 @@ The need for importing is explained in [](import-explanation), and examples illu
 
 This step has the potential to be the most confusing part of the QIIME 2 pipeline as there are dozens of import and format types to choose from.
 To see a full list of available import/format types use:
- - `qiime tools list-types`
- - `qiime tools list-formats`
+- `qiime tools list-types`
+- `qiime tools list-formats`
 
 If you're importing FASTQ data that you've generated, the most straight-forward approach is using a [manifest file](import-fastq-manifest): a text file that maps your sample identifiers to file paths to their forward and reverse (if applicable) read FASTQ files.
 If you have sequencing data with one of two very specific formats, you may alternatively be able to use [other import formats](importing-fastq), but importing with a manifest file will always work.
@@ -82,8 +87,8 @@ If you want to import FASTA files or a feature table directly, you can also do t
 ### Demultiplexing sequences
 
 Relevant plugins:
- - [`q2-demux`](q2-plugin-demux)
- - [`q2-cutadapt`](q2-plugin-cutadapt)
+- [`q2-demux`](q2-plugin-demux)
+- [`q2-cutadapt`](q2-plugin-cutadapt)
 
 If you have reads from multiple samples in the same file, you'll need to demultiplex your sequences.
 
@@ -101,8 +106,8 @@ For the time being, this type of demultiplexing needs to be done outside of QIIM
 ### Merging paired end reads
 
 Relevant plugins:
- - [`q2-vsearch`](q2-plugin-vsearch)
- - [`q2-dada2`](q2-plugin-dada2)
+- [`q2-vsearch`](q2-plugin-vsearch)
+- [`q2-dada2`](q2-plugin-dada2)
 
 Whether or not you need to merge reads depends on how you plan to cluster or denoise your sequences into amplicon sequence variants (ASVs) or operational taxonomic units (OTUs).
 If you plan to use DADA2 to denoise your sequences, do not merge --- [`denoise-paired`](q2-action-dada2-denoise-paired) performs read merging automatically after denoising each sequence.
@@ -114,8 +119,8 @@ If you need to merge your reads, you can use the [`merge-pairs`](q2-action-vsear
 ### Removing non-biological sequences
 
 Relevant plugins:
- - [`q2-cutadapt`](q2-plugin-cutadapt)
- - [`q2-dada2`](q2-plugin-dada2)
+- [`q2-cutadapt`](q2-plugin-cutadapt)
+- [`q2-dada2`](q2-plugin-dada2)
 
 If your data contains any non-biological sequences (e.g. primers, sequencing adapters, PCR spacers, etc), you should remove these.
 
@@ -141,8 +146,8 @@ DADA2 and deblur will also produce a stats summary file with useful information 
 ### Denoising
 
 Relevant plugins:
- - [`q2-dada2`](q2-plugin-dada2)
- - [`q2-deblur`](q2-plugin-deblur)
+- [`q2-dada2`](q2-plugin-dada2)
+- [`q2-deblur`](q2-plugin-deblur)
 
 DADA2 and deblur are currently the two denoising methods available in QIIME 2 and both group sequences into amplicon sequence variants (ASV).
 
@@ -159,13 +164,13 @@ Reads shorter than the truncation length are discarded and reads longer are trun
 
 #### Denoising with DADA2
 
-The [q2-dada2](q2-plugin-dada2) has multiple methods to denoise reads:
+The [`q2-dada2`](q2-plugin-dada2) has multiple methods to denoise reads:
 
- - [`denoise-paired`](q2-action-dada2-denoise-paired) requires unmerged, paired-end Illumina reads (i.e. both forward and reverse).
- - [`denoise-single-end`](q2-action-dada2-denoise-single) accepts either single-end or unmerged, paired-end Illumina reads.
+- [`denoise-paired`](q2-action-dada2-denoise-paired) requires unmerged, paired-end Illumina reads (i.e. both forward and reverse).
+- [`denoise-single-end`](q2-action-dada2-denoise-single) accepts either single-end or unmerged, paired-end Illumina reads.
  If you give it unmerged paired-end data, it will only use the forward reads (and do nothing with the reverse reads).
- - [`denoise-pyro`](q2-action-dada2-denoise-pyro) accepts ion torrent or 454 data.
- - [`denoise-css`](q2-action-dada2-denoise-pyro) accepts Pacbio CCS.
+- [`denoise-pyro`](q2-action-dada2-denoise-pyro) accepts ion torrent or 454 data.
+- [`denoise-css`](q2-action-dada2-denoise-pyro) accepts Pacbio CCS.
 
 Note that DADA2 may be slow on very large datasets.
 You can increase the number of threads to use with the `--p-n-threads` parameter.
@@ -174,8 +179,8 @@ You can increase the number of threads to use with the `--p-n-threads` parameter
 
 The [`q2-deblur`](q2-plugin-deblur) plugin has two methods to denoise sequences:
 
- - [`denoise-16S`](q2-action-deblur-denoise-16S) denoises 16S rRNA data.
- - [`denoise-other`](q2-action-deblur-denoise-other) denoises other types of sequences.
+- [`denoise-16S`](q2-action-deblur-denoise-16S) denoises 16S rRNA data.
+- [`denoise-other`](q2-action-deblur-denoise-other) denoises other types of sequences.
 
 If you use `denoise-16S`, deblur performs an initial positive filtering step where it discards any reads which do not have minimum 60% identity similarity to sequences from the 85% OTU GreenGenes 13_8 database.
 If you don't want to do this step, use the `denoise-other` method.
@@ -187,7 +192,7 @@ Note that deblur *can* take in *merged* reads and treat them as single-end reads
 ### OTU Clustering
 
 Relevant plugins:
- - [`q2-vsearch`](q2-plugin-vsearch)
+- [`q2-vsearch`](q2-plugin-vsearch)
 
 QIIME 2 can also perform OTU clustering using the [`q2-vsearch`](q2-plugin-vsearch) plugin.
 This can include simple dereplication of sequences using [`dereplicate-sequences`](q2-method-vsearch-dereplicate-sequences), or [*de novo*](q2-method-vsearch-cluster-features-de-novo), [closed-reference](q2-method-vsearch-cluster-features-closed-reference), or [open-reference](q2-method-vsearch-cluster-features-open-reference) OTU clustering.
@@ -204,27 +209,46 @@ For additional information, see [](cluster-reads-into-otus).
 ### Taxonomic annotation
 
 Relevant plugins:
- - [`q2-feature-classifier`](q2-plugin-feature-classifier) (also see [Bokulich et al. (2018)](https://doi.org/10.1186/s40168-018-0470-z))
- - [`rescript`](q2-plugin-rescript) (also see [Robeson et al. (2019)](https://doi.org/10.1371/journal.pcbi.1009581))
+- [`q2-feature-classifier`](q2-plugin-feature-classifier) (also see [Bokulich et al. (2018)](https://doi.org/10.1186/s40168-018-0470-z))
+- [`rescript`](q2-plugin-rescript) (also see [Robeson et al. (2019)](https://doi.org/10.1371/journal.pcbi.1009581))
 
 There are two main approaches for assigning taxonomy, each with multiple methods available.
 
 The first approach involves aligning reads to reference databases directly:
- - [BLAST+ local alignment](q2-method-feature-classifier-classify-consensus-blast)
- - [VSEARCH global alignment](q2-method-feature-classifier-classify-consensus-vsearch)
- - [BLAST+ local alignment](q2-method-feature-classifier-classify-blast)
- - [VSEARCH global alignment](q2-method-feature-classifier-classify-vsearch-global)
+- [BLAST+ local alignment](q2-method-feature-classifier-classify-consensus-blast)
+- [VSEARCH global alignment](q2-method-feature-classifier-classify-consensus-vsearch)
+- [BLAST+ local alignment](q2-method-feature-classifier-classify-blast)
+- [VSEARCH global alignment](q2-method-feature-classifier-classify-vsearch-global)
 
 The second approach uses a machine learning classifier to assign likely taxonomies to reads, and can be used through [`classify-sklearn`](q2-method-feature-classifier-classify-sklearn).
 This method needs a pre-trained model to classify the sequences.
 You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://resources.qiime2.org), or train one yourself as described in [](train-feature-classifier).
 [`rescript`](q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
 
+## Generating phylogenetic trees
+
+Relevant plugins:
+- [`q2-phylogeny`](q2-plugin-phylogeny)
+- [`q2-fragment-insertion`](q2-plugin-fragment-insertion)
+
+QIIME 2 allows you to generate phylogenetic trees *de novo* with a few different underlying tools using the [`q2-phylogeny`](q2-plugin-phylogeny) plugin.
+You can also generate phylogenetic trees by inserting short sequence reads into a reference phylogenetic tree using [`q2-fragment-insertion`](q2-plugin-fragment-insertion).
+
+*De novo* trees are useful if you don't have a good reference.
+These are often fairly low-quality trees however.
+
+Reference-based phylogenetic reconstruction is useful when you have an existing reference tree.
+These are generally higher quality than de novo trees.
+
+In both cases, we consider the trees to be rough estimates of the evolutionary relationships between features that are useful in the computation of phylogenetic diversity metrics.
+
+
+
 ## Analyzing data and gaining insight into your microbiomes!
 
 Relevant plugins:
- - [Many in the amplicon distribution](available-plugins)
- - [Many more on the QIIME 2 Library](https://library.qiime2.org)
+- [Many in the amplicon distribution](available-plugins)
+- [Many more on the QIIME 2 Library](https://library.qiime2.org)
 
 At this point, you should be ready to analyze your feature table to answer your scientific questions.
 QIIME 2 offers multiple built-in functions to analyze your data.
@@ -232,17 +256,30 @@ If you don't find what you're looking for, you can also [export your data](how-t
 The [](moving-pictures-tutorial) has good examples of the types of visualizations and statistics that you can apply to your data.
 
 Some of those include:
- - [generating taxonomic composition barplots](q2-action-taxa-barplot),
- - [generating interactive ordination (Emperor) plots](q2-action-emperor-plot),
- - [calculating common diversity metrics](q2-action-diversity-core-metrics),
- - [calculating phylogenetic diversity metrics](q2-action-diversity-core-metrics-phylogenetic),
- - calculating uncommon diversity metrics: approximately [30 alpha diversity metrics](q2-action-diversity-alpha) and [20 beta diversity metrics](q2-action-diversity-beta),
- - [computing](q2-action-composition-ancombc) and [visualizing](q2-action-composition-da-barplot) differential abundance across sample categories,
- - [performing longitudinal data analysis](q2-plugin-longitudinal),
- - developing machine learning tools to predict [categorical](q2-action-sample-classifier-classify-samples) or [continuous](q2-action-sample-classifier-regress-samples) metadata as a function of microbiome composition,
- - and lots more.
+- [generating taxonomic composition barplots](q2-action-taxa-barplot),
+- [generating interactive ordination (Emperor) plots](q2-action-emperor-plot),
+- [calculating common diversity metrics](q2-action-diversity-core-metrics),
+- [calculating phylogenetic diversity metrics](q2-action-diversity-core-metrics-phylogenetic),
+- calculating uncommon diversity metrics: approximately [30 alpha diversity metrics](q2-action-diversity-alpha) and [20 beta diversity metrics](q2-action-diversity-beta),
+- [computing](q2-action-composition-ancombc) and [visualizing](q2-action-composition-da-barplot) differential abundance across sample categories,
+- [performing longitudinal data analysis](q2-plugin-longitudinal),
+- developing machine learning tools to predict [categorical](q2-action-sample-classifier-classify-samples) or [continuous](q2-action-sample-classifier-regress-samples) metadata as a function of microbiome composition,
 
-Welcome to the QIIME 2 community!
-If you run into questions, or just want to connect with other microbiome researchers, data scientists, and research software engineers, come visit us on the [QIIME 2 Forum](https:forum.qiime2.org).
+- and lots more.
+
+## A library of plugins
+
+The amplicon distribution is intended as a base of stable analytic functionality for microbiome marker gene analysis, but there are many other plugins that you can install in your amplicon distribution deployment that expand its functionality.
+These plugins can generally be found on the [QIIME 2 Library](https://library.qiime2.org) and/or the [Community Contributions](https://forum.qiime2.org/c/community-contributions/15) category on the QIIME 2 Forum.
+Some cool new plugins (as of 28 February 2025) include:
+
+- [`q2-kmerizer`](https://github.com/bokulich-lab/q2-kmerizer): Enables diversity calculations that approximate those of phylogenetic methods without the use of a phylogenetic tree ([](https://doi.org/10.1128/msystems.01550-24)).
+ This is useful when building a tree is too computationally expensive, or you're not confident that you have one that's reliable.
+ Pretty neat!
+- [`q2-micom`](https://library.qiime2.org/plugin/micom-dev/q2-micom): Enables inference of metabolic interactions in gut microbiome data using MICOM ([](https://doi.org/10.1128/mSystems.00606-19)).
+- [`q2-boots`](https://library.qiime2.org/plugin/caporaso-lab/q2-boots): Supports bootstrapped and rarefaction-based diversity calculations with an interface that mirrors those in [`q2-diversity`](q2-plugin-diversity) ([](https://doi.org/10.12688/f1000research.156295.1)).
+ This produces averaged alpha and beta diversity results across a user-defined number of bootstrapping or rarefaction iterations, such that these results can be used anywhere that individual alpha and beta diversity results can be used.
+ Don't like the idea of throwing away data to support even sampling?
+ `q2-boots` allows you to make diversity estimates based on all of your data.
 
 Have fun! 😎

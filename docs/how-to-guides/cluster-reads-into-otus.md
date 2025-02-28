@@ -1,4 +1,5 @@
-# Clustering sequences into OTUs using q2-vsearch
+(cluster-reads-into-otus)=
+# How to clustering sequences into OTUs
 
 :::{warning}
 Transfer of this document from `https://docs.qiime2.org` is in progress (as of 20 Feb 2025).

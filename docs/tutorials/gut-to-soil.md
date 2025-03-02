@@ -185,6 +185,38 @@ use.action(
 
 **Replace with SEPP**
 
+```
+wget \
+  -O "sepp-refs-gg-13-8.qza" \
+  "https://data.qiime2.org/classifiers/sepp-ref-dbs/sepp-refs-gg-13-8.qza"
+
+qiime fragment-insertion sepp \
+  --i-representative-sequences ./rep-seqs.qza \
+  --i-reference-database sepp-refs-gg-13-8.qza \
+  --o-tree ./sepp-tree.qza \
+  --o-placements ./tree-placements.qza \
+  --p-threads 10
+```
+
+:::{describe-usage}
+
+sepp_reference = use.init_artifact_from_url(
+   'sepp-reference',
+   'https://data.qiime2.org/classifiers/sepp-ref-dbs/sepp-refs-gg-13-8.qza')
+:::
+
+:::{describe-usage}
+
+sepp_tree, _ = use.action(
+    use.UsageAction(plugin_id='fragment_insertion',
+                    action_id='sepp'),
+    use.UsageInputs(representative_sequences=rep_seqs,
+                    reference_database=sepp_reference,
+                    threads=4),
+    use.UsageOutputNames(tree='sepp-tree',
+                         placements='placements'))
+:::
+
 QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac.
 In addition to counts of features per sample (i.e., the data in the `FeatureTable[Frequency]` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another.
 This information will be stored in a `Phylogeny[Rooted]` QIIME 2 artifact.
@@ -196,17 +228,20 @@ These positions are generally considered to add noise to a resulting phylogeneti
 Following that, the pipeline applies FastTree to generate a phylogenetic tree from the masked alignment.
 The FastTree program creates an unrooted tree, so in the final step in this section midpoint rooting is applied to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
 
-:::{describe-usage}
+```{note} Building a tree without a reference
+:class: dropdown
+::::{describe-usage}
 
-_, _, _, rooted_tree = use.action(
+_, _, _, de_novo_tree = use.action(
     use.UsageAction(plugin_id='phylogeny',
                     action_id='align_to_tree_mafft_fasttree'),
     use.UsageInputs(sequences=rep_seqs),
     use.UsageOutputNames(alignment='aligned_rep_seqs',
                          masked_alignment='masked_aligned_rep_seqs',
                          tree='unrooted_tree',
-                         rooted_tree='rooted_tree'))
-:::
+                         rooted_tree='de_novo_tree'))
+::::
+```
 
 ## Alpha and beta diversity analysis
 
@@ -264,7 +299,7 @@ How many total sequences will you be analyzing in the `core-metrics-phylogenetic
 core_metrics_results = use.action(
     use.UsageAction(plugin_id='diversity',
                     action_id='core_metrics_phylogenetic'),
-    use.UsageInputs(phylogeny=rooted_tree,
+    use.UsageInputs(phylogeny=sepp_tree,
                     table=table,
                     sampling_depth=250, # 9614 used for full demux.qza
                     metadata=sample_metadata),
@@ -308,6 +343,23 @@ Finally, ordination is a popular approach for exploring microbial community comp
 **Vizard PCoA 1 and 2 versus time.**
 The PCoA results that were used in `core-metrics-phylogeny` are also available, making it easy to generate new PCoA-based visualizations.
 
+```
+qiime vizard scatterplot-2d --m-metadata-file cmp-sepp-250/unweighted_unifrac_pcoa_results.qza sample-metadata.tsv --o-visualization cmp-sepp-250/uu-scatter-plot.qzv
+r-plot.qzv
+```
+
+:::{describe-usage}
+
+uu_pcoa_as_md = use.view_as_metadata('uu_pcoa_as_md', unweighted_unifrac_pcoa)
+faith_pd_as_md = use.view_as_metadata('faith_pd_as_md', faith_pd_vec)
+vizard_md = use.merge_metadata('vizard_md', sample_metadata, uu_pcoa_as_md, faith_pd_as_md)
+
+use.action(
+    use.UsageAction(plugin_id='vizard',
+                    action_id='scatterplot_2d'),
+    use.UsageInputs(metadata=vizard_md),
+    use.UsageOutputNames(visualization='diversity_scatterplot'))
+:::
 
 
 :::{tip} Question.
@@ -332,7 +384,7 @@ use.action(
     use.UsageAction(plugin_id='diversity',
                     action_id='alpha_rarefaction'),
     use.UsageInputs(table=table,
-                    phylogeny=rooted_tree,
+                    phylogeny=sepp_tree,
                     max_depth=250,
                     metadata=sample_metadata),
     use.UsageOutputNames(visualization='alpha_rarefaction'))

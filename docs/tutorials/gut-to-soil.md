@@ -1,5 +1,5 @@
 (gut-to-soil-tutorial)=
-# Gut-to-soil axis tutorial
+# Gut-to-soil axis tutorial 💩🌱
 
 :::{warning}
 This document is a work in progress as of 1 March 2025.
@@ -12,7 +12,7 @@ This guide assumes you have installed the QIIME 2 amplicon distribution, and hav
 
 ## Background
 
-In this tutorial you'll use the amplicon distribution of [QIIME 2](https://qiime2.org) to reproduce core analyses presented in [Meilander *et al.* (2024): Upcycling Human Excrement: The Gut Microbiome to Soil Microbiome Axis](https://arxiv.org/abs/2411.04148).
+In this tutorial you'll use the amplicon distribution of [QIIME 2](https://qiime2.org) to reproduce analyses presented in [Meilander *et al.* (2024): Upcycling Human Excrement: The Gut Microbiome to Soil Microbiome Axis](https://arxiv.org/abs/2411.04148).
 
 The data used here is a subset (a single sequencing run) of that generated for the paper, specifically selected so that this tutorial can be run quickly on a personal computer.
 

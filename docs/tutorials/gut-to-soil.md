@@ -69,7 +69,7 @@ It should be easy for them to generate.
 
 demux = use.init_artifact_from_url(
    'demux',
-   'https://www.dropbox.com/scl/fi/d51q968tuog0b4uxc1n4o/demux-25p.qza?rlkey=logsbkku2mj8kuhff4i1b0rba&st=jac9iov1&dl=1')
+   'https://www.dropbox.com/scl/fi/73f6rmcq7lelug5qbuhl6/demux-10p.qza?rlkey=s0hoh326fes3z2usvgs62tv3c&st=f5c7j4bo&dl=1')
 :::
 
 :::{tip}

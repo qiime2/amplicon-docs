@@ -292,19 +292,8 @@ unweighted_unifrac_pcoa = core_metrics_results.unweighted_unifrac_pcoa_results
 bray_curtis_pcoa=core_metrics_results.bray_curtis_pcoa_results
 :::
 
-Here we set the `--p-sampling-depth` parameter to 1103.
-This value was chosen based on the number of sequences in the `L3S313` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the samples that have fewer sequences.
-This will allow us to retain most of our samples.
+Here we set the `--p-sampling-depth` parameter to ???.
 The three samples that have fewer sequences will be dropped from the `core-metrics-phylogenetic` analyses and anything that uses these results.
-It is worth noting that all three of these samples are "right palm" samples.
-Losing a disproportionate number of samples from one metadata category is not ideal.
-However, we are dropping a small enough number of samples here that this felt like the best compromise between total sequences analyzed and number of samples retained.
-
-::::{note}
-The sampling depth of 1103 was chosen based on the DADA2 feature table summary.
-If you are using a Deblur feature table rather than a DADA2 feature table, you might want to choose a different even sampling depth.
-Apply the logic from the previous paragraph to help you choose an even sampling depth.
-::::
 
 ::::{note}
 In many Illumina runs you'll observe a few samples that have very low sequence counts.
@@ -314,34 +303,12 @@ You will typically want to exclude those from the analysis by choosing a larger 
 After computing diversity metrics, we can begin to explore the microbial composition of the samples in the context of the sample metadata.
 This information is present in the [sample metadata](https://data.qiime2.org/2025.4/tutorials/gut-to-soil/sample_metadata) file that was downloaded earlier.
 
-
-If you're interested in performing those tests, you can use the `qiime metadata distance-matrix` in combination with `qiime diversity mantel` and `qiime diversity bioenv` commands.
-
 Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata.
-We can use the [Emperor](http://emperor.microbio.me) tool to explore principal coordinates (PCoA) plots in the context of sample metadata.
-While our `core-metrics-phylogenetic` command did already generate some Emperor plots, we want to pass an optional parameter, `--p-custom-axes`, which is very useful for exploring time series data.
-The PCoA results that were used in `core-metrics-phylogeny` are also available, making it easy to generate new visualizations with Emperor.
-We will generate Emperor plots for unweighted UniFrac and Bray-Curtis so that the resulting plot will contain axes for principal coordinate 1, principal coordinate 2, and days since the experiment start.
-We will use that last axis to explore how these samples changed over time.
 
-:::{describe-usage}
+**Vizard PCoA 1 and 2 versus time.**
+The PCoA results that were used in `core-metrics-phylogeny` are also available, making it easy to generate new PCoA-based visualizations.
 
-use.action(
-    use.UsageAction(plugin_id='emperor',
-                    action_id='plot'),
-    use.UsageInputs(pcoa=unweighted_unifrac_pcoa,
-                    metadata=sample_metadata,
-                    custom_axes=['Composting Time Point']),
-    use.UsageOutputNames(visualization='unweighted-unifrac-pcoa-v-time'))
 
-use.action(
-    use.UsageAction(plugin_id='emperor',
-                    action_id='plot'),
-    use.UsageInputs(pcoa=bray_curtis_pcoa,
-                    metadata=sample_metadata,
-                    custom_axes=['Composting Time Point']),
-    use.UsageOutputNames(visualization='bray-curtis-emperor-pcoa-v-time'))
-:::
 
 :::{tip} Question.
 Do the Emperor plots support the other beta diversity analyses we've performed here?
@@ -577,6 +544,5 @@ use.action(
 
 ## Next steps
 
-You've reached the end of the QIIME 2 *Moving Pictures* tutorial.
-Many users who are new to the platform will next adapt the commands presented in this tutorial to their own data, so that might be a good next step for you.
+You might next want to try to adapt the commands presented in this tutorial to your own data, adjusting parameter settings and metadata column headers as is relevant.
 If you need help, head over to the [QIIME 2 Forum](https://forum.qiime2.org).

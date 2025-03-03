@@ -69,7 +69,7 @@ It should be easy for them to generate.
 
 demux = use.init_artifact_from_url(
    'demux',
-   'https://www.dropbox.com/scl/fi/73f6rmcq7lelug5qbuhl6/demux-10p.qza?rlkey=s0hoh326fes3z2usvgs62tv3c&st=f5c7j4bo&dl=1')
+   'https://www.dropbox.com/scl/fi/73f6rmcq7lelug5qbuhl6/demux-10p.qza?rlkey=s0hoh326fes3z2usvgs62tv3c&st=caz1avkn&dl=1')
 :::
 
 :::{tip}
@@ -183,21 +183,7 @@ use.action(
 
 ## Generate a tree for phylogenetic diversity analyses
 
-**Replace with SEPP**
-
-```
-wget \
-  -O "sepp-refs-gg-13-8.qza" \
-  "https://data.qiime2.org/classifiers/sepp-ref-dbs/sepp-refs-gg-13-8.qza"
-
-qiime fragment-insertion sepp \
-  --i-representative-sequences ./rep-seqs.qza \
-  --i-reference-database sepp-refs-gg-13-8.qza \
-  --o-tree ./sepp-tree.qza \
-  --o-placements ./tree-placements.qza \
-  --p-threads 10
-```
-
+<!--
 :::{describe-usage}
 
 sepp_reference = use.init_artifact_from_url(
@@ -216,6 +202,7 @@ sepp_tree, _ = use.action(
     use.UsageOutputNames(tree='sepp-tree',
                          placements='placements'))
 :::
+-->
 
 QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac.
 In addition to counts of features per sample (i.e., the data in the `FeatureTable[Frequency]` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another.
@@ -296,10 +283,12 @@ How many total sequences will you be analyzing in the `core-metrics-phylogenetic
 
 :::{describe-usage}
 
+phylogeny = de_novo_tree# sepp_tree
+
 core_metrics_results = use.action(
     use.UsageAction(plugin_id='diversity',
                     action_id='core_metrics_phylogenetic'),
-    use.UsageInputs(phylogeny=sepp_tree,
+    use.UsageInputs(phylogeny=phylogeny,
                     table=table,
                     sampling_depth=250, # 9614 used for full demux.qza
                     metadata=sample_metadata),
@@ -343,11 +332,6 @@ Finally, ordination is a popular approach for exploring microbial community comp
 **Vizard PCoA 1 and 2 versus time.**
 The PCoA results that were used in `core-metrics-phylogeny` are also available, making it easy to generate new PCoA-based visualizations.
 
-```
-qiime vizard scatterplot-2d --m-metadata-file cmp-sepp-250/unweighted_unifrac_pcoa_results.qza sample-metadata.tsv --o-visualization cmp-sepp-250/uu-scatter-plot.qzv
-r-plot.qzv
-```
-
 :::{describe-usage}
 
 uu_pcoa_as_md = use.view_as_metadata('uu_pcoa_as_md', unweighted_unifrac_pcoa)
@@ -384,7 +368,7 @@ use.action(
     use.UsageAction(plugin_id='diversity',
                     action_id='alpha_rarefaction'),
     use.UsageInputs(table=table,
-                    phylogeny=sepp_tree,
+                    phylogeny=phylogeny,
                     max_depth=250,
                     metadata=sample_metadata),
     use.UsageOutputNames(visualization='alpha_rarefaction'))

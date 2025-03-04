@@ -25,6 +25,7 @@ project:
       children:
         - file: tutorials/intro.md
         - file: tutorials/moving-pictures.md
+        - file: tutorials/gut-to-soil.md
     - title: How To Guides
       children:
         - file: how-to-guides/intro.md

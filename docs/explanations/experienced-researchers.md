@@ -5,7 +5,7 @@ This document is intended for experienced microbiome researchers who already kno
 
 :::{tip}
 We recommend reading [](getting-started) before this document, as it provides some background information on QIIME 2 itself that is helpful for learning the platform quickly.
-[](some-theory) contains a more theoretical overview of microbiome data processing, and can be read either before or after this document.
+[](conceptual-overview) contains a more theoretical overview of microbiome data processing, and can be read either before or after this document.
 :::
 
 :::{note}
@@ -57,7 +57,7 @@ The processing steps we'll cover in this discussion include:
 - Generating phylogenetic trees
 - Analyzing data and gaining insight into your microbiomes!
 
-[](some-theory) and [](available-plugins) can give you ideas for additional possible processing and analysis steps.
+[](conceptual-overview) and [](available-plugins) can give you ideas for additional possible processing and analysis steps.
 
 ### Preparing your metadata
 
@@ -133,7 +133,7 @@ All of DADA2's `denoise` actions have some sort of `--p-trim` parameter you can 
 ### Grouping similar sequences
 
 There are two main approaches for grouping similar sequences together: denoising and clustering.
-[*Some theory: denoising and clustering*](some-theory:denoising-and-clustering) provides more in-depth discussion of these approaches.
+[*Some theory: denoising and clustering*](conceptual-overview:denoising-and-clustering) provides more in-depth discussion of these approaches.
 
 Regardless of how you group your sequences, the grouping methods will output:
 

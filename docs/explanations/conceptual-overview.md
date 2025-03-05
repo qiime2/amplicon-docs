@@ -237,83 +237,57 @@ We recommend against using clustering, but we provide the functionality because 
 If you're thinking about including a clustering step in your workflow, reach out on the [QIIME 2 Forum](https://forum.qiime2.org) - we can try to help you figure out an alternative.
 :::
 
-### The Feature Table
+### The feature table
 
-The final products of all denoising and clustering methods/workflows are
-a `FeatureTable[Frequency]` (feature table) artifact and a
-`FeatureData[Sequence]` (representative sequences) artifact.
-These are
-two of the most important artifacts in an marker gene sequencing workflow,
-and are used for many downstream analyses, as discussed below.
-Indeed,
-feature tables are crucial to any QIIME 2 analysis, as the central
-record of all observations per sample.
-Such an important artifact
-deserves its own powerful plugin,
-[q2-feature-table](https://docs.qiime2.org/2025.4/plugins/available/feature-table/).
-We will not discuss all actions of this plugin in detail here (some are
-mentioned below), but it performs many useful operations on feature
-tables so familiarize yourself with its documentation!
-😴
+The final products of all denoising and clustering methods/workflows are a `FeatureTable` (feature table) artifact and a `FeatureData[Sequence]` (representative sequences) artifact.
+These are two of the most important artifact classes in a marker gene sequencing workflow, and are used for many downstream analyses, as discussed below.
+Indeed, feature tables are crucial to any QIIME 2 analysis, as the central record of the counts of features per sample.
+Such an important artifact deserves its own powerful plugin:
 
-**I repeat**: feature tables are central to analysis in QIIME 2.
-Almost
-all analysis steps (i.e., following demultiplexing and
-denoising/clustering) involve feature tables in some way.
-**Pay
-attention!** 😳
-
-:::: note
-::: title
-Note
+::::{tip} q2-feature-table plugin documentation
+:class: dropdown
+:::{describe-plugin} feature-table
 :::
-
-Want to see which sequences are associated with each feature ID?
-Use
-`qiime metadata tabulate` with your `FeatureData[Sequence]` artifact as
-input.
 ::::
 
+We will not discuss all actions of this plugin in detail here (some are mentioned below), but it performs many useful operations on feature tables so familiarize yourself with its documentation!
+
+:::{tip}
+A very useful pair of actions here are `summarize-plus` and `tabulate-seqs`: when used together, these allow you to generate a summary of which sequences were observed how many times and in how many samples like the one [here](https://view.qiime2.org/visualization/?src=https://zenodo.org/api/records/13887457/files/asv-seqs-ms10.qzv/content).
+After taxonomically annotating the sequences (coming up next!) you can integrate that information in this report as well.
+
+This is a little advanced, so don't worry if you're not able to answer this yet: referring to the help text of the `summarize-plus` and `tabulate-seqs` actions, which outputs of `summarize-plus` will be passed as which inputs to `tabulate-seqs`?
+Hint: read about [using Artifacts as metadata](https://use.qiime2.org/en/latest/how-to-guides/artifacts-as-metadata.html) - this is a very powerful concept in QIIME 2, and opens up many diverse analysis possibilities.
+:::
+
 Congratulations!
-🎉 You've made it past importing, demultiplexing, and
-denoising/clustering your data, which are the most complicated and
-difficult steps for most users (if only because there are so many ways
-to do it!).
+You've made it past importing, demultiplexing, and denoising/clustering your data, which are the most complicated and difficult steps for most users (if only because there are so many ways to do it!).
 If you've made it this far, the rest should be easy peasy.
 Now begins the fun.
 🍾
 
-## Taxonomy classification and taxonomic analyses {#Taxonomy}
+## Taxonomy annotation and taxonomic analyses
 
-For many experiments, investigators aim to identify the organisms that
-are present in a sample.
-E.g., what genera or species are present in my
-samples?
-Are there any human pathogens in this patient's sample?
-[What's swimming in my wine](https://doi.org/10.1073/pnas.1317377110)?
-🍷🤑
+For many experiments, investigators aim to identify the organisms that are present in a sample.
+For example:
+- What genera or species are present in my samples?
+- Are there any human pathogens in this patient's sample?
+- [What's swimming in my wine](https://doi.org/10.1073/pnas.1317377110)? 🍷🤑
 
-We can do this by comparing our query sequences (i.e., our features, be
-they ASVs or OTUs) to a reference database of sequences with known
-taxonomic composition.
-Simply finding the closest alignment is not
-really good enough --- because other sequences that are equally close
-matches or nearly as close may have different taxonomic annotations.
-So
-we use *taxonomy classifiers* to determine the closest taxonomic
-affiliation with some degree of confidence or consensus (which may not
-be a species name if one cannot be predicted with certainty!), based on
-alignment, k-mer frequencies, etc.
-Those [interested in learning more
-about taxonomy
-classification](https://doi.org/10.1186/s40168-018-0470-z) in QIIME 2
-can read until the cows come home.
+We can do this by comparing our feature sequences (be they ASVs or OTUs) to a reference database of sequences with known taxonomic composition.
+Simply finding the closest alignment is not really good enough -- because other sequences that are equally close matches or nearly as close may have different taxonomic annotations.
+So we use *taxonomy classifiers* to determine the closest taxonomic affiliation with some degree of confidence or consensus (which may not be a species name if one cannot be predicted with certainty!), based on alignment, k-mer frequencies, etc.
+Those [interested in learning more about taxonomy classification](https://doi.org/10.1186/s40168-018-0470-z) in QIIME 2 can read until the cows come home.
+If you want to learn about how the algorithms work, you can also refer to the [*Sequencing Homology Searching*](https://readiab.org/database-searching.html) chapter of [*An Introduction to Applied Bioinformatics*](https://readIAB.org) (disclaimer: that was written by Greg Caporaso).
 🐄🐄🐄
 
 Let's see what a taxonomy classification workflow might look like:
 
-::: {#taxonomy flowchart}
-![image](images/taxonomy.png)
+:::{figure} ../_static/overview-taxonomy.png
+:label: overview-taxonomy
+:alt: Flowchart of taxonomic annotation workflows in QIIME 2.
+
+Flowchart of taxonomic annotation workflows in QIIME 2.
 :::
 
 `q2-feature-classifier` contains three different classification methods.

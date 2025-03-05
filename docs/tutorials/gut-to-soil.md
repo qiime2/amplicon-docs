@@ -183,7 +183,6 @@ use.action(
 
 ## Generate a tree for phylogenetic diversity analyses
 
-<!--
 :::{describe-usage}
 
 sepp_reference = use.init_artifact_from_url(
@@ -202,7 +201,7 @@ sepp_tree, _ = use.action(
     use.UsageOutputNames(tree='sepp-tree',
                          placements='placements'))
 :::
--->
+
 
 QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac.
 In addition to counts of features per sample (i.e., the data in the `FeatureTable[Frequency]` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another.
@@ -283,7 +282,7 @@ How many total sequences will you be analyzing in the `core-metrics-phylogenetic
 
 :::{describe-usage}
 
-phylogeny = de_novo_tree# sepp_tree
+phylogeny = sepp_tree # de_novo_tree
 
 core_metrics_results = use.action(
     use.UsageAction(plugin_id='diversity',

@@ -10,6 +10,7 @@ project:
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
   references:
     qiime2: https://develop.qiime2.org/en/latest/
+    genome-sampler-docs: https://genome-sampler.readthedocs.io/en/latest/
 
   plugins:
     - type: executable
@@ -25,6 +26,7 @@ project:
       children:
         - file: tutorials/intro.md
         - file: tutorials/moving-pictures.md
+        - file: tutorials/test.md
     - title: How To Guides
       children:
         - file: how-to-guides/intro.md

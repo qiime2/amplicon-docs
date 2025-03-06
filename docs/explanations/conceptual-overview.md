@@ -2,7 +2,7 @@
 # Conceptual overview of marker gene (i.e., amplicon) data analysis
 
 :::{note}
-This document was partially updated when transferred from `https://docs.qiime2.org`, but [some improvements can still be made](https://github.com/qiime2/amplicon-docs/issues/7).
+This document was partially updated when transferred from `https://docs.qiime2.org`, but [some improvements should still be made to highlight the most recent methods](https://github.com/qiime2/amplicon-docs/issues/7).
 :::
 
 This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research.

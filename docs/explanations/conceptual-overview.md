@@ -272,7 +272,7 @@ Now begins the fun.
 
 For many experiments, investigators aim to identify the organisms that are present in a sample.
 For example:
-- [How do the genera or species in a system change over time?](https://arxiv.org/abs/2411.04148)
+- [How do the genera or species in a system change over time?](https://doi.org/10.48550/arXiv.2411.04148)
 - Are there any potential human pathogens in this patient's sample?
 - [What's swimming in my wine?](https://doi.org/10.1073/pnas.1317377110) 🍷🤑
 
@@ -489,9 +489,9 @@ has its own in-depth tutorial to guide us:
    🙃
 
 And that's just a brief overview!
-QIIME 2 continues to grow, so stay tuned for more plugins in future releases 📻, and keep your [eyes peeled](https://library.qiime2.org) for {term}`stand-alone plugins` that will continue to expand the functionality availability in QIIME 2.
+QIIME 2 continues to grow, so stay tuned for more plugins in future releases 📻, and keep your [eyes peeled](https://library.qiime2.org) for {term}`stand-alone plugins <stand-alone plugin>` that will continue to expand the functionality availability in QIIME 2.
 
-A good next step would be to work through the [](moving-pictures-tutorial), if you haven't done so already.
+A good next step is to work through the [](moving-pictures-tutorial), if you haven't done so already.
 That will help you learn how to actually use all of the functionality discussed here on real microbiome sequence data.
 
 Now go forth an have fun!

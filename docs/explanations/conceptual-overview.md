@@ -1,10 +1,8 @@
 (conceptual-overview)=
 # Conceptual overview of marker gene (i.e., amplicon) data analysis
 
-:::{warning}
-Transfer of this document from `https://docs.qiime2.org` is in progress (as of 20 Feb 2025).
-Expect some problematic formatting.
-🪚
+:::{note}
+This document was partially updated when transferred from `https://docs.qiime2.org`, but [some improvements can still be made](https://github.com/qiime2/amplicon-docs/issues/7).
 :::
 
 This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research.
@@ -451,6 +449,8 @@ However, this is only the beginning, and there are so many more advanced analyse
 :alt: Flowchart of "downstream" analysis workflows in QIIME 2.
 
 Flowchart of "downstream" analysis workflows in QIIME 2.
+**Note: [This figure needs some updates](https://github.com/qiime2/amplicon-docs/issues/7).
+Specifically, gneiss was deprecated and is no longer part of the *amplicon distribution*.
 :::
 
 We are only going to give a brief overview, since each of these analyses

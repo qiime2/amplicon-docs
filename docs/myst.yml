@@ -40,7 +40,7 @@ project:
         - file: explanations/intro.md
         - file: explanations/getting-started.md
         - file: explanations/experienced-researchers.md
-        - file: explanations/some-theory.md
+        - file: explanations/conceptual-overview.md
         - file: explanations/why-importing.md
         - file: explanations/archives.md
     - title: References

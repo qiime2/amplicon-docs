@@ -18,7 +18,7 @@ Based on our website analytics, these are the topics users are most frequently l
   It's written for readers who are also new to microbiome analysis.
   If you want to try or learn QIIME 2, we recommend starting with the [](tutorials/moving-pictures).
   All of the outputs generated during the tutorial are linked in the tutorial document, so you can also read through it and interact with the results without running any of the commands on your own.
-  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](explanations/experienced-researchers) and [](explanations/some-theory).
+  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](explanations/experienced-researchers) and [](explanations/conceptual-overview).
 
 - **Ready to install QIIME 2?**
   See [](how-to-guides/install).

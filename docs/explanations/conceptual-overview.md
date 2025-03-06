@@ -237,7 +237,7 @@ We recommend against using clustering, but we provide the functionality because 
 If you're thinking about including a clustering step in your workflow, reach out on the [QIIME 2 Forum](https://forum.qiime2.org) - we can try to help you figure out an alternative.
 :::
 
-### The feature table
+## The feature table
 
 The final products of all denoising and clustering methods/workflows are a `FeatureTable` (feature table) artifact and a `FeatureData[Sequence]` (representative sequences) artifact.
 These are two of the most important artifact classes in a marker gene sequencing workflow, and are used for many downstream analyses, as discussed below.
@@ -252,36 +252,38 @@ Such an important artifact deserves its own powerful plugin:
 
 We will not discuss all actions of this plugin in detail here (some are mentioned below), but it performs many useful operations on feature tables so familiarize yourself with its documentation!
 
-:::{tip}
-A very useful pair of actions here are `summarize-plus` and `tabulate-seqs`: when used together, these allow you to generate a summary of which sequences were observed how many times and in how many samples like the one [here](https://view.qiime2.org/visualization/?src=https://zenodo.org/api/records/13887457/files/asv-seqs-ms10.qzv/content).
+:::{tip} Reviewing information about observed sequences
+:label: overview-tabulate-seqs
+A very useful pair of actions here are `summarize-plus` and `tabulate-seqs`: when used together, these allow you to generate a summary of which sequences were observed how many times and in how many samples.
+See an example from the gut-to-soil axis study [here](https://view.qiime2.org/visualization/?src=https://zenodo.org/api/records/13887457/files/asv-seqs-ms10.qzv/content).
 After taxonomically annotating the sequences (coming up next!) you can integrate that information in this report as well.
 
-This is a little advanced, so don't worry if you're not able to answer this yet: referring to the help text of the `summarize-plus` and `tabulate-seqs` actions, which outputs of `summarize-plus` will be passed as which inputs to `tabulate-seqs`?
+This is a little advanced, so don't worry if you're not able to answer this yet: referring to the help text of the `summarize-plus` and `tabulate-seqs` actions, which output(s) of `summarize-plus` would be passed as which input(s) to `tabulate-seqs`?
 Hint: read about [using Artifacts as metadata](https://use.qiime2.org/en/latest/how-to-guides/artifacts-as-metadata.html) - this is a very powerful concept in QIIME 2, and opens up many diverse analysis possibilities.
 :::
 
 Congratulations!
-You've made it past importing, demultiplexing, and denoising/clustering your data, which are the most complicated and difficult steps for most users (if only because there are so many ways to do it!).
-If you've made it this far, the rest should be easy peasy.
+You've made it through importing, demultiplexing, and denoising/clustering your data, which are the most complicated and difficult steps for most users (if only because there are so many ways to do it!).
+If you've made it this far, the rest should be easy.
 Now begins the fun.
 🍾
 
-## Taxonomy annotation and taxonomic analyses
+## Taxonomy classification (or annotation) and taxonomic analyses
 
 For many experiments, investigators aim to identify the organisms that are present in a sample.
 For example:
-- What genera or species are present in my samples?
-- Are there any human pathogens in this patient's sample?
-- [What's swimming in my wine](https://doi.org/10.1073/pnas.1317377110)? 🍷🤑
+- [How do the genera or species in a system change over time?](https://arxiv.org/abs/2411.04148)
+- Are there any potential human pathogens in this patient's sample?
+- [What's swimming in my wine?](https://doi.org/10.1073/pnas.1317377110) 🍷🤑
 
 We can do this by comparing our feature sequences (be they ASVs or OTUs) to a reference database of sequences with known taxonomic composition.
 Simply finding the closest alignment is not really good enough -- because other sequences that are equally close matches or nearly as close may have different taxonomic annotations.
 So we use *taxonomy classifiers* to determine the closest taxonomic affiliation with some degree of confidence or consensus (which may not be a species name if one cannot be predicted with certainty!), based on alignment, k-mer frequencies, etc.
-Those [interested in learning more about taxonomy classification](https://doi.org/10.1186/s40168-018-0470-z) in QIIME 2 can read until the cows come home.
-If you want to learn about how the algorithms work, you can also refer to the [*Sequencing Homology Searching*](https://readiab.org/database-searching.html) chapter of [*An Introduction to Applied Bioinformatics*](https://readIAB.org) (disclaimer: that was written by Greg Caporaso).
+Those interested in learning more about the relative performance of the taxonomy classifiers in QIIME 2 can [read until the cows come home](https://doi.org/10.1186/s40168-018-0470-z).
+And if you want to learn about how the algorithms work, you can refer to the [*Sequencing Homology Searching*](https://readiab.org/database-searching.html) chapter of [*An Introduction to Applied Bioinformatics*](https://doi.org/10.21105/jose.00027)).
 🐄🐄🐄
 
-Let's see what a taxonomy classification workflow might look like:
+{ref}`overview-taxonomy` shows what a taxonomy classification workflow might look like.
 
 :::{figure} ../_static/overview-taxonomy.png
 :label: overview-taxonomy
@@ -290,354 +292,207 @@ Let's see what a taxonomy classification workflow might look like:
 Flowchart of taxonomic annotation workflows in QIIME 2.
 :::
 
+### Alignment-based taxonomic classification
 `q2-feature-classifier` contains three different classification methods.
-`classify-consensus-blast` and `classify-consensus-vsearch` are both
-alignment-based methods that find a consensus assignment across N top
-hits.
-These methods take reference database `FeatureData[Taxonomy]` and
-`FeatureData[Sequence]` files directly, and do not need to be
-pre-trained.
+`classify-consensus-blast` and `classify-consensus-vsearch` are both alignment-based methods that find a consensus assignment across N top hits.
+These methods take reference database `FeatureData[Taxonomy]` and `FeatureData[Sequence]` files directly, and do not need to be pre-trained.
 
-Machine-learning-based classification methods are available through
-`classify-sklearn`, and theoretically can apply any of the
-classification methods available in
-[scikit-learn](http://scikit-learn.org).
-These classifiers must be
-*trained*, e.g., to learn which features best distinguish each taxonomic
-group, adding an additional step to the classification process.
-`Classifier training <feature-classifier>`{.interpreted-text role="doc"}
-is **reference database- and marker-gene-specific** and only needs to
-happen once per marker-gene/reference database combination; that
-classifier may then be re-used as many times as you like without needing
-to re-train!
+### Machine-learning-based taxonomic classification
+Machine-learning-based classification methods are available through `classify-sklearn`, and theoretically can apply any of the classification methods available in [scikit-learn](http://scikit-learn.org).
+These classifiers must be *trained*, e.g., to learn which features best distinguish each taxonomic group, adding an additional step to the classification process.
+Classifier training is **reference database- and marker-gene-specific** and only needs to happen once per marker-gene/reference database combination; that classifier may then be re-used as many times as you like without needing to re-train!
 
-Most users do not even need to follow that tutorial and perform that
-training step, because the lovely QIIME 2 developers provide several
-`pre-trained classifiers <../data-resources>`{.interpreted-text
-role="doc"} for public use.
+#### Training your own feature classifiers.
+If you're working with an uncommon marker gene, you may need to train your own feature classifier.
+This is possible following the steps in the [classifier training tutorial](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).
+The [`rescript` plugin](../references/plugin-reference/plugins/rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
+Most users don't need to train their own classifiers however, as the QIIME 2 developers [provide classifiers to the public for common marker genes in the QIIME 2 Library](https://resources.qiime2.org).
 🎅🎁🎅🎁🎅🎁
 
-**Which method is best?** [They are all pretty
-good](https://doi.org/10.1186/s40168-018-0470-z), otherwise we wouldn't
-bother exposing them here.
-😎 But in general `classify-sklearn` with a
-Naive Bayes classifier can slightly outperform other methods we've
-tested based on several criteria for classification of 16S rRNA gene and
-fungal ITS sequences.
-It can be more difficult and frustrating for some
-users, however, since it requires that additional training step.
-That
-training step can be memory intensive, becoming a barrier for some users
-who are unable to use the
-`pre-trained classifiers <../data-resources>`{.interpreted-text
-role="doc"}.
-Some users also prefer the alignment-based methods because
-their mode of operation is much more transparent and their parameters
-easier to manipulate (see the link above for description of these
-parameters and recommended settings for different applications).
+#### Environment-weighted classifiers
+Typical Naive Bayes classifiers treat all reference sequences as being equally likely to be observed in a sample.
+[Environment-weighted taxonomic classifiers](https://doi.org/10.1038/s41467-019-12669-6), on the other hand, use public microbiome data to weight taxa by their past frequency of being observed in specific sample types.
+This can improve the accuracy and the resolution of marker gene classification, and we recommend using weighted classifiers when possible.
+You can find environment-weighted classifiers [for 16S rRNA in the QIIME 2 Library](https://resources.qiime2.org).
+If the environment type that you're studying isn't one of the ones that pre-trained classifiers are provided for, the "diverse weighted" classifiers may still be relevant.
+These are trained on weights from multiple different environment types, and have been shown to perform better than classifiers that assume equal weights for all taxa.
 
-**Feature classification can be slow**.
-It all depends on the number of
-sequences you have, and the number of reference sequences.
-OTU clustered
-sequences will take longer to classify (because often there are more).
-Filter low-abundance features out of your sequences file before
-classifying, and use smaller reference databases if possible if you have
-concerns about runtime.
-In practice, in "normal size" sequencing
-experiments (whatever that means 😜) we see variations between a few
-minutes (a few hundred features) to many hours (hundreds of thousands of
-features) for classification to complete.
-If you want to hang some
-numbers on there, [check out our
-benchmarks](https://doi.org/10.1186/s40168-018-0470-z) for classifier
-runtime performance.
+### Which feature classification method is best?
+[They are all pretty good](https://doi.org/10.1186/s40168-018-0470-z), otherwise we wouldn't bother exposing them in `q2-feature-classifier`.
+But in general `classify-sklearn` with a Naive Bayes classifier can slightly outperform other methods we've tested based on several criteria for classification of 16S rRNA gene and fungal ITS sequences.
+It can be more difficult and frustrating for some users, however, since it requires that additional training step.
+That training step can be memory intensive, becoming a barrier for some users who are unable to use the pre-trained classifiers.
+Some users also prefer the alignment-based methods because their mode of operation is much more transparent and their parameters easier to manipulate.
+
+### Feature classification can be slow
+Runtime of feature classifiers is a function of the number of sequences to be classified, and the number of reference sequences.
+If runtime is an issue for you, considering filtering low-abundance features out of your sequences file before classifying (e.g., those that are present in only a single sample), and use smaller reference databases if possible.
+In practice, in "normal size" sequencing experiments (whatever that means 😜) we see variations between a few minutes (a few hundred features) to hours or days (hundreds of thousands of features) for classification to complete.
+If you want to hang some numbers on there, [check out our benchmarks](https://doi.org/10.1186/s40168-018-0470-z) for classifier runtime performance.
 🏃⏱️
 
-**Feature classification can be memory intensive**.
-We usually see
-minimum 4 GB RAM, maximum 32+ GB required.
-It all depends on the size of
-the reference sequences, their length, and number of query sequences\...
+### Feature classification can be memory intensive
+Generally at least 8 GB of RAM are required, though 16GB is better.
+The is generally related to the size of the reference database, and in some cases 32 GB of RAM or more are required.
 
-Examples of using `classify-sklearn` are shown in the
-`feature classifier tutorial <feature-classifier>`{.interpreted-text
-role="doc"} and in the
-`moving pictures tutorial <moving pics taxonomy>`{.interpreted-text
-role="ref"}.
-The
-`taxonomy flowchart <taxonomy flowchart>`{.interpreted-text role="ref"}
-should make the other classifier methods reasonably clear.
+Examples of using `classify-sklearn` are shown in the [](moving-pictures-tutorial).
+{ref}`overview-taxonomy` should make the other classifier methods reasonably clear.
 
-All classifiers produce a `FeatureData[Taxonomy]` artifact containing a
-list of taxonomy classifications for each query sequence.
+All classifiers produce a `FeatureData[Taxonomy]` artifact, tabulating the taxonomic annotation for each query sequence.
+If you want to review those, or compare them across different classifiers, refer back to [](overview-tabulate-seqs).
 
-:::: note
-::: title
-Note
-:::
+### Taxonomic analysis
 
-Want to see which sequences and taxonomic assignments are associated
-with each feature ID?
-Use `qiime metadata tabulate` with your
-`FeatureData[Taxonomy]` and `FeatureData[Sequence]` artifacts as input.
-::::
+Taxonomic classification opens us up to a whole new world of possibilities. 🌎
 
-### Now that we have classified our sequences {#taxonomy-driven analysis}
+Here are some popular actions that are enabled by having a `FeatureData[Taxonomy]` artifact:
 
-Taxonomic classification opens us up to a whole new world of
-possibilities.
-🌎
+1. **Collapse your feature table** with `taxa collapse`!
+   This groups all features that share the same taxonomic assignment into a single feature.
+   That taxonomic assignment becomes the feature ID in the new feature table.
+   This feature table [can be used in all the same ways as the original](fun-with-feature-tables).
+   Some users may be specifically interested in performing, e.g., taxonomy-based diversity analyses, but at the very least anyone assigning taxonomy is probably interested in assessing [differential abundance](overview-differential-abundance) of those taxa.
+   Comparing differential abundance analyses using taxa as features versus using ASVs or OTUs as features can be diagnostic and informative for various analyses.
+1. **Plot your taxonomic composition** to see the abundance of various taxa in each of your samples.
+   Check out `taxa barplot` and `feature-table heatmap` for more details. 📊
+1. **Filter your feature table and feature sequences** to remove certain taxonomic groups.
+   This is useful for removing known contaminants or non-target groups, e.g., host DNA including mitochondrial or chloroplast sequences.
+   It can also be useful for focusing on specific groups for deeper analysis.
+   See the [filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/filtering/) for more details and examples. 🌿🐀
 
-Here are the main actions that are enabled by having a
-`FeatureData[Taxonomy]` artifact:
+## Sequence alignment and phylogenetic reconstruction
 
-1.  **Collapse your feature table** with `taxa collapse`!
-This merges
-    all features that share the same taxonomic assignment into a single
-    feature.
-That taxonomic assignment becomes the feature ID in the new
-    feature table.
-This feature table
-    `can be used in all the same ways as the original <Fun>`{.interpreted-text
-    role="ref"}.
-Some users may be specifically interested in
-    performing, e.g., taxonomy-informed
-    `diversity analyses <Diversity>`{.interpreted-text role="ref"}, but
-    at the very least anyone assigning taxonomy is probably interested
-    in testing `differential abundance <Fun>`{.interpreted-text
-    role="ref"} of those taxa.
-Comparing differential abundance analyses
-    using taxa as features vs. using ASVs or OTUs as features can be
-    diagnostic and informative for various analyses.
-🌂
-2.  **Plot your taxonomic composition** to see the abundance of various
-    taxa in each of your samples.
-Check out `taxa barplot` and
-    `feature-table heatmap` for more details.
-📊
-3.  **Filter your feature table and representative sequences**
-    (`FeatureData[Sequence]` artifact) to remove certain taxonomic
-    groups.
-This is useful for removing known contaminants or non-target
-    groups, e.g., host DNA including mitochondrial or chloroplast
-    sequences.
-It can also be useful for focusing on specific groups for
-    deeper analysis.
-See the
-    `filtering tutorial <filtering>`{.interpreted-text role="doc"} for
-    more details and examples.
-🌿🐀
+Some diversity metrics - notably [Faith's Phylogenetic Diversity (PD)](https://doi.org/10.1016/0006-3207(92)91201-3) and [UniFrac](https://doi.org/10.1128/AEM.71.12.8228-8235.2005) - integrate the phylogenetic similarity of features.
+If you are sequencing phylogenetic markers (e.g., 16S rRNA genes), you can build a phylogenetic tree that can be used for computing these metrics.
 
-## Sequence alignment and phylogeny building {#alignment}
-
-Many diversity analyses rely on the phylogenetic similarity between
-individual features.
-If you are sequencing phylogenetic markers (e.g.,
-16S rRNA genes), you can align these sequences to assess the
-phylogenetic relationship between each of your features.
-This phylogeny
-can then be used by other downstream analyses, such as [UniFrac
-distance](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1317376/)
-analyses.
-
-The different options for aligning sequences and producing a phylogeny
-are shown in the flowchart below.
-For detailed description of
-alignment/phylogeny building, see the [q2-phylogeny
-tutorial](https://forum.qiime2.org/t/q2-phylogeny-community-tutorial/4455)
-and the [q2-fragment-insertion
-tutorial](https://library.qiime2.org/plugins/q2-fragment-insertion/16/).
+The different options for aligning sequences and producing a phylogeny are shown in the flowchart below, and can be classified as *de novo* or reference-based.
+For a detailed discussion of alignment and phylogeny building, see the [q2-phylogeny tutorial](https://docs.qiime2.org/2024.10/tutorials/phylogeny/) and [q2-fragment-insertion](https://doi.org/10.1128/mSystems.00021-18).
 🌳
 
-![image](images/alignment-phylogeny.png)
+:::{figure} ../_static/overview-alignment-phylogeny.png
+:label: overview-alignment-phylogeny
+:alt: Flowchart of alignment and phylogenetic reconstruction workflows in QIIME 2.
 
-Now that we have our `Phylogeny[Rooted]` artifact, pay attention to
-where it is used below.
-👀
+Flowchart of alignment and phylogenetic reconstruction workflows in QIIME 2.
+:::
 
-## Diversity analysis {#Diversity}
+Now that we have our rooted phylogenetic tree (i.e., an artifact of class `Phylogeny[Rooted]`), let's use it!
 
-In microbiome experiments, investigators frequently wonder about things
-like:
+## Diversity analysis
 
--   How many different species/OTUs/ASVs are present in my samples?
--   How much phylogenetic diversity is present in each sample?
--   How similar/different are individual samples and groups of samples?
--   What factors (e.g., pH, elevation, blood pressure, body site, or
-    host species just to name a few examples) are associated with
-    differences in microbial composition and biodiversity?
+In microbiome experiments, investigators frequently wonder about things like:
 
-And more.
-These questions can be answered by alpha- and beta-diversity
-analyses.
-Alpha diversity measures the level of diversity within
-individual samples.
-Beta diversity measures the level of diversity or
-dissimilarity between samples.
-We can then use this information to
-statistically test whether alpha diversity is different between groups
-of samples (indicating, e.g., that those groups have more/less species
-richness) and whether beta diversity is greater between groups
-(indicating, e.g., that samples within a group are more similar to each
-other than those in another group, suggesting that membership within
-these groups is shaping the microbial composition of those samples).
+- How many different species/OTUs/ASVs are present in my samples?
+- Which of my samples represent more phylogenetic diversity?
+- Does the microbiome composition of my samples differ based on sample categories (e.g., healthy versus disease)?
+- What factors (e.g., pH, elevation, blood pressure, body site, or host species just to name a few examples) are correlated with differences in microbial composition and biodiversity?
 
-Different types of diversity analyses in QIIME 2 are exemplified in the
-the `moving pictures tutorial <moving pics diversity>`{.interpreted-text
-role="ref"} and
-`fecal microbiome transplant tutorial <fmt diversity>`{.interpreted-text
-role="ref"}, and the full suite of analyses used to generate diversity
-artifacts are shown here (and that's not all: note that other plugins
-can operate on these artifacts, as described further in this guide):
+These questions can be answered by alpha- and beta-diversity analyses.
+Alpha diversity measures the level of diversity within individual samples.
+Beta diversity measures assess the dissimilarity between samples.
+We can then use this information to statistically test whether alpha diversity is different between groups of samples (indicating, for example, that those groups have more/less species richness) and whether beta diversity is greater across groups (indicating, for example, that samples within a group are more similar to each other than those in another group, suggesting that membership within these groups is shaping the microbial composition of those samples).
 
-![image](images/diversity.png)
+Different types of diversity analyses in QIIME 2 are exemplified in the [](moving-pictures-tutorial).
+The actions used to generate diversity artifacts are shown in {ref}`overview-diversity`, and many other tools can operate on these results.
 
-The `q2-diversity` plugin contains [many different useful
-actions](https://docs.qiime2.org/2025.4/plugins/available/diversity/)!
+:::{figure} ../_static/overview-diversity.png
+:label: overview-diversity
+:alt: Flowchart of diversity analysis workflows in QIIME 2.
+
+Flowchart of diversity analysis workflows in QIIME 2.
+:::
+
+The `q2-diversity` plugin contains many different useful actions.
 Check them out to learn more.
-As you can see in the flowchart, the
-`diversity core-metrics*` pipelines (`core-metrics` and
-`core-metrics-phylogenetic`) encompass many different core diversity
-commands, and in the process produce the main diversity-related
-artifacts that can be used in downstream analyses.
+As you can see in the flowchart, the `diversity core-metrics*` pipelines (`core-metrics` and `core-metrics-phylogenetic`) encompass many different core diversity commands, and in the process produce the main diversity-related artifacts that can be used in downstream analyses.
 These are:
+- `SampleData[AlphaDiversity]` artifacts, which contain alpha diversity estimates for each sample in your feature table.
+  This is the chief artifact for alpha diversity analyses.
+- `DistanceMatrix` artifacts, containing the pairwise distance/dissimilarity between each pair of samples in your feature table.
+  This is the chief artifact for beta diversity analyses.
+- `PCoAResults` artifacts, containing principal coordinates ordination results for each distance/dissimilarity metric.
+  Principal coordinates analysis is a dimension reduction technique, facilitating visual comparisons of sample (dis)simmilarities in 2D or 3D space.
+  Learn more about ordination in [*Ordination Methods for Ecologists*](https://ordination.okstate.edu/) and in the [*Machine learning in bioinformatics*](https://readiab.org/machine-learning.html) section of *An Introduction to Applied Bioinformatics*](https://doi.org/10.21105/jose.00027).
 
--   `SampleData[AlphaDiversity]` artifacts, which contain alpha
-    diversity estimates for each sample in your feature table.
-This is
-    the chief artifact for alpha diversity analyses.
--   `DistanceMatrix` artifacts, containing the pairwise
-    distance/dissimilarity between each pair of samples in your feature
-    table.
-This is the chief artifact for beta diversity analyses.
--   `PCoAResults` artifacts, containing principal coordinates ordination
-    results for each distance/dissimilarity metric.
-[Principal
-    coordinates
-    analysis](https://mb3is.megx.net/gustame/dissimilarity-based-methods/principal-coordinates-analysis)
-    is a dimension reduction technique, facilitating visual comparisons
-    of sample (dis)simmilarities in 2D or 3D space.
+:::{tip} q2-boots: bootstrapped and rarefaction-based microbiome diversity analysis
+A {term}`stand-alone plugin`, [`q2-boots`](https://library.qiime2.org/plugin/caporaso-lab/q2-boots) has recently (as of March 2025) been released that facilitates bootstrapped and rarefaction-based diversity analysis.
+The actions in this plugin are intended to mirror those in `q2-diversity`, and the results are more robust than those generated by `q2-diversity` because they integrate all of the observed microbiome data.
+To learn more about this, refer to [Raspet *et al.* (2025)](https://doi.org/10.12688/f1000research.156295.1).
+The artifacts generated by `q2-boots` are intended to be used anywhere that the artifacts generated by `q2-diversity` are used.
+
+Some optimization of the methods in this plugin is still in progress, and as a result this isn't yet part of the amplicon distribution.
+It can however be installed on top of the amplicon distribution following [its install instructions on the QIIME 2 Library](https://library.qiime2.org/plugin/caporaso-lab/q2-boots).
+Try it out!
+🥾
+:::
 
 These are the main diversity-related artifacts.
-Keep them safe!
-We can
-re-use these data in
-`all sorts of downstream analyses <Fun>`{.interpreted-text role="ref"},
-or in the various actions of `q2-diversity` shown in the flowchart.
-Most
-of these actions are demonstrated in the
-`moving pictures tutorial <moving pics diversity>`{.interpreted-text
-role="ref"} so head on over there to learn more!
-☔
+We can re-use these data in [all sorts of downstream analyses](fun-with-feature-tables), or in the various actions of `q2-diversity` shown in the flowchart.
+Many of these actions are demonstrated in the [](moving-pictures-tutorial) so head on over there to learn more!
 
-Note that there are many, many different alpha- and beta-[diversity
-metrics](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282)
-that are available in QIIME 2.
-To learn more (and figure out whose paper
-you should be citing!), check out that neat resource, which was
-contributed by a friendly QIIME 2 user to enlighten all of us.
-Thanks
-Stephanie!
+Note that there are [many different alpha- and beta-diversity metrics](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282) that are available in QIIME 2.
+To learn more (and figure out whose paper you should be citing!), check out that neat resource, which was contributed by a friendly QIIME 2 user to enlighten all of us.
+Thanks Stephanie!
 😁🙏😁🙏😁🙏
 
 (fun-with-feature-tables)=
-## Fun with feature tables {#Fun}
+## Fun with feature tables
 
-At this point you have a feature table, taxonomy classification results,
-alpha diversity, and beta diversity results.
+At this point you have a feature table, taxonomy classification results, alpha diversity, and beta diversity results.
 Oh my!
-🤓
+🦁🐯🐻
 
-Taxonomic and diversity analyses, as described above, are the basic
-types of analyses that most QIIME 2 users are probably going to need to
-perform at some point.
-However, this is only the beginning, and there
-are so many more advanced analyses at our fingertips.
+Taxonomic and diversity analyses, as described above, are the basic types of analyses that most QIIME 2 users are probably going to need to perform at some point.
+However, this is only the beginning, and there are so many more advanced analyses at our fingertips.
 🖐️⌨️
 
-![image](images/fun-with-features.png)
+:::{figure} ../_static/overview-fun-with-features.png
+:label: overview-fun-with-features
+:alt: Flowchart of "downstream" analysis workflows in QIIME 2.
+
+Flowchart of "downstream" analysis workflows in QIIME 2.
+:::
 
 We are only going to give a brief overview, since each of these analyses
 has its own in-depth tutorial to guide us:
 
--   **Analyze longitudinal data:**
-    `q2-longitudinal <longitudinal>`{.interpreted-text role="doc"} is a
-    plugin for performing statistical analyses of [longitudinal
-    experiments](https://en.wikipedia.org/wiki/Longitudinal_study),
-    i.e., where samples are collected from individual
-    patients/subjects/sites repeatedly over time.
-This includes
-    longitudinal studies of alpha and beta diversity, and some really
-    awesome, interactive plots.
+- **Analyze longitudinal data:**
+  `q2-longitudinal` is a plugin for performing statistical analyses of [longitudinal experiments](https://en.wikipedia.org/wiki/Longitudinal_study), i.e., where samples are collected from individual patients/subjects/sites repeatedly over time.
+  This includes longitudinal studies of alpha and beta diversity, and some really awesome, interactive plots.
 📈🍝
+ - **Predict the future (or the past) 🔮:**
+   `q2-sample-classifier` is a plugin for machine-learning 🤖 analyses of feature data.
+   Both classification and regression models are supported.
+   This allows you to do things like:
+ - predict sample metadata as a function of feature data (e.g., can we use a fecal sample to [predict cancer susceptibility](https://dx.doi.org/10.1128%2FmSphere.00001-15)?
+   Or [predict wine quality](https://doi.org/10.1128/mbio.00631-16) based on the microbial composition of grapes before fermentation?).
+   🍇
+ - identify features that are predictive of different sample characteristics.
+   🚀
+ - quantify rates of microbial maturation (e.g., to track normal microbiome development in the infant gut and the impacts of [persistent malnutrition](https://dx.doi.org/10.1038%2Fnature13421) or [antibiotics, diet, and delivery mode](https://dx.doi.org/10.1126%2Fscitranslmed.aad7121)).
+   👶
+ - predict outliers and [mislabeled samples](https://dx.doi.org/10.1038%2Fismej.2010.148).
+   👹
 
--
+- **Differential abundance** testing is used to determine which features are significantly more/less abundant in different groups of samples.
+  QIIME 2 currently supports a few different approaches to  differential abundance testing, including `ancom-bc` in `q2-composition`.
+  👾👾👾
 
-    **Predict the future (or the past) 🔮:** `q2-sample-classifier <sample-classifier>`{.interpreted-text role="doc"} is a plugin for machine-learning 🤖 analyses of feature data.
-Both classification and regression models are supported.
-This allows you to do things like:
-
-    :   -   predict sample metadata as a function of feature data (e.g.,
-            can we use a fecal sample to [predict cancer
-            susceptibility](https://dx.doi.org/10.1128%2FmSphere.00001-15)?
-            Or [predict wine
-            quality](http://mbio.asm.org/content/7/3/e00631-16.short)
-            based on the microbial composition of grapes before
-            fermentation?).
-🍇
-        -   identify features that are predictive of different sample
-            characteristics.
-🚀
-        -   quantify rates of microbial maturation (e.g., to track
-            normal microbiome development in the infant gut and the
-            impacts of [persistent
-            malnutrition](https://dx.doi.org/10.1038%2Fnature13421) or
-            [antibiotics, diet, and delivery
-            mode](https://dx.doi.org/10.1126%2Fscitranslmed.aad7121)).
-            👶
-        -   predict outliers and [mislabeled
-            samples](https://dx.doi.org/10.1038%2Fismej.2010.148).
-👹
-
--   **Differential abundance** is used to determine which features are
-    significantly more/less abundant in different groups of samples.
-    QIIME 2 currently supports a few different approaches to
-    differential abundance testing, including
-    `ancom <ancom>`{.interpreted-text role="ref"} and `ancom-bc`
-    (actions in `q2-composition`).
-👾👾👾
-
--
-
-    **Evaluate and control data quality:** `q2-quality-control <quality-control>`{.interpreted-text role="doc"} is a plugin for evaluating and controlling sequence data quality.
-This includes actions that:
-
-    :   -   test the accuracy of different bioinformatic or molecular
-            methods, or of run-to-run quality variation.
-These actions
-            are typically used if users have samples with known
-            compositions, e.g., [mock
-            communities](http://mockrobiota.caporasolab.us/), since
-            accuracy is calculated as the similarity between the
-            observed and expected compositions, sequences, etc.
-But more
-            creative uses may be possible\...
-🐢
-        -   filter sequences based on alignment to a reference database,
-            or that contain specific short sections of DNA (e.g., primer
-            sequences).
-This is useful for removing sequences that match
-            a specific group of organisms, non-target DNA, or other
-            nonsense.
-🙃
+- **Evaluate and control data quality:**
+  `q2-quality-control` is a plugin for evaluating and controlling sequence data quality.
+  This includes actions that:
+ - test the accuracy of different bioinformatic or molecular methods, or of run-to-run quality variation.
+   These actions are typically used if users have samples with known compositions, e.g., [mock communities](http://mockrobiota.caporasolab.us/), since accuracy is calculated as the similarity between the observed and expected compositions, sequences, etc.
+   But more creative uses may be possible...
+ - filter sequences based on alignment to a reference database, or that contain specific short sections of DNA (e.g., primer sequences).
+   This is useful for removing sequences that match a specific group of organisms, non-target DNA, or other nonsense.
+   🙃
 
 And that's just a brief overview!
-QIIME 2 continues to grow, so stay
-tuned for more plugins in future releases 📻, and keep your eyes peeled
-for third-party plugins that will continue to expand the functionality
-availability in QIIME 2.
-👀
+QIIME 2 continues to grow, so stay tuned for more plugins in future releases 📻, and keep your [eyes peeled](https://library.qiime2.org) for {term}`stand-alone plugins` that will continue to expand the functionality availability in QIIME 2.
+
+A good next step would be to work through the [](moving-pictures-tutorial), if you haven't done so already.
+That will help you learn how to actually use all of the functionality discussed here on real microbiome sequence data.
 
 Now go forth an have fun!
 💃

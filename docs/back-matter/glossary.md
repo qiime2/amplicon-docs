@@ -34,8 +34,9 @@ deployment
 
 distribution
 :  A collection of QIIME 2 plugins that are installed together through a single {term}`conda metapackage`.
-   These are generally grouped by a theme. For example, the *amplicon distribution* provides a collection of plugins for analysis of microbiome amplicon data, while the *metagenome distribution* provides a collection of plugins for analysis of microbiome shotgun metagenomics data.
+   These are generally grouped by a theme. For example, the *amplicon distribution* provides a collection of plugins for analysis of microbiome amplicon data, while *MOSHPIT* provides a collection of plugins for analysis of microbiome shotgun metagenomics data.
    When a distribution is installed, that particular installation of QIIME 2 is an example of a {term}`deployment`.
+   {term}`Stand-alone plugins` can be installed to expand the functionality of a distribution.
 
 DRY
 :  An acronym of *Don't Repeat Yourself*, and a critical principle of software engineering and equally applicable in research data management.
@@ -65,7 +66,7 @@ plugin
    All plugins can be accessed through all interfaces.
    Plugins can be developed and distributed by anyone.
    As of this writing, a collection of plugins that are installed together are referred to as a distribution.
-   Additional plugins can be installed, and the primary resource enabling discovery of additional plugins is the [QIIME 2 Library](https://library.qiime2.org).
+   Additional {term}`stand-alone plugins` can be installed.
 
 Python 3 API
 :  QIIME 2's Application Programmer Interface.
@@ -88,6 +89,10 @@ result
 
 sample
 :  An individual unit of study in an analysis.
+
+stand-alone plugin
+:  A plugin that is not included in one of the primary QIIME 2 distributions, but rather is installed independently.
+   These often include cutting edge functionality, and can be discovered through the [QIIME 2 Library](https://library.qiime2.org).
 
 visualizer
 :  A type of QIIME 2 {term}`action` that takes one or more {term}`artifacts <artifact>` or {term}`parameters <parameter>` as input, and produces exactly one {term}`visualization` as output.

@@ -1,4 +1,4 @@
-(merge-runs)=
+(merge-paired-end-reads)=
 # How to merge Illumina paired-end reads
 
 :::{warning}

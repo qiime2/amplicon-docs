@@ -124,6 +124,7 @@ This will let them review in exact detail what you did to generate the result, a
 You can view your data provenance using [QIIME 2 View](https://view.qiime2.org) (click the *Provenance* tab after loading your file), or by [using Provenance Replay](https://forum.qiime2.org/t/provenance-replay-beta-release-and-tutorial/23279).
 
 :::{warning} Warning: Do not include confidential information in your metadata.
+:label: metadata-in-provenance-warning
 QIIME 2 goes to great lengths to ensure that your bioinformatics workflow will be reproducible.
 This includes recording information about your analysis inside of your Results' data provenance, and the recorded information includes metadata that you provided to run specific commands.
 For this and other reasons, we strongly recommend that you **never include confidential information, such as Personally Identifying Information (PII), in your QIIME 2 metadata**.

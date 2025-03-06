@@ -57,6 +57,9 @@ Visualizations can be viewed by loading them with [QIIME 2 View](https://view.qi
 Navigate to QIIME 2 View, and drag and drop the visualization that was created to view it.
 (You can learn more about viewing Visualizations, including alternatives to QIIME 2 View if you can't use that for any reason, [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).)
 
+```{embed} #metadata-in-provenance-warning
+```
+
 ## Obtaining and importing data
 
 Download the sequence reads that we'll use in this analysis.

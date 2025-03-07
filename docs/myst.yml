@@ -10,7 +10,7 @@ project:
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
   references:
     qiime2: https://develop.qiime2.org/en/latest/
-    gut-to-soil-tutorial: https://gut-to-soil-tutorial.readthedocs.io/en/latest/
+    _gut-to-soil-ext: https://gut-to-soil-tutorial.readthedocs.io/en/latest/
 
   plugins:
     - type: executable

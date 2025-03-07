@@ -1,7 +1,7 @@
 (gut-to-soil-tutorial)=
 # Gut-to-soil axis tutorial 💩🌱
 
-```{embed} xref:gut-to-soil-tutorial#gut-to-soil-16S-tutorial
+```{embed} xref:_gut-to-soil-ext#gut-to-soil-16s-tutorial
 ```
 
 <!--

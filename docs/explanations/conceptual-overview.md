@@ -96,7 +96,7 @@ Most users start with either multiplexed (e.g., between one and three FASTQ file
 If possible, we recommend starting with demultiplexed sequence data - this prevents you from having to understand how sequences were multiplexed and how they need to be demultiplexed.
 Whoever did your sequencing should already have that information and know how to do this.
 Others users may start downstream, because some data processing has already been performed. For example, you can also start your QIIME 2 analysis with a feature table (`.biom` or `.tsv` file) generated with some other tool.
-[](how-to-import-export) helps you identify what type of data you have, and provides specific instructions on importing different types of data.
+[](how-to-import) helps you identify what type of data you have, and provides specific instructions on importing different types of data.
 
 Now that we understand that we can actually enter into this overview workflow at nearly *any* of the nodes, let us walk through individual sections.
 

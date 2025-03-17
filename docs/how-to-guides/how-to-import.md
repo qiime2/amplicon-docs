@@ -1,5 +1,5 @@
-(how-to-import-export)=
-## How to import and export data
+(how-to-import)=
+# How to import data for use with QIIME 2
 
 :::{warning}
 Transfer of this document from `https://docs.qiime2.org` is in progress (as of 20 Feb 2025).
@@ -7,8 +7,23 @@ Expect some problematic formatting.
 🪚
 :::
 
+```{mermaid}
+:class: handDrawn neutral
+
+flowchart TB
+  A[Jupyter Notebook] --> C
+  B[MyST Markdown] --> C
+  C(mystmd) --> D{AST}
+  D <--> E["**hello** \[link\](#importing-fastq)"]
+  E --> F[PDF]
+  D --> G[Word]
+  D --> H[React]
+  D --> I[HTML]
+  D <--> J[JATS]
+```
+
 (how-to-import-export:import)=
-### Importing data into QIIME 2 Artifacts (i.e., `.qza` files)
+## Importing data into QIIME 2 Artifacts (i.e., `.qza` files)
 
 In order to use QIIME 2, your input data must be stored in *QIIME 2
 artifacts* (i.e. `.qza` files). This is what enables distributed and
@@ -53,7 +68,7 @@ mkdir qiime2-importing-tutorial cd qiime2-importing-tutorial
 :::
 
 (importing-fastq)=
-#### Sequence data with sequence quality information (i.e. FASTQ) {#importing seqs}
+### Sequence data with sequence quality information (i.e. FASTQ) {#importing seqs}
 
 With QIIME 2, there are functions to import different types of FASTQ
 data:
@@ -63,9 +78,9 @@ data:
 3.  FASTQ data in the Casava 1.8 demultiplexed format
 4.  Any FASTQ data not represented in the list items above
 
-##### \"EMP protocol\" multiplexed single-end fastq {#emp import}
+#### \"EMP protocol\" multiplexed single-end fastq {#emp import}
 
-###### Format description
+##### Format description
 
 Single-end \"[Earth Microbiome Project (EMP)
 protocol](http://www.earthmicrobiome.org/protocols-and-standards/)\"
@@ -86,7 +101,7 @@ association between a sequence read and its barcode read (i.e. the first
 barcode read corresponds to the first sequence read, the second barcode
 to the second read, and so on).
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: command-block
 mkdir emp-single-end-sequences
@@ -98,16 +113,16 @@ mkdir emp-single-end-sequences
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz" saveas="emp-single-end-sequences/sequences.fastq.gz"}
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--type EMPSingleEndSequences \--input-path
 emp-single-end-sequences \--output-path emp-single-end-sequences.qza
 :::
 
-##### \"EMP protocol\" multiplexed paired-end fastq
+#### \"EMP protocol\" multiplexed paired-end fastq
 
-###### Format description
+##### Format description
 
 Paired-end \"[Earth Microbiome Project (EMP)
 protocol](http://www.earthmicrobiome.org/protocols-and-standards/)\"
@@ -133,7 +148,7 @@ between a sequence read and its barcode read (i.e. the first barcode
 read corresponds to the first sequence read, the second barcode to the
 second read, and so on.)
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: command-block
 mkdir emp-paired-end-sequences
@@ -148,16 +163,16 @@ mkdir emp-paired-end-sequences
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/atacama-soils/1p/barcodes.fastq.gz" saveas="emp-paired-end-sequences/barcodes.fastq.gz"}
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--type EMPPairedEndSequences \--input-path
 emp-paired-end-sequences \--output-path emp-paired-end-sequences.qza
 :::
 
-##### Multiplexed single-end FASTQ with barcodes in sequence {#multiplexed barcode in seq import}
+#### Multiplexed single-end FASTQ with barcodes in sequence {#multiplexed barcode in seq import}
 
-###### Format description
+##### Format description
 
 Users with multiplexed single-ended barcodes in sequence reads should
 have:
@@ -166,7 +181,7 @@ have:
 2.  one `metadata <metadata>`{.interpreted-text role="doc"} file with a
     column of per-sample barcodes for use in FASTQ demultiplexing
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: command-block
 mkdir muxed-se-barcode-in-seq
@@ -175,7 +190,7 @@ mkdir muxed-se-barcode-in-seq
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/muxed-se-barcode-in-seq.fastq.gz" saveas="muxed-se-barcode-in-seq/sequences.fastq.gz"}
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--type MultiplexedSingleEndBarcodeInSequence
@@ -192,9 +207,9 @@ be whatever you prefer.
 There should be exactly one unique barcode for each sample you wish to
 demultiplex. Barcodes are not required to be in any specific order.
 
-##### Multiplexed paired-end FASTQ with barcodes in sequence
+#### Multiplexed paired-end FASTQ with barcodes in sequence
 
-###### Format description
+##### Format description
 
 Users with multiplexed paired-end barcodes in sequence reads should
 have:
@@ -220,7 +235,7 @@ between forward and reverse sequence reads, so a correct order must be
 preserved. Barcodes in the metadata mapping file are not required to be
 in any specific order.
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: command-block
 mkdir muxed-pe-barcode-in-seq
@@ -232,7 +247,7 @@ mkdir muxed-pe-barcode-in-seq
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/muxed-pe-barcode-in-seq/reverse.fastq.gz" saveas="muxed-pe-barcode-in-seq/reverse.fastq.gz"}
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--type MultiplexedPairedEndBarcodeInSequence
@@ -240,9 +255,9 @@ qiime tools import \--type MultiplexedPairedEndBarcodeInSequence
 multiplexed-seqs.qza
 :::
 
-##### Casava 1.8 single-end demultiplexed fastq {#casava import}
+#### Casava 1.8 single-end demultiplexed fastq {#casava import}
 
-###### Format description
+##### Format description
 
 In the Casava 1.8 demultiplexed (single-end) format, there is one
 `fastq.gz` file for each sample in the study which contains the
@@ -258,7 +273,7 @@ this file name are:
     single-end reads), and
 5.  the set number.
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/casava-18-single-end-demultiplexed.zip" saveas="casava-18-single-end-demultiplexed.zip"}
 :::
@@ -267,7 +282,7 @@ this file name are:
 unzip -q casava-18-single-end-demultiplexed.zip
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--type \'SampleData\[SequencesWithQuality\]\'
@@ -276,9 +291,9 @@ CasavaOneEightSingleLanePerSampleDirFmt \--output-path
 demux-single-end.qza
 :::
 
-##### Casava 1.8 paired-end demultiplexed fastq
+#### Casava 1.8 paired-end demultiplexed fastq
 
-###### Format description
+##### Format description
 
 In Casava 1.8 demultiplexed (paired-end) format, there are two
 `fastq.gz` files for each sample in the study, each containing the
@@ -294,7 +309,7 @@ fields in this file name are:
 4.  the direction of the read (i.e. R1 or R2), and
 5.  the set number.
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/casava-18-paired-end-demultiplexed.zip" saveas="casava-18-paired-end-demultiplexed.zip"}
 :::
@@ -303,7 +318,7 @@ fields in this file name are:
 unzip -q casava-18-paired-end-demultiplexed.zip
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--type
@@ -314,7 +329,7 @@ demux-paired-end.qza
 :::
 
 (import-fastq-manifest)=
-##### \"Fastq manifest\" formats {#manifest file}
+#### \"Fastq manifest\" formats {#manifest file}
 
 The examples above demonstrate how to import multiplexed data (i.e. EMP
 or FASTQ files with the barcodes in the sequence) and how to import
@@ -325,7 +340,7 @@ creating a \"manifest file\" and then using the `qiime tools import`
 command with different specifications than in the EMP or Casava import
 commands.
 
-###### Format description
+##### Format description
 
 First, you\'ll create a text file called a \"manifest file\", which maps
 sample identifiers to `fastq.gz` or `fastq` [absolute
@@ -373,7 +388,7 @@ importing data in these four formats is very similar, we\'ll only
 provide examples for two of the variants:
 `SingleEndFastqManifestPhred33V2` and `PairedEndFastqManifestPhred64V2`.
 
-###### SingleEndFastqManifestPhred33V2
+##### SingleEndFastqManifestPhred33V2
 
 In this variant of the fastq manifest format, the read directions must
 all either be forward or reverse. This format assumes that the [PHRED
@@ -395,7 +410,7 @@ qiime tools import \--type \'SampleData\[SequencesWithQuality\]\'
 \--input-format SingleEndFastqManifestPhred33V2
 :::
 
-###### SingleEndFastqManifestPhred64V2
+##### SingleEndFastqManifestPhred64V2
 
 In this variant of the fastq manifest format, the read directions must
 all either be forward or reverse. This format assumes that the [PHRED
@@ -405,7 +420,7 @@ used for the positional quality scores in all of the `fastq.gz` /
 encoded quality scores to PHRED 33 encoded quality scores. This
 conversion will be slow, but will only happen one time.
 
-###### PairedEndFastqManifestPhred33V2
+##### PairedEndFastqManifestPhred33V2
 
 In this variant of the fastq manifest format, there must be forward and
 reverse read `fastq.gz` / `fastq` files for each sample ID. This format
@@ -414,7 +429,7 @@ offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#q
 used for the positional quality scores in all of the `fastq.gz` /
 `fastq` files is 33.
 
-###### PairedEndFastqManifestPhred64V2
+##### PairedEndFastqManifestPhred64V2
 
 In this variant of the fastq manifest format, there must be forward and
 reverse read `fastq.gz` / `fastq` files for each sample ID. This format
@@ -440,7 +455,7 @@ pe-64-manifest \--output-path paired-end-demux.qza \--input-format
 PairedEndFastqManifestPhred64V2
 :::
 
-#### Sequences without quality information (i.e. FASTA)
+### Sequences without quality information (i.e. FASTA)
 
 QIIME 2 currently supports importing the QIIME 1 `seqs.fna` file\_
 format, which consists of a single FASTA file with exactly two lines per
@@ -458,9 +473,9 @@ Other FASTA formats like FASTA files with differently formatted sequence
 headers or per-sample demultiplexed FASTA files (i.e. one FASTA file per
 sample) are not currently supported.
 
-#### Per-feature unaligned sequence data (i.e., representative FASTA sequences)
+### Per-feature unaligned sequence data (i.e., representative FASTA sequences)
 
-##### Format description
+#### Format description
 
 Unaligned sequence data is imported from a FASTA formatted file
 containing DNA sequences that are not aligned (i.e., do not contain
@@ -471,21 +486,21 @@ format
 description](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format)
 for more information about the FASTA format.
 
-###### Obtaining example data
+##### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/sequences.fna" saveas="sequences.fna"}
 :::
 
-##### Importing data
+#### Importing data
 
 ::: command-block
 qiime tools import \--input-path sequences.fna \--output-path
 sequences.qza \--type \'FeatureData\[Sequence\]\'
 :::
 
-#### Per-feature aligned sequence data (i.e., aligned representative FASTA sequences)
+### Per-feature aligned sequence data (i.e., aligned representative FASTA sequences)
 
-##### Format description
+#### Format description
 
 Aligned sequence data is imported from a FASTA formatted file containing
 DNA sequences that are aligned to one another. All aligned sequences
@@ -495,36 +510,36 @@ support these characters. See the [scikit-bio FASTA format
 description](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format)
 for more information about the FASTA format.
 
-###### Obtaining example data
+##### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/aligned-sequences.fna" saveas="aligned-sequences.fna"}
 :::
 
-##### Importing data
+#### Importing data
 
 ::: command-block
 qiime tools import \--input-path aligned-sequences.fna \--output-path
 aligned-sequences.qza \--type \'FeatureData\[AlignedSequence\]\'
 :::
 
-#### Feature table data {#importing feature tables}
+### Feature table data {#importing feature tables}
 
 You can also import pre-processed feature tables into QIIME 2.
 
-##### BIOM v1.0.0
+#### BIOM v1.0.0
 
-###### Format description
+##### Format description
 
 See the [BIOM v1.0.0 format
 specification](http://biom-format.org/documentation/format_versions/biom-1.0.html)
 for details.
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v100.biom" saveas="feature-table-v100.biom"}
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--input-path feature-table-v100.biom \--type
@@ -532,20 +547,20 @@ qiime tools import \--input-path feature-table-v100.biom \--type
 \--output-path feature-table-1.qza
 :::
 
-##### BIOM v2.1.0
+#### BIOM v2.1.0
 
-###### Format description
+##### Format description
 
 See the [BIOM v2.1.0 format
 specification](http://biom-format.org/documentation/format_versions/biom-2.1.html)
 for details.
 
-####### Obtaining example data
+###### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v210.biom" saveas="feature-table-v210.biom"}
 :::
 
-###### Importing data
+##### Importing data
 
 ::: command-block
 qiime tools import \--input-path feature-table-v210.biom \--type
@@ -553,21 +568,21 @@ qiime tools import \--input-path feature-table-v210.biom \--type
 \--output-path feature-table-2.qza
 :::
 
-#### Phylogenetic trees
+### Phylogenetic trees
 
-##### Format description
+#### Format description
 
 Phylogenetic trees are imported from newick formatted files. See the
 [scikit-bio newick format
 description](http://scikit-bio.org/docs/latest/generated/skbio.io.format.newick.html)
 for more information about the newick format.
 
-###### Obtaining example data
+##### Obtaining example data
 
 ::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/unrooted-tree.tre" saveas="unrooted-tree.tre"}
 :::
 
-##### Importing data
+#### Importing data
 
 ::: command-block
 qiime tools import \--input-path unrooted-tree.tre \--output-path
@@ -577,7 +592,7 @@ unrooted-tree.qza \--type \'Phylogeny\[Unrooted\]\'
 If you have a rooted tree, you can use `--type 'Phylogeny[Rooted]'`
 instead.
 
-#### Other data types
+### Other data types
 
 QIIME 2 can import many other data types not covered in this tutorial.
 You can see which formats of input data are importable with the
@@ -598,105 +613,3 @@ formats can be imported as which QIIME 2 data types, but hopefully the
 names of these formats and types should be self-explanatory enough to
 figure it out. If you have any questions, please post to the [QIIME 2
 Forum](https://forum.qiime2.org) for help!
-
-(how-to-import-export:export)=
-### Exporting data from QIIME 2 Artifacts (i.e., `.qza` files)
-
-:::: note
-::: title
-Note
-:::
-
-This tutorial assumes you have installed QIIME 2 using one of the
-procedures in the
-`install documents <../install/index>`{.interpreted-text role="doc"}.
-::::
-
-In order to use QIIME 2, your input data must be stored in *QIIME 2
-artifacts* (i.e. `.qza` files). This is what enables distributed and
-automatic provenance tracking, as well as semantic type validation and
-transformations between data formats (see the
-`core concepts <../concepts>`{.interpreted-text role="doc"} page for
-more details about QIIME 2 artifacts).
-
-Sometimes you\'ll want to export data from a QIIME 2 artifact, for
-example to analyze data with a different microbiome analysis program, or
-to do statistical analysis in R. This can be achieved used the
-`qiime tools export` command, which takes a QIIME 2 artifact (`.qza`)
-file and an output directory as input. The data in the artifact will
-exported to one or more files depending on the specific artifact.
-
-:::: warning
-::: title
-Warning
-:::
-
-When exporting data from a QIIME 2 artifact, there will no longer be
-provenance associated with the data. If you subsequently re-import the
-exported data, the provenance associated with the new artifact will
-begin with the import step and all existing provenance will be lost.
-It\'s therefore best to only export data from artifacts when you are
-done with all processing steps that can be achieved with QIIME 2 to
-maximize the value of each artifact\'s provenance.
-::::
-
-The following sections provide examples of exporting data from QIIME 2
-artifacts. It is possible to export data from any QIIME 2 artifact or
-visualization; the process is the same as what is described below.
-
-### Exporting a feature table
-
-A `FeatureTable[Frequency]` artifact will be exported as a [BIOM v2.1.0
-formatted
-file](http://biom-format.org/documentation/format_versions/biom-2.1.html).
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/exporting/feature-table.qza" saveas="feature-table.qza"}
-:::
-
-::: command-block
-qiime tools export \--input-path feature-table.qza \--output-path
-exported-feature-table
-:::
-
-### Exporting a phylogenetic tree
-
-A `Phylogeny[Unrooted]` artifact will be exported as a [newick formatted
-file](http://scikit-bio.org/docs/latest/generated/skbio.io.format.newick.html).
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/exporting/unrooted-tree.qza" saveas="unrooted-tree.qza"}
-:::
-
-::: command-block
-qiime tools export \--input-path unrooted-tree.qza \--output-path
-exported-tree
-:::
-
-### Exporting versus extracting {#export vs extract}
-
-QIIME 2 artifacts can be extracted using `qiime tools extract`.
-Extracting an artifact differs from exporting an artifact. When
-exporting an artifact, only the data files will be placed in the output
-directory. Extracting will additionally provide QIIME 2\'s metadata
-about an artifact, including for example the artifact\'s provenance, in
-the output directory in plain-text formats. An artifact can be extracted
-as follows. The directory that you\'re extracting to must already exist.
-
-::: command-block
-mkdir extracted-feature-table qiime tools extract \--input-path
-feature-table.qza \--output-path extracted-feature-table
-:::
-
-The output directory will contain a new directory whose name is the
-artifact\'s UUID. All artifact data and metadata will be stored in that
-directory.
-
-:::: note
-::: title
-Note
-:::
-
-While it is possible to view an artifact\'s provenance from its
-extracted metadata text files, the graphical provenance viewer at
-<https://view.qiime2.org> is the recommended way to view an artifact\'s
-provenance.
-::::

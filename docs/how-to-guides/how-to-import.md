@@ -2,131 +2,214 @@
 # How to import data for use with QIIME 2
 
 :::{warning}
-Transfer of this document from `https://docs.qiime2.org` is in progress (as of 20 Feb 2025).
-Expect some problematic formatting.
-🪚
+Transfer of this document from `https://docs.qiime2.org` is in progress (as of 17 March 2025). 🪚
+
+The goal of this document is to provide specific examples on how to carry out the most commonly used imports of data into QIIME 2 Artifacts.
+It's challenging to compile this though, because I don't have good data on the frequency at which the different imports are used.[^provenance-has-this]
+I'm therefore going to consider this document a work in progress, focusing on compiling the most relevant information in consultation with users and developers, and based on [the most popular forum posts on importing](https://forum.qiime2.org/tag/import?ascending=false&order=views).
+
+If you have questions about importing that aren't answered here, post to the forum.
+If you think specific examples would be helpful for others, post an issue on the [amplicon-docs issue tracker](https://github.com/qiime2/amplicon-docs/issues).
+Issues should include detailed information (e.g., including small example data that could be used under a CC-BY license, example working import commands, and/or helpful related discussions from the forum or elsewhere).
+(If you don't have this detailed information, starting with a question on the forum is recommended over posting to the issue tracker.)
+
 :::
 
-```{mermaid}
-:class: handDrawn neutral
+# Importing data into QIIME 2
 
-flowchart TB
-  A[Jupyter Notebook] --> C
-  B[MyST Markdown] --> C
-  C(mystmd) --> D{AST}
-  D <--> E["**hello** \[link\](#importing-fastq)"]
-  E --> F[PDF]
-  D --> G[Word]
-  D --> H[React]
-  D --> I[HTML]
-  D <--> J[JATS]
-```
+A QIIME 2 analysis almost always starts with importing data for use in QIIME 2.
+You can learn about why this is needed in [](import-explanation).
 
-(how-to-import-export:import)=
-## Importing data into QIIME 2 Artifacts (i.e., `.qza` files)
+Importing creates a [QIIME 2 artifact](getting-started:artifacts-and-visualizations) from data in another format, such as a `.biom` file or one or more `.fastq` files.
+Two pieces of information are needed to import data into QIIME 2: the [Artifact Class](getting-started:artifact-classes) that you want to import into, and QIIME 2's name for the format that you're trying to load.
 
-In order to use QIIME 2, your input data must be stored in *QIIME 2
-artifacts* (i.e. `.qza` files). This is what enables distributed and
-automatic provenance tracking, as well as semantic type validation and
-transformations between data formats (see the
-`core concepts <../concepts>`{.interpreted-text role="doc"} page for
-more details about QIIME 2 artifacts). This tutorial demonstrates how to
-import various data formats into QIIME 2 artifacts for use with QIIME 2.
+:::{note}
+In addition to being the first step in a user's QIIME 2 analysis, importing is often the most challenging step.
+The reason it's challenging is that there are tens or even hundreds of different file types that users would like to use with QIIME 2, and many file formats in bioinformatics are poorly defined.
+For example, the [ete3 phylogenetic analysis and visualization toolkit](http://etetoolkit.org/) recognizes (as of this writing) [11 different variants of the newick file format](http://etetoolkit.org/docs/latest/reference/reference_tree.html#ete3.TreeNode).
+A newick file doesn't include explicit information in it on which of these variants it is, so it's up to the person working with the file to know that.
+A user importing data into QIIME 2 needs to have an understanding of what format their data is in, and then learn how to provide that information to QIIME 2.
 
-:::: note
-::: title
-Note
+As always, we're here to help on [the forum](https://forum.qiime2.org).
+There are [lots of existing discussions about importing](https://forum.qiime2.org/tag/import).
+If after searching you haven't found an answer to your question, post with a description of the data that you're trying to import and we'll help you figure out how to proceed.
 :::
 
-This tutorial does not describe all data formats that are currently
-supported in QIIME 2. It is a work-in-progress that describes some of
-the most commonly used data formats that are available. We are also
-actively working on supporting additional data formats. If you need to
-import data in a format that is not covered here, please post to the
-[QIIME 2 Forum](https://forum.qiime2.org) for help.
+The first step in determining how to import your data is figuring out what it is that you're trying to import.
+The following sections present importing of different data types, ordered by how common we think they are to import in practice.
+**You don't need to read all of the sections below but rather jump to the section that describes the data that you're trying to import.**
+
+We also don't present all of the importable data types here, as many of them are rarely used in importing (rather they represent intermediary data types used by QIIME 2).
+Using the command line interface, you can run `qiime tools list-types` to see a list of all of them.
+
+## Importing "raw sequencing data"
+
+Most users begin their QIIME 2 analysis with "raw sequencing data" in the form of `.fastq.gz` files.
+
+::::{margin}
+:::{note}
+This section refers to `.fastq.gz` files but it applies directly to `.fastq` files as well.
+Files ending with `.gz` are compressed files, similar to `.zip` files.
+`.fastq.gz` are more common for storing and moving fastq data because they're *much* more efficient than `.fastq` files, which can be very large and are highly compressible.
+:::
 ::::
 
-Importing will typically happen with your initial data (e.g. sequences
-obtained from a sequencing facility), but importing can be performed at
-any step in your analysis pipeline. For example, if a collaborator
-provides you with a feature table in `.biom` format, you can import it
-into a QIIME 2 artifact to perform \"downstream\" statistical analyses
-that operate on a feature table.
+Raw microbiome data typically exists in one of two forms: multiplexed or demultiplexed.
+In multiplexed data, sequences from all samples are grouped together in one or more files.
+In demultiplexed data, sequences are separated into different files based on the sample they are derived from.
+Data can be demultiplexed before it's delivered to you, or it can be delivered still multiplexed in which case you can use QIIME 2 to demultiplex the data.
 
-Importing can be accomplished using any of the QIIME 2
-`interfaces <../interfaces/index>`{.interpreted-text role="doc"}. This
-tutorial will focus on using the QIIME 2 command-line interface
-(`q2cli`) to import data with the `qiime tools import` method. Each
-section below briefly describes a data format, provides commands to
-download example data, and illustrates how to import the data into a
-QIIME 2 artifact.
-
-You may want to begin by creating a directory to work in.
-
-::: {.command-block no-exec=""}
-mkdir qiime2-importing-tutorial cd qiime2-importing-tutorial
+:::{tip}
+Generally speaking, it's more convenient to have your data delivered to you already demultiplexed because it means that you don't have to understand how it was multiplexed to demultiplex it.
 :::
 
-(importing-fastq)=
-### Sequence data with sequence quality information (i.e. FASTQ) {#importing seqs}
+:::{tip} Differentiating demultiplexed and multiplexed sequencing data
+:class: dropdown
 
-With QIIME 2, there are functions to import different types of FASTQ
-data:
+The number of files that you are starting with is the key to determining whether your data are multiplexed or demultiplexed.
+If you have one, two, three or four `.fastq.gz` files, it's almost certain that you have multiplexed data.
+If the number of `.fastq.gz` files that you have is equal to your number of samples times one, two, three or four, it's almost certain that you have demultiplexed data.
+If you're still unsure whether your data is multiplexed or demultiplexed, get in touch on the QIIME 2 Forum and include a list of your `.fastq.gz` filenames.
+:::
 
-1.  FASTQ data with the EMP Protocol format
-2.  Multiplexed FASTQ data with barcodes in sequences
-3.  FASTQ data in the Casava 1.8 demultiplexed format
-4.  Any FASTQ data not represented in the list items above
+:::{tip} Understanding Illumina `.fastq.gz` file names
+:class: dropdown
 
-#### \"EMP protocol\" multiplexed single-end fastq {#emp import}
+Most Illumina sequencing runs are paired-end, meaning that sequence reads are generated in two directions: the "forward reads" begin at the 5' end of the amplicon, and the "reverse reads" begin at the 3' end of the amplicon.
+These reads are stored in separate files, usually designated with an `_R1_` (for the forward reads) somewhere in the file name or `_R2_` (for the reverse reads) somewhere in the file name.
+In some cases, there may also be one or two "index" or "barcode" read files, designated with `_I1_` in the filename (or `_I1_` and `_I2_` in the names of separate files).
+
+The sequence data from all of your samples is contained in the `R1` files if you performed a single-end sequencing run, or in the `R1` and `R2` files if you performed a paired-end sequencing run.
+If you have an `I1` file, that contains the sequence barcodes which during PCR were added to the sequences on a sample-specific basis.
+If you also have an `I2` file, this means that a dual-barcoding scheme was used for associating sequences with samples.
+In either case, the single barcode or the combination of forward and reverse barcodes define which sample a given sequence was isolated from.
+
+If you have many `.fastq.gz` files, your data are likely demultiplexed.
+In this case, you'll typically see either an `R1` or a pair of `R1` and `R2` files for each of your samples.
+Often you'll be able to recognize your sample identifiers in the filenames, though there is typically a lot of additional information in there as well.
+:::
+
+### Demultiplexed sequence data
+
+(import-fastq-manifest)=
+#### "Fastq manifest" formats
+
+We recommend importing demultiplexed data using a fastq manifest file.
+This format is not specific to any sequencing instrument, but rather is generally used for importing demultiplexed fastq data.
+This file should be easy for your sequencing center to generate for you, so you can ask them to provide it or you can generate one yourself.
+
+::::{margin}
+:::{tip}
+[`fq-manifestor`](https://github.com/gregcaporaso/fq-manifestor) is a script that may help you generate fastq manifest files.
+:::
+::::
+
+A fastq manifest file is a type of [sample metadata file](https://use.qiime2.org/en/latest/references/metadata.html) that maps sample identifiers to one or two absolute filepaths pointing at `.fastq.gz` (or `.fastq`) files, depending on whether you're importing data from a single- or paried-end run.
+
+::::{margin}
+:::{tip}
+For convenience, the absolute filepaths may contain environment variables (e.g., `$HOME` or `$PWD`).
+:::
+::::
+
+The following examples present fastq manifest files for single-end and paired-end read data.
+
+:::::{tab-set}
+
+::::{tab-item} Single-end reads
+:sync: single-end-fq-manifest
+:::
+sample-id absolute-filepath
+sample-1  /scratch/microbiome/sample1_R1.fastq.gz
+sample-2  /scratch/microbiome/sample2_R1.fastq.gz
+:::
+::::
+
+::::{tab-item} Paired-end reads
+:sync: paired-end-fq-manifest
+:::
+sample-id forward-absolute-filepath   reverse-absolute-filepath
+sample-1  /scratch/microbiome/sample1_R1.fastq.gz  /scratch/microbiome/sample1_R2.fastq.gz
+sample-2  /scratch/microbiome/sample2_R1.fastq.gz  /scratch/microbiome/sample2_R2.fastq.gz
+:::
+::::
+:::::
+
+You're almost certainly interested in one of two variants of this format: one for single-end read data and one for pair-end read data.
+
+::::{margin}
+:::{warning}
+If you're working with data generated roughly in 2020 or earlier, you may need to know the [PHRED offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants) used in the quality scores.
+As discussed in [](import-explanation), this is required to accurately interpret the quality scores in your fastq files, and this information is not present in the fastq files themselves - so the only way QIIME 2 can know is if you explicitly provide that information.
+For most modern sequencing data, the PHRED offset is 33, but for some legacy data it may be 64.
+
+The import commands in this section would be adapted to use 64 in place of 33 in the two format names - i.e., you'd pass `SingleEndFastqManifestPhred64V2` or `PairedEndFastqManifestPhred64V2` as the *input format*.
+:::
+::::
+
+
+The following import commands should allow you to import your demultiplexed sequences, assuming you have a fastq manifest file named `fq-manifest.tsv`.
+
+:::::{tab-set}
+
+::::{tab-item} Single-end reads, PHRED 33
+:sync: single-end-fq-manifest
+:::
+qiime tools import
+ --type 'SampleData[SequencesWithQuality]' \
+ --input-path fq-manifest.tsv \
+ --output-path demux.qza \
+ --input-format SingleEndFastqManifestPhred33V2
+:::
+::::
+
+::::{tab-item} Paired-end reads, PHRED 33
+:sync: paired-end-fq-manifest
+:::
+qiime tools import
+ --type 'SampleData[PairedEndSequencesWithQuality]' \
+ --input-path fq-manifest.tsv \
+ --output-path demux.qza \
+ --input-format PairedEndFastqManifestPhred33V2
+:::
+::::
+:::::
+
+(import-casava)=
+#### Casava 1.8 paired-end demultiplexed fastq
+
+The Casava 1.8 paired-end demultiplexed fastq format is a format for demultiplexed sequence data that is very specific to the software used to create it.
+There are two `fastq.gz` files for each sample in the study, each containing the forward or reverse reads for that sample.
+The file name includes the sample identifier.
+The forward and reverse read file names for a single sample might look like `sample-1_15_L001_R1_001.fastq.gz` and `sample-1_15_L001_R2_001.fastq.gz`, respectively.
+The underscore-separated fields in this file name are:
+
+1.  the sample identifier,
+2.  the barcode sequence or a barcode identifier,
+3.  the lane number,
+4.  the direction of the read (i.e. R1 or R2), and
+5.  the set number.
+
+If you're lucky enough to have data that is in this format exactly, you can import it as follows (assuming it's in a directory called `my-sequence-data`):
+
+:::
+qiime tools import \
+  --type 'SampleData[PairedEndSequencesWithQuality]' \
+  --input-path my-sequence-data/ \
+  --input-format CasavaOneEightSingleLanePerSampleDirFmt \
+  --output-path demux.qza
+:::
+
+More often, if you have demultiplexed sequence data, you'll need to [import using a fastq manifest file](import-fastq-manifest).
+
+<!--
+### Multiplexed sequence data
+
+#### "EMP protocol" multiplexed paired-end fastq
 
 ##### Format description
 
-Single-end \"[Earth Microbiome Project (EMP)
-protocol](http://www.earthmicrobiome.org/protocols-and-standards/)\"
-formatted reads should have two `fastq.gz` files total:
-
-1.  one `forward.fastq.gz` file that contains the single-end reads,
-2.  one `barcodes.fastq.gz` file that contains the associated barcode
-    reads
-
-In this format, sequence data is still multiplexed (i.e. you have only
-one `fastq.gz` file containing raw data for all of your samples).
-
-Because you are importing multiple files in a directory, the filenames
-`forward.fastq.gz` and `barcodes.fastq.gz` are *required*.
-
-The order of the records in the two `fastq.gz` files defines the
-association between a sequence read and its barcode read (i.e. the first
-barcode read corresponds to the first sequence read, the second barcode
-to the second read, and so on).
-
-###### Obtaining example data
-
-::: command-block
-mkdir emp-single-end-sequences
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz" saveas="emp-single-end-sequences/barcodes.fastq.gz"}
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz" saveas="emp-single-end-sequences/sequences.fastq.gz"}
-:::
-
-##### Importing data
-
-::: command-block
-qiime tools import \--type EMPSingleEndSequences \--input-path
-emp-single-end-sequences \--output-path emp-single-end-sequences.qza
-:::
-
-#### \"EMP protocol\" multiplexed paired-end fastq
-
-##### Format description
-
-Paired-end \"[Earth Microbiome Project (EMP)
-protocol](http://www.earthmicrobiome.org/protocols-and-standards/)\"
-formatted reads should have three `fastq.gz` files total:
+Paired-end "[Earth Microbiome Project (EMP) protocol](http://www.earthmicrobiome.org/protocols-and-standards/)" formatted reads should have three `fastq.gz` files total:
 
 1.  one `forward.fastq.gz` file that contains the forward sequence
     reads,
@@ -135,324 +218,18 @@ formatted reads should have three `fastq.gz` files total:
 3.  one `barcodes.fastq.gz` file that contains the associated barcode
     reads
 
-In this format, sequence data is still multiplexed (i.e. you have only
-one forward and one reverse `fastq.gz` file containing raw data for all
-of your samples).
+In this format, sequence data is still multiplexed (i.e. you have only one forward and one reverse `fastq.gz` file containing raw data for all of your samples).
 
-Because you are importing multiple files in a directory, the filenames
-`forward.fastq.gz`, `reverse.fastq.gz`, and `barcodes.fastq.gz` are
-*required*.
+Because you are importing multiple files in a directory, the filenames `forward.fastq.gz`, `reverse.fastq.gz`, and `barcodes.fastq.gz` are *required*.
+You may need to rename the files obtained from your sequencing center to use these file names.
 
-The order of the records in the `fastq.gz` files defines the association
-between a sequence read and its barcode read (i.e. the first barcode
-read corresponds to the first sequence read, the second barcode to the
-second read, and so on.)
+If those three files are in a directory called `my-sequence-data`, your import command would look like the following:
 
-###### Obtaining example data
-
-::: command-block
-mkdir emp-paired-end-sequences
 :::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/atacama-soils/1p/forward.fastq.gz" saveas="emp-paired-end-sequences/forward.fastq.gz"}
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/atacama-soils/1p/reverse.fastq.gz" saveas="emp-paired-end-sequences/reverse.fastq.gz"}
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/atacama-soils/1p/barcodes.fastq.gz" saveas="emp-paired-end-sequences/barcodes.fastq.gz"}
-:::
-
-##### Importing data
-
-::: command-block
-qiime tools import \--type EMPPairedEndSequences \--input-path
-emp-paired-end-sequences \--output-path emp-paired-end-sequences.qza
-:::
-
-#### Multiplexed single-end FASTQ with barcodes in sequence {#multiplexed barcode in seq import}
-
-##### Format description
-
-Users with multiplexed single-ended barcodes in sequence reads should
-have:
-
-1.  one `fastq.gz` file, containing records from multiple samples,
-2.  one `metadata <metadata>`{.interpreted-text role="doc"} file with a
-    column of per-sample barcodes for use in FASTQ demultiplexing
-
-###### Obtaining example data
-
-::: command-block
-mkdir muxed-se-barcode-in-seq
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/muxed-se-barcode-in-seq.fastq.gz" saveas="muxed-se-barcode-in-seq/sequences.fastq.gz"}
-:::
-
-##### Importing data
-
-::: command-block
-qiime tools import \--type MultiplexedSingleEndBarcodeInSequence
-\--input-path muxed-se-barcode-in-seq/sequences.fastq.gz \--output-path
-multiplexed-seqs.qza
-:::
-
-In this format, sequence data is still multiplexed (i.e. you have only
-one `fastq.gz` file containing raw data for all of your samples).
-
-Because you are importing a single file of sequences, your filenames may
-be whatever you prefer.
-
-There should be exactly one unique barcode for each sample you wish to
-demultiplex. Barcodes are not required to be in any specific order.
-
-#### Multiplexed paired-end FASTQ with barcodes in sequence
-
-##### Format description
-
-Users with multiplexed paired-end barcodes in sequence reads should
-have:
-
-1.  one `forward.fastq.gz` file, containing forward reads from multiple
-    samples,
-2.  one `reverse.fastq.gz` file, containing reverse reads from the same
-    samples,
-3.  one `metadata <metadata>`{.interpreted-text role="doc"} file with a
-    column of per-sample barcodes for use in FASTQ demultiplexing (or
-    two columns of dual-index barcodes)
-
-In this format, sequence data is still multiplexed (i.e. you have only
-one forward and one reverse `fastq.gz` file containing raw data for all
-of your samples).
-
-Because you are importing a multi-file directory, the filenames
-[forward.fastq.gz]{.title-ref} and [reverse.fastq.gz]{.title-ref} are
-*required*.
-
-The order of the records in the `fastq.gz` files defines the association
-between forward and reverse sequence reads, so a correct order must be
-preserved. Barcodes in the metadata mapping file are not required to be
-in any specific order.
-
-###### Obtaining example data
-
-::: command-block
-mkdir muxed-pe-barcode-in-seq
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/muxed-pe-barcode-in-seq/forward.fastq.gz" saveas="muxed-pe-barcode-in-seq/forward.fastq.gz"}
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/muxed-pe-barcode-in-seq/reverse.fastq.gz" saveas="muxed-pe-barcode-in-seq/reverse.fastq.gz"}
-:::
-
-##### Importing data
-
-::: command-block
-qiime tools import \--type MultiplexedPairedEndBarcodeInSequence
-\--input-path muxed-pe-barcode-in-seq \--output-path
-multiplexed-seqs.qza
-:::
-
-#### Casava 1.8 single-end demultiplexed fastq {#casava import}
-
-##### Format description
-
-In the Casava 1.8 demultiplexed (single-end) format, there is one
-`fastq.gz` file for each sample in the study which contains the
-[single-end]{.title-ref} reads for that sample. The file name includes
-the sample identifier and should look like
-`L2S357_15_L001_R1_001.fastq.gz`. The underscore-separated fields in
-this file name are:
-
-1.  the sample identifier,
-2.  the barcode sequence or a barcode identifier,
-3.  the lane number,
-4.  the direction of the read (i.e. only R1, because these are
-    single-end reads), and
-5.  the set number.
-
-###### Obtaining example data
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/casava-18-single-end-demultiplexed.zip" saveas="casava-18-single-end-demultiplexed.zip"}
-:::
-
-::: command-block
-unzip -q casava-18-single-end-demultiplexed.zip
-:::
-
-##### Importing data
-
-::: command-block
-qiime tools import \--type \'SampleData\[SequencesWithQuality\]\'
-\--input-path casava-18-single-end-demultiplexed \--input-format
-CasavaOneEightSingleLanePerSampleDirFmt \--output-path
-demux-single-end.qza
-:::
-
-#### Casava 1.8 paired-end demultiplexed fastq
-
-##### Format description
-
-In Casava 1.8 demultiplexed (paired-end) format, there are two
-`fastq.gz` files for each sample in the study, each containing the
-forward or reverse reads for that sample. The file name includes the
-sample identifier. The forward and reverse read file names for a single
-sample might look like `L2S357_15_L001_R1_001.fastq.gz` and
-`L2S357_15_L001_R2_001.fastq.gz`, respectively. The underscore-separated
-fields in this file name are:
-
-1.  the sample identifier,
-2.  the barcode sequence or a barcode identifier,
-3.  the lane number,
-4.  the direction of the read (i.e. R1 or R2), and
-5.  the set number.
-
-###### Obtaining example data
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/casava-18-paired-end-demultiplexed.zip" saveas="casava-18-paired-end-demultiplexed.zip"}
-:::
-
-::: command-block
-unzip -q casava-18-paired-end-demultiplexed.zip
-:::
-
-##### Importing data
-
-::: command-block
-qiime tools import \--type
-\'SampleData\[PairedEndSequencesWithQuality\]\' \--input-path
-casava-18-paired-end-demultiplexed \--input-format
-CasavaOneEightSingleLanePerSampleDirFmt \--output-path
-demux-paired-end.qza
-:::
-
-(import-fastq-manifest)=
-#### \"Fastq manifest\" formats {#manifest file}
-
-The examples above demonstrate how to import multiplexed data (i.e. EMP
-or FASTQ files with the barcodes in the sequence) and how to import
-demultiplexed data that follows some common formatting conventions (the
-Casava formats). If you don\'t have data that matches the above cases,
-you likely will need to import your data into QIIME 2 manually by first
-creating a \"manifest file\" and then using the `qiime tools import`
-command with different specifications than in the EMP or Casava import
-commands.
-
-##### Format description
-
-First, you\'ll create a text file called a \"manifest file\", which maps
-sample identifiers to `fastq.gz` or `fastq` [absolute
-filepaths](https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths)
-that contain sequence and quality data for the sample (i.e. these are
-FASTQ files). The manifest file also indicates the direction of the
-reads in each `fastq.gz` or `fastq` file. The manifest file will
-generally be created by you, and it is designed to be a simple format
-that doesn\'t put restrictions on the naming of the demultiplexed
-`fastq.gz` / `fastq` files, since there is no broadly used naming
-convention for these files. You can call the manifest file whatever you
-want. As well, the manifest format is Metadata-compatible, so you can
-re-use the manifest file to bootstrap your
-`Sample Metadata <metadata>`{.interpreted-text role="doc"}, too.
-
-The manifest file is a tab-seperated (i.e., `.tsv`) text file. The first
-column defines the Sample ID, while the second (and optional third)
-column defines the absolute filepath to the forward (and optional
-reverse) reads. All of the rules and behavior of this format are
-inherited from the
-`QIIME 2 Metadata format <metadata>`{.interpreted-text role="doc"}.
-
-The `fastq.gz` absolute filepaths may contain environment variables
-(e.g., `$HOME` or `$PWD`). The following example illustrates a simple
-fastq manifest file for paired-end read data for four samples.
-
-    sample-id forward-absolute-filepath   reverse-absolute-filepath
-    sample-1  $PWD/some/filepath/sample0_R1.fastq.gz  $PWD/some/filepath/sample1_R2.fastq.gz
-    sample-2  $PWD/some/filepath/sample2_R1.fastq.gz  $PWD/some/filepath/sample2_R2.fastq.gz
-    sample-3  $PWD/some/filepath/sample3_R1.fastq.gz  $PWD/some/filepath/sample3_R2.fastq.gz
-    sample-4  $PWD/some/filepath/sample4_R1.fastq.gz  $PWD/some/filepath/sample4_R2.fastq.gz
-
-Just like with `fastq.gz`, the absolute filepaths in the manifest for
-any `fastq` files must be accurate. The following example illustrates a
-simple fastq manifest file for `fastq` single-end read data for two
-samples.
-
-    sample-id absolute-filepath
-    sample-1  $PWD/some/filepath/sample1_R1.fastq
-    sample-2  $PWD/some/filepath/sample2_R1.fastq
-
-There are four variants of FASTQ data which you must specify to QIIME 2
-when importing, and which are defined in the following sections. Since
-importing data in these four formats is very similar, we\'ll only
-provide examples for two of the variants:
-`SingleEndFastqManifestPhred33V2` and `PairedEndFastqManifestPhred64V2`.
-
-##### SingleEndFastqManifestPhred33V2
-
-In this variant of the fastq manifest format, the read directions must
-all either be forward or reverse. This format assumes that the [PHRED
-offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants)
-used for the positional quality scores in all of the `fastq.gz` /
-`fastq` files is 33.
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/se-33.zip" saveas="se-33.zip"}
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/se-33-manifest" saveas="se-33-manifest"}
-:::
-
-::: command-block
-unzip -q se-33.zip
-
-qiime tools import \--type \'SampleData\[SequencesWithQuality\]\'
-\--input-path se-33-manifest \--output-path single-end-demux.qza
-\--input-format SingleEndFastqManifestPhred33V2
-:::
-
-##### SingleEndFastqManifestPhred64V2
-
-In this variant of the fastq manifest format, the read directions must
-all either be forward or reverse. This format assumes that the [PHRED
-offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants)
-used for the positional quality scores in all of the `fastq.gz` /
-`fastq` files is 64. During import, QIIME 2 will convert the PHRED 64
-encoded quality scores to PHRED 33 encoded quality scores. This
-conversion will be slow, but will only happen one time.
-
-##### PairedEndFastqManifestPhred33V2
-
-In this variant of the fastq manifest format, there must be forward and
-reverse read `fastq.gz` / `fastq` files for each sample ID. This format
-assumes that the [PHRED
-offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants)
-used for the positional quality scores in all of the `fastq.gz` /
-`fastq` files is 33.
-
-##### PairedEndFastqManifestPhred64V2
-
-In this variant of the fastq manifest format, there must be forward and
-reverse read `fastq.gz` / `fastq` files for each sample ID. This format
-assumes that the [PHRED
-offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants)
-used for the positional quality scores in all of the `fastq.gz` /
-`fastq` files is 64. During import, QIIME 2 will convert the PHRED 64
-encoded quality scores to PHRED 33 encoded quality scores. This
-conversion will be slow, but will only happen one time.
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/pe-64.zip" saveas="pe-64.zip"}
-:::
-
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/pe-64-manifest" saveas="pe-64-manifest"}
-:::
-
-::: command-block
-unzip -q pe-64.zip
-
-qiime tools import \--type
-\'SampleData\[PairedEndSequencesWithQuality\]\' \--input-path
-pe-64-manifest \--output-path paired-end-demux.qza \--input-format
-PairedEndFastqManifestPhred64V2
+qiime tools import \
+  --type EMPPairedEndSequences \
+  --input-path my-sequence-data \
+  --output-path emp-paired-end-sequences.qza
 :::
 
 ### Sequences without quality information (i.e. FASTA)
@@ -591,25 +368,9 @@ unrooted-tree.qza \--type \'Phylogeny\[Unrooted\]\'
 
 If you have a rooted tree, you can use `--type 'Phylogeny[Rooted]'`
 instead.
+-->
 
-### Other data types
+## Importing metadata (tl;dr: metadata doesn't get imported)
 
-QIIME 2 can import many other data types not covered in this tutorial.
-You can see which formats of input data are importable with the
-following command:
-
-::: command-block
-qiime tools list-formats \--importable
-:::
-
-And which QIIME 2 types you can import these formats as:
-
-::: command-block
-qiime tools list-types
-:::
-
-Unfortunately, there isn\'t currently documentation detailing which data
-formats can be imported as which QIIME 2 data types, but hopefully the
-names of these formats and types should be self-explanatory enough to
-figure it out. If you have any questions, please post to the [QIIME 2
-Forum](https://forum.qiime2.org) for help!
+Sample metadata and feature metadata don't need to be imported, but rather can be loaded and used directly from `.tsv` files.
+To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).

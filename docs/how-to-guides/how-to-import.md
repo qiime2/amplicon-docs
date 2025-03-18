@@ -5,7 +5,7 @@
 Transfer of this document from `https://docs.qiime2.org` is in progress (as of 17 March 2025). 🪚
 
 The goal of this document is to provide specific examples on how to carry out the most commonly used imports of data into QIIME 2 Artifacts.
-It's challenging to compile this though, because I don't have good data on the frequency at which the different imports are used.[^provenance-has-this]
+It's challenging to compile this though, because I don't have good data on the frequency at which the different imports are used.[^import-statistics]
 I'm therefore going to consider this document a work in progress, focusing on compiling the most relevant information in consultation with users and developers, and based on [the most popular forum posts on importing](https://forum.qiime2.org/tag/import?ascending=false&order=views).
 
 If you have questions about importing that aren't answered here, post to the forum.
@@ -374,3 +374,6 @@ instead.
 
 Sample metadata and feature metadata don't need to be imported, but rather can be loaded and used directly from `.tsv` files.
 To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
+
+[^import-statistics]: It would be possible for us to compile this information because imports are recorded in data provenance, and we could assess that across the user community when provenance is parsed by [QIIME 2 View](https://view.qiime2.org).
+ To date though, we've never collected usage information (or any other data) through QIIME 2 View.

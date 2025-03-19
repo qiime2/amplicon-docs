@@ -146,7 +146,7 @@ The following import commands should allow you to import your demultiplexed sequ
 ::::{tab-item} Single-end reads, PHRED 33
 :sync: single-end-fq-manifest
 :::
-qiime tools import
+qiime tools import \
  --type 'SampleData[SequencesWithQuality]' \
  --input-path fq-manifest.tsv \
  --output-path demux.qza \
@@ -157,7 +157,7 @@ qiime tools import
 ::::{tab-item} Paired-end reads, PHRED 33
 :sync: paired-end-fq-manifest
 :::
-qiime tools import
+qiime tools import \
  --type 'SampleData[PairedEndSequencesWithQuality]' \
  --input-path fq-manifest.tsv \
  --output-path demux.qza \

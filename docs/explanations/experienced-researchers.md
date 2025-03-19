@@ -71,7 +71,7 @@ You can find an example in the *Moving Pictures tutorial* [here](moving-pictures
 ### Importing data into QIIME 2: `qiime tools import`
 
 If you're using QIIME 2 to process your data, the first thing you need to do is get that data into a format that QIIME 2 can understand.
-The need for importing is explained in [](import-explanation), and examples illustrating the most common import needs of users are presented in [](how-to-import-export).
+The need for importing is explained in [](import-explanation), and examples illustrating the most common import needs of users are presented in [](how-to-import).
 
 This step has the potential to be the most confusing part of the QIIME 2 pipeline as there are dozens of import and format types to choose from.
 To see a full list of available import/format types use:
@@ -82,7 +82,7 @@ If you're importing FASTQ data that you've generated, the most straight-forward 
 If you have sequencing data with one of two very specific formats, you may alternatively be able to use [other import formats](importing-fastq), but importing with a manifest file will always work.
 
 If you want to import FASTA files or a feature table directly, you can also do that by using a different `--type` flag for `qiime tools import`.
-[](how-to-import-export) provides examples for these imports.
+[](how-to-import) provides examples for these imports.
 
 ### Demultiplexing sequences
 
@@ -252,7 +252,7 @@ Relevant plugins:
 
 At this point, you should be ready to analyze your feature table to answer your scientific questions.
 QIIME 2 offers multiple built-in functions to analyze your data.
-If you don't find what you're looking for, you can also [export your data](how-to-import-export:export) for analysis with other tools.
+If you don't find what you're looking for, you can also [export your data](how-to-export) for analysis with other tools.
 The [](moving-pictures-tutorial) has good examples of the types of visualizations and statistics that you can apply to your data.
 
 Some of those include:

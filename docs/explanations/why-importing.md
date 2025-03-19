@@ -1,7 +1,14 @@
 (import-explanation)=
 # Why importing is necessary
 
+In addition to being the first step in a user's QIIME 2 analysis, importing is often the most challenging step.
+The reason it's challenging is that there are tens or even hundreds of different file types that users would like to use with QIIME 2, and many file formats in bioinformatics are poorly defined.
+For example, the [ete3 phylogenetic analysis and visualization toolkit](http://etetoolkit.org/) recognizes (as of this writing) [11 different variants of the newick file format](http://etetoolkit.org/docs/latest/reference/reference_tree.html#ete3.TreeNode).
+A newick file doesn't include explicit information in it on which of these variants it is, so it's up to the person working with the file to know that.
+A user importing data into QIIME 2 needs to have an understanding of what format their data is in, and then learn how to provide that information to QIIME 2.
+
 Importing fastq files is likely the most common importing task for QIIME 2 users, so I'll discuss why importing is necessary using fastq as an example.
+(You can learn how to do this in [](import-fastq-sequencing-data).)
 Fastq files store sequence and associated sequence quality information.
 They use a clever approach for representing quality information that enables the quality information to be represented in the same number of characters as the sequence itself.
 For example, here is a single sequence and quality record from a fastq file:

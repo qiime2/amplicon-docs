@@ -6,7 +6,7 @@ Transfer of this document from `https://docs.qiime2.org` is in progress (as of 1
 
 The goal of this document is to provide specific examples on how to carry out the most commonly used imports of data into QIIME 2 Artifacts.
 It's challenging to compile this though, because I don't have good data on the frequency at which the different imports are used.[^import-statistics]
-I'm therefore going to consider this document a work in progress, focusing on compiling the most relevant information in consultation with users and developers, and based on [the most popular forum posts on importing](https://forum.qiime2.org/tag/import?ascending=false&order=views).
+I'm therefore going to consider this document a work in progress, focusing on compiling the most relevant information in consultation with users and developers, and based on [the most viewed forum posts on importing](https://forum.qiime2.org/tag/import?ascending=false&order=views).
 
 If you have questions about importing that aren't answered here, post to the forum.
 If you think specific examples would be helpful for others, post an issue on the [amplicon-docs issue tracker](https://github.com/qiime2/amplicon-docs/issues).
@@ -14,8 +14,6 @@ Issues should include detailed information (e.g., including small example data t
 (If you don't have this detailed information, starting with a question on the forum is recommended over posting to the issue tracker.)
 
 :::
-
-# Importing data into QIIME 2
 
 A QIIME 2 analysis almost always starts with importing data for use in QIIME 2.
 You can learn about why this is needed in [](import-explanation).
@@ -178,7 +176,7 @@ qiime tools import
 (import-casava)=
 #### Casava 1.8 paired-end demultiplexed fastq
 
-The Casava 1.8 paired-end demultiplexed fastq format is a format for demultiplexed sequence data that is very specific to the software used to create it.
+The Casava 1.8 paired-end demultiplexed fastq format is a format for demultiplexed sequence data that is **very specific to the software used to create it**.
 There are two `fastq.gz` files for each sample in the study, each containing the forward or reverse reads for that sample.
 The file name includes the sample identifier.
 The forward and reverse read file names for a single sample might look like `sample-1_15_L001_R1_001.fastq.gz` and `sample-1_15_L001_R2_001.fastq.gz`, respectively.
@@ -201,6 +199,80 @@ qiime tools import \
 :::
 
 More often, if you have demultiplexed sequence data, you'll need to [import using a fastq manifest file](import-fastq-manifest).
+
+## Importing "-omics feature tables"
+
+`FeatureTable` is almost certainly the most frequent artifact class used with QIIME 2.
+There are many actions that work on these, and most support arbitrary individual[^individual-omics] -omics data types.
+If you generate a feature table outside of QIIME 2, you can import for use with the many QIIME 2 actions that work on these.
+
+The main thing you need to know to import your feature table into QIIME 2 is the type of data it contains.
+Counts of features (e.g., ASVs, genes, pathways, proteins, metabolites, ...) on a per sample basis are described with the subclass `Frequency`.
+Relative frequencies (i.e., fractions such that the sum across all features in a sample is `1.0`) are described with the subclass `RelativeFrequency`.
+There are others, but those are the most common.
+
+::::{margin}
+:::{warning}
+It is critical that you correctly describe the type of data your feature table contains.
+Don't assume or guess!
+Making an incorrect choice will likely result in your performing analyses that are problematic or meaningless with your data type.
+:::
+::::
+
+### Importing from .biom (v2.1.0, default)
+
+Input:
+- A feature table in `.biom` format, adhering to the [BIOM v2.1.0 format specification](http://biom-format.org/documentation/format_versions/biom-2.1.html) ([example](https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v210.biom)).
+
+This is currently the default, so a feature table containing frequencies (i.e., `FeatureTable[Frequency]`) could be imported as follows:
+
+:::
+qiime tools import \
+  --input-path feature-table-v210.biom \
+  --type 'FeatureTable[Frequency]' \
+  --output-path feature-table.qza
+:::
+
+Alternatives:
+- If your table contains relative frequencies, you would provide the artifact class `FeatureTable[RelativeFrequency]` as the `type`.
+
+
+::::{tip} Importing taxonomy information from biom formats
+:class: dropdown
+:label: import-taxonomy-from-biom
+Unlike the biom format, QIIME 2 maintains feature and sample metadata and annotations in separate files from the feature table.
+This simplifies working with multiple different annotations (e.g., to compare taxonomic annotations using two different reference databases).
+If you have taxonomy information in a biom table and want to use that with QIIME 2, you can import that into an artifact of class `FeatureData[Taxonomy]` as follows:
+
+:::
+qiime tools import \
+  --input-path feature-table.biom \
+  --output-path taxonomy.qza \
+  --input-format BIOMV210Format \
+  --type "FeatureData[Taxonomy]"
+:::
+::::
+
+### Importing from .biom (v1.0.0)
+
+Input:
+- A feature table in `.biom` format, adhering to the [BIOM v1.0.0 format specification](http://biom-format.org/documentation/format_versions/biom-1.0.html) ([example](https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v100.biom)).
+
+:::
+qiime tools import \
+  --input-path feature-table-v100.biom \
+  --type 'FeatureTable[Frequency]' \
+  --output-path feature-table.qza \
+  --input-format BIOMV100Format
+:::
+
+Alternatives:
+- If your table contains relative frequencies, you would provide the artifact class `FeatureTable[RelativeFrequency]` as the `type`.
+
+### Importing from other feature table formats
+
+If you have a feature table in a format that is not one of the two listed above, [we're working on additional options for importing](https://github.com/qiime2/q2-types/issues/140).
+In the meantime, see [forum posts on this topic](https://forum.qiime2.org/search?q=tag%3Afeature-table%20%23import%20order%3Alikes).
 
 <!--
 ### Multiplexed sequence data
@@ -377,3 +449,6 @@ To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Me
 
 [^import-statistics]: It would be possible for us to compile this information because imports are recorded in data provenance, and we could assess that across the user community when provenance is parsed by [QIIME 2 View](https://view.qiime2.org).
  To date though, we've never collected usage information (or any other data) through QIIME 2 View.
+
+[^individual-omics]: If your feature table integrates different -omics data types, specialized methods may be required.
+ Best to reach out on the forum for input here.

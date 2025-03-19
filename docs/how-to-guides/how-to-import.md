@@ -12,7 +12,6 @@ If you have questions about importing that aren't answered here, post to the for
 If you think specific examples would be helpful for others, post an issue on the [amplicon-docs issue tracker](https://github.com/qiime2/amplicon-docs/issues).
 Issues should include detailed information (e.g., including small example data that could be used under a CC-BY license, example working import commands, and/or helpful related discussions from the forum or elsewhere).
 (If you don't have this detailed information, starting with a question on the forum is recommended over posting to the issue tracker.)
-
 :::
 
 :::{note}
@@ -20,32 +19,21 @@ This document currently presents importing using the command line interface only
 Transitioning of this content to usage examples, which will then present importing through other interfaces, is [pending](https://github.com/qiime2/amplicon-docs/issues/10).
 :::
 
-A QIIME 2 analysis almost always starts with importing data for use in QIIME 2.
-You can learn about why this is needed in [](import-explanation).
-
+A QIIME 2 analysis almost always starts with importing data for use in QIIME 2, and this can also unfortunately be one of the most difficult steps of using QIIME 2 for users.
 Importing creates a [QIIME 2 artifact](getting-started:artifacts-and-visualizations) from data in another format, such as a `.biom` file or one or more `.fastq` files.
-Two pieces of information are needed to import data into QIIME 2: the [Artifact Class](getting-started:artifact-classes) that you want to import into, and QIIME 2's name for the format that you're trying to load.
+You can learn about why this is needed and why it's hard in [](import-explanation).
 
-:::{note}
-In addition to being the first step in a user's QIIME 2 analysis, importing is often the most challenging step.
-The reason it's challenging is that there are tens or even hundreds of different file types that users would like to use with QIIME 2, and many file formats in bioinformatics are poorly defined.
-For example, the [ete3 phylogenetic analysis and visualization toolkit](http://etetoolkit.org/) recognizes (as of this writing) [11 different variants of the newick file format](http://etetoolkit.org/docs/latest/reference/reference_tree.html#ete3.TreeNode).
-A newick file doesn't include explicit information in it on which of these variants it is, so it's up to the person working with the file to know that.
-A user importing data into QIIME 2 needs to have an understanding of what format their data is in, and then learn how to provide that information to QIIME 2.
-
-As always, we're here to help on [the forum](https://forum.qiime2.org).
-There are [lots of existing discussions about importing](https://forum.qiime2.org/tag/import).
-If after searching you haven't found an answer to your question, post with a description of the data that you're trying to import and we'll help you figure out how to proceed.
-:::
-
-The first step in determining how to import your data is figuring out what it is that you're trying to import.
-The following sections present importing of different data types, ordered by how common we think they are to import in practice.
+The first step in determining how to import your data is figuring out what artifact class you're trying to import.
+The following sections present importing of different artifact classes, ordered by how common we think they are to import in practice.
 **You don't need to read all of the sections below but rather jump to the section that describes the data that you're trying to import.**
+We also don't present all of the importable artifact classes here, as many of them are rarely used in importing (rather they represent intermediary data used by QIIME 2).
+Using the command line interface, you can run `qiime tools list-types` to see a list of all importable artifact classes.
 
-We also don't present all of the importable data types here, as many of them are rarely used in importing (rather they represent intermediary data types used by QIIME 2).
-Using the command line interface, you can run `qiime tools list-types` to see a list of all of them.
+As always, we're here to help on [the forum](https://forum.qiime2.org) if you get stuck.
+There are [lots of existing discussions about importing](https://forum.qiime2.org/tag/import?ascending=false&order=views) and if after searching you haven't found an answer to your question, post with a description of the data that you're trying to import and we'll help you figure out how to proceed.
 
-## Importing "raw sequencing data"
+(import-fastq-sequencing-data)=
+## Importing "fastq sequencing data"
 
 Most users begin their QIIME 2 analysis with "raw sequencing data" in the form of `.fastq.gz` files.
 

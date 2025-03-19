@@ -15,6 +15,11 @@ Issues should include detailed information (e.g., including small example data t
 
 :::
 
+:::{note}
+This document currently presents importing using the command line interface only.
+Transitioning of this content to usage examples, which will then present importing through other interfaces, is [pending](https://github.com/qiime2/amplicon-docs/issues/10).
+:::
+
 A QIIME 2 analysis almost always starts with importing data for use in QIIME 2.
 You can learn about why this is needed in [](import-explanation).
 

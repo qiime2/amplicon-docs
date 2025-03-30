@@ -66,7 +66,7 @@ Briefly, the data should be in a tab-separated text file (`.tsv`), where the fir
 Sample ids must be unique, and the column header for the first column should be `sample-id` or `id` (there are a few other options as well).
 
 The metadata file format is defined in *Using QIIME 2* [here](https://use.qiime2.org/en/latest/references/metadata.html).
-You can find an example in the *Moving Pictures tutorial* [here](moving-pictures-tutorial:sample-metadata).
+You can find an example in the *Moving Pictures tutorial* [here](xref:q2doc-gut-to-soil-target#sample-metadata).
 
 ### Importing data into QIIME 2: `qiime tools import`
 
@@ -154,7 +154,7 @@ DADA2 and deblur are currently the two denoising methods available in QIIME 2 an
 #### Preparing data for denoising
 
 Both DADA2 and deblur perform quality filtering, denoising, and chimera removal, so you shouldn't need to perform any quality screening prior to running them.
-That said, the deblur developers recommend doing an initial quality screen - this is illustrated in the *Moving Pictures tutorial's* [Deblur section](moving-pictures:deblur).
+That said, the deblur developers recommend doing an initial quality screen - this is illustrated in the *Moving Pictures tutorial's* [Deblur section](xref:q2doc-moving-pictures-target#deblur).
 No quality filtering step is required before running DADA2.
 
 Both methods have an option to truncate your reads to a constant length (which occurs prior to denoising).

@@ -66,7 +66,7 @@ Briefly, the data should be in a tab-separated text file (`.tsv`), where the fir
 Sample ids must be unique, and the column header for the first column should be `sample-id` or `id` (there are a few other options as well).
 
 The metadata file format is defined in *Using QIIME 2* [here](https://use.qiime2.org/en/latest/references/metadata.html).
-You can find an example in the *Moving Pictures tutorial* [here](xref:q2doc-gut-to-soil-target#sample-metadata).
+You can find an example in the *Gut-to-Soil Tutorial* [here](xref:q2doc-gut-to-soil-target#gut-to-soil-tutorial:sample-metadata).
 
 ### Importing data into QIIME 2: `qiime tools import`
 
@@ -87,15 +87,15 @@ If you want to import FASTA files or a feature table directly, you can also do t
 ### Demultiplexing sequences
 
 Relevant plugins:
-- [`q2-demux`](q2-plugin-demux)
-- [`q2-cutadapt`](q2-plugin-cutadapt)
+- [`q2-demux`](xref:q2doc-library-target#q2-plugin-demux)
+- [`q2-cutadapt`](xref:q2doc-library-target#q2-plugin-cutadapt)
 
 If you have reads from multiple samples in the same file, you'll need to demultiplex your sequences.
 
-If your barcodes have already been removed from the reads and are in a separate file, you can use [`emp-paired`](q2-action-demux-emp-paired) to demultiplex these.
+If your barcodes have already been removed from the reads and are in a separate file, you can use [`emp-paired`](xref:q2doc-library-target#q2-action-demux-emp-paired) to demultiplex these.
 
 If your barcodes are still in your sequences, you can use functions from the `q2-cutadapt`.
-The [`demux-single`](q2-action-cutadapt-demux-single) method looks for barcode sequences at the beginning of your reads (5' end) with a certain error tolerance, removes them, and returns sequence data separated by each sample.
+The [`demux-single`](xref:q2doc-library-target#q2-action-cutadapt-demux-single) method looks for barcode sequences at the beginning of your reads (5' end) with a certain error tolerance, removes them, and returns sequence data separated by each sample.
 The QIIME 2 Forum has a [post on the various functions available in cutadapt](https://forum.qiime2.org/t/demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313), including demultiplexing.
 You can learn more about how `cutadapt` works under the hood by reading their [documentation](https://cutadapt.readthedocs.io/en/stable/index.html).
 
@@ -106,26 +106,26 @@ For the time being, this type of demultiplexing needs to be done outside of QIIM
 ### Merging paired end reads
 
 Relevant plugins:
-- [`q2-vsearch`](q2-plugin-vsearch)
-- [`q2-dada2`](q2-plugin-dada2)
+- [`q2-vsearch`](xref:q2doc-library-target#q2-plugin-vsearch)
+- [`q2-dada2`](xref:q2doc-library-target#q2-plugin-dada2)
 
 Whether or not you need to merge reads depends on how you plan to cluster or denoise your sequences into amplicon sequence variants (ASVs) or operational taxonomic units (OTUs).
-If you plan to use DADA2 to denoise your sequences, do not merge --- [`denoise-paired`](q2-action-dada2-denoise-paired) performs read merging automatically after denoising each sequence.
+If you plan to use DADA2 to denoise your sequences, do not merge --- [`denoise-paired`](xref:q2doc-library-target#q2-action-dada2-denoise-paired) performs read merging automatically after denoising each sequence.
 If you plan to use deblur or OTU clustering methods next, join your sequences now.
 
-If you need to merge your reads, you can use the [`merge-pairs`](q2-action-vsearch-merge-pairs) method.
+If you need to merge your reads, you can use the [`merge-pairs`](xref:q2doc-library-target#q2-action-vsearch-merge-pairs) method.
 
 (experienced-researchers:removing-nonbio-sequences)=
 ### Removing non-biological sequences
 
 Relevant plugins:
-- [`q2-cutadapt`](q2-plugin-cutadapt)
-- [`q2-dada2`](q2-plugin-dada2)
+- [`q2-cutadapt`](xref:q2doc-library-target#q2-plugin-cutadapt)
+- [`q2-dada2`](xref:q2doc-library-target#q2-plugin-dada2)
 
 If your data contains any non-biological sequences (e.g. primers, sequencing adapters, PCR spacers, etc), you should remove these.
 
-The [`q2-cutadapt`](q2-plugin-cutadapt) plugin has comprehensive methods for removing non-biological
-sequences from [paired-end](q2-action-cutadapt-trim-paired) or [single-end](q2-action-cutadapt-trim-single) data.
+The [`q2-cutadapt`](xref:q2doc-library-target#q2-plugin-cutadapt) plugin has comprehensive methods for removing non-biological
+sequences from [paired-end](xref:q2doc-library-target#q2-action-cutadapt-trim-paired) or [single-end](xref:q2doc-library-target#q2-action-cutadapt-trim-single) data.
 
 If you're going to use DADA2 to denoise your sequences, you can remove biological sequences at the same time as you call the denoising function.
 All of DADA2's `denoise` actions have some sort of `--p-trim` parameter you can specify to remove base pairs from the 5' end of your reads.
@@ -146,8 +146,8 @@ DADA2 and deblur will also produce a stats summary file with useful information 
 ### Denoising
 
 Relevant plugins:
-- [`q2-dada2`](q2-plugin-dada2)
-- [`q2-deblur`](q2-plugin-deblur)
+- [`q2-dada2`](xref:q2doc-library-target#q2-plugin-dada2)
+- [`q2-deblur`](xref:q2doc-library-target#q2-plugin-deblur)
 
 DADA2 and deblur are currently the two denoising methods available in QIIME 2 and both group sequences into amplicon sequence variants (ASV).
 
@@ -164,23 +164,23 @@ Reads shorter than the truncation length are discarded and reads longer are trun
 
 #### Denoising with DADA2
 
-The [`q2-dada2`](q2-plugin-dada2) has multiple methods to denoise reads:
+The [`q2-dada2`](xref:q2doc-library-target#q2-plugin-dada2) has multiple methods to denoise reads:
 
-- [`denoise-paired`](q2-action-dada2-denoise-paired) requires unmerged, paired-end Illumina reads (i.e. both forward and reverse).
-- [`denoise-single-end`](q2-action-dada2-denoise-single) accepts either single-end or unmerged, paired-end Illumina reads.
+- [`denoise-paired`](xref:q2doc-library-target#q2-action-dada2-denoise-paired) requires unmerged, paired-end Illumina reads (i.e. both forward and reverse).
+- [`denoise-single-end`](xref:q2doc-library-target#q2-action-dada2-denoise-single) accepts either single-end or unmerged, paired-end Illumina reads.
  If you give it unmerged paired-end data, it will only use the forward reads (and do nothing with the reverse reads).
-- [`denoise-pyro`](q2-action-dada2-denoise-pyro) accepts ion torrent or 454 data.
-- [`denoise-css`](q2-action-dada2-denoise-pyro) accepts Pacbio CCS.
+- [`denoise-pyro`](xref:q2doc-library-target#q2-action-dada2-denoise-pyro) accepts ion torrent or 454 data.
+- [`denoise-css`](xref:q2doc-library-target#q2-action-dada2-denoise-pyro) accepts Pacbio CCS.
 
 Note that DADA2 may be slow on very large datasets.
 You can increase the number of threads to use with the `--p-n-threads` parameter.
 
 #### Denoising with deblur
 
-The [`q2-deblur`](q2-plugin-deblur) plugin has two methods to denoise sequences:
+The [`q2-deblur`](xref:q2doc-library-target#q2-plugin-deblur) plugin has two methods to denoise sequences:
 
-- [`denoise-16S`](q2-action-deblur-denoise-16S) denoises 16S rRNA data.
-- [`denoise-other`](q2-action-deblur-denoise-other) denoises other types of sequences.
+- [`denoise-16S`](xref:q2doc-library-target#q2-action-deblur-denoise-16S) denoises 16S rRNA data.
+- [`denoise-other`](xref:q2doc-library-target#q2-action-deblur-denoise-other) denoises other types of sequences.
 
 If you use `denoise-16S`, deblur performs an initial positive filtering step where it discards any reads which do not have minimum 60% identity similarity to sequences from the 85% OTU GreenGenes 13_8 database.
 If you don't want to do this step, use the `denoise-other` method.
@@ -192,25 +192,25 @@ Note that deblur *can* take in *merged* reads and treat them as single-end reads
 ### OTU Clustering
 
 Relevant plugins:
-- [`q2-vsearch`](q2-plugin-vsearch)
+- [`q2-vsearch`](xref:q2doc-library-target#q2-plugin-vsearch)
 
-QIIME 2 can also perform OTU clustering using the [`q2-vsearch`](q2-plugin-vsearch) plugin.
+QIIME 2 can also perform OTU clustering using the [`q2-vsearch`](xref:q2doc-library-target#q2-plugin-vsearch) plugin.
 This can include simple dereplication of sequences using [`dereplicate-sequences`](q2-method-vsearch-dereplicate-sequences), or [*de novo*](q2-method-vsearch-cluster-features-de-novo), [closed-reference](q2-method-vsearch-cluster-features-closed-reference), or [open-reference](q2-method-vsearch-cluster-features-open-reference) OTU clustering.
 
 Before dereplicating or clustering your sequences, you should ensure that:
 
 -   paired-end reads are merged (see [](experienced-researchers:merging))
 -   non-biological sequences are removed (see [](experienced-researchers:removing-nonbio-sequences))
--   reads have undergone quality control, either [by denoising](experienced-researchers:denoising) or using [`q2-quality-filter`](q2-plugin-quality-filter)
--   if you want to strictly dereplicate your sequences, all reads should be trimmed to the same length using [`q2-cutadapt`](q2-plugin-cutadapt)
+-   reads have undergone quality control, either [by denoising](experienced-researchers:denoising) or using [`q2-quality-filter`](xref:q2doc-library-target#q2-plugin-quality-filter)
+-   if you want to strictly dereplicate your sequences, all reads should be trimmed to the same length using [`q2-cutadapt`](xref:q2doc-library-target#q2-plugin-cutadapt)
 
 For additional information, see [](cluster-reads-into-otus).
 
 ### Taxonomic annotation
 
 Relevant plugins:
-- [`q2-feature-classifier`](q2-plugin-feature-classifier) (also see [Bokulich et al. (2018)](https://doi.org/10.1186/s40168-018-0470-z))
-- [`rescript`](q2-plugin-rescript) (also see [Robeson et al. (2019)](https://doi.org/10.1371/journal.pcbi.1009581))
+- [`q2-feature-classifier`](xref:q2doc-library-target#q2-plugin-feature-classifier) (also see [Bokulich et al. (2018)](https://doi.org/10.1186/s40168-018-0470-z))
+- [`rescript`](xref:q2doc-library-target#q2-plugin-rescript) (also see [Robeson et al. (2019)](https://doi.org/10.1371/journal.pcbi.1009581))
 
 There are two main approaches for assigning taxonomy, each with multiple methods available.
 
@@ -223,16 +223,16 @@ The first approach involves aligning reads to reference databases directly:
 The second approach uses a machine learning classifier to assign likely taxonomies to reads, and can be used through [`classify-sklearn`](q2-method-feature-classifier-classify-sklearn).
 This method needs a pre-trained model to classify the sequences.
 You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://resources.qiime2.org), or train one yourself as described in [](train-feature-classifier).
-[`rescript`](q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
+[`rescript`](xref:q2doc-library-target#q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
 
 ## Generating phylogenetic trees
 
 Relevant plugins:
-- [`q2-phylogeny`](q2-plugin-phylogeny)
-- [`q2-fragment-insertion`](q2-plugin-fragment-insertion)
+- [`q2-phylogeny`](xref:q2doc-library-target#q2-plugin-phylogeny)
+- [`q2-fragment-insertion`](xref:q2doc-library-target#q2-plugin-fragment-insertion)
 
-QIIME 2 allows you to generate phylogenetic trees *de novo* with a few different underlying tools using the [`q2-phylogeny`](q2-plugin-phylogeny) plugin.
-You can also generate phylogenetic trees by inserting short sequence reads into a reference phylogenetic tree using [`q2-fragment-insertion`](q2-plugin-fragment-insertion).
+QIIME 2 allows you to generate phylogenetic trees *de novo* with a few different underlying tools using the [`q2-phylogeny`](xref:q2doc-library-target#q2-plugin-phylogeny) plugin.
+You can also generate phylogenetic trees by inserting short sequence reads into a reference phylogenetic tree using [`q2-fragment-insertion`](xref:q2doc-library-target#q2-plugin-fragment-insertion).
 
 *De novo* trees are useful if you don't have a good reference.
 These are often fairly low-quality trees however.
@@ -256,14 +256,14 @@ If you don't find what you're looking for, you can also [export your data](how-t
 The [](moving-pictures-tutorial) has good examples of the types of visualizations and statistics that you can apply to your data.
 
 Some of those include:
-- [generating taxonomic composition barplots](q2-action-taxa-barplot),
-- [generating interactive ordination (Emperor) plots](q2-action-emperor-plot),
-- [calculating common diversity metrics](q2-action-diversity-core-metrics),
-- [calculating phylogenetic diversity metrics](q2-action-diversity-core-metrics-phylogenetic),
-- calculating uncommon diversity metrics: approximately [30 alpha diversity metrics](q2-action-diversity-alpha) and [20 beta diversity metrics](q2-action-diversity-beta),
-- [computing](q2-action-composition-ancombc) and [visualizing](q2-action-composition-da-barplot) differential abundance across sample categories,
-- [performing longitudinal data analysis](q2-plugin-longitudinal),
-- developing machine learning tools to predict [categorical](q2-action-sample-classifier-classify-samples) or [continuous](q2-action-sample-classifier-regress-samples) metadata as a function of microbiome composition,
+- [generating taxonomic composition barplots](xref:q2doc-library-target#q2-action-taxa-barplot),
+- [generating interactive ordination (Emperor) plots](xref:q2doc-library-target#q2-action-emperor-plot),
+- [calculating common diversity metrics](xref:q2doc-library-target#q2-action-diversity-core-metrics),
+- [calculating phylogenetic diversity metrics](xref:q2doc-library-target#q2-action-diversity-core-metrics-phylogenetic),
+- calculating uncommon diversity metrics: approximately [30 alpha diversity metrics](xref:q2doc-library-target#q2-action-diversity-alpha) and [20 beta diversity metrics](xref:q2doc-library-target#q2-action-diversity-beta),
+- [computing](xref:q2doc-library-target#q2-action-composition-ancombc) and [visualizing](xref:q2doc-library-target#q2-action-composition-da-barplot) differential abundance across sample categories,
+- [performing longitudinal data analysis](xref:q2doc-library-target#q2-plugin-longitudinal),
+- developing machine learning tools to predict [categorical](xref:q2doc-library-target#q2-action-sample-classifier-classify-samples) or [continuous](xref:q2doc-library-target#q2-action-sample-classifier-regress-samples) metadata as a function of microbiome composition,
 
 - and lots more.
 
@@ -277,7 +277,7 @@ Some cool new plugins (as of 28 February 2025) include:
  This is useful when building a tree is too computationally expensive, or you're not confident that you have one that's reliable.
  Pretty neat!
 - [`q2-micom`](https://library.qiime2.org/plugin/micom-dev/q2-micom): Enables inference of metabolic interactions in gut microbiome data using MICOM ([](https://doi.org/10.1128/mSystems.00606-19)).
-- [`q2-boots`](https://library.qiime2.org/plugin/caporaso-lab/q2-boots): Supports bootstrapped and rarefaction-based diversity calculations with an interface that mirrors those in [`q2-diversity`](q2-plugin-diversity) ([](https://doi.org/10.12688/f1000research.156295.1)).
+- [`q2-boots`](https://library.qiime2.org/plugin/caporaso-lab/q2-boots): Supports bootstrapped and rarefaction-based diversity calculations with an interface that mirrors those in [`q2-diversity`](xref:q2doc-library-target#q2-plugin-diversity) ([](https://doi.org/10.12688/f1000research.156295.1)).
  This produces averaged alpha and beta diversity results across a user-defined number of bootstrapping or rarefaction iterations, such that these results can be used anywhere that individual alpha and beta diversity results can be used.
  Don't like the idea of throwing away data to support even sampling?
  `q2-boots` allows you to make diversity estimates based on all of your data.

@@ -1,5 +1,5 @@
 autodoc:
-	cd docs/references && q2doc autodoc --no-validate .
+	q2doc autodoc --singlepage --output references docs
 
 html:
 	cd docs && jupyter book build --html
@@ -18,3 +18,6 @@ serve:
 
 clean:
 	rm -rf docs/_build/html/
+	rm -rf docs/references/plugins/
+	rm -rf docs/references/artifacts/
+	rm -rf docs/q2doc.bib

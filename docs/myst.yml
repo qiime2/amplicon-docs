@@ -46,18 +46,14 @@ project:
     - title: References
       children:
         - file: references/available-plugins.md
+          children:
+              - pattern: references/plugins/*.md
+        - title: Artifacts
+          children:
+            - pattern: references/artifacts/*.md
     - title: Back Matter
       children:
-        - file: back-matter/intro.md
         - file: back-matter/glossary.md
-        - title: Plugin Index
-          children:
-            - title: Plugins
-              children:
-                  - pattern: references/plugin-reference/plugins/*/*.md
-            - title: Artifacts
-              children:
-                - pattern: references/plugin-reference/artifacts/*.md
 
 site:
   template: https://github.com/ebolyen/myst-book-theme-poc.git

@@ -6,18 +6,18 @@ This document was partially updated when transferred from `https://docs.qiime2.o
 :::
 
 This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research.
-For experienced users who are already well versed in microbiome analysis (and those who are averse to uncontrolled use of emoji) mosey on over to [](expierienced-researchers).
+For experienced users who are already well versed in microbiome analysis (and those who are averse to uncontrolled use of emoji) mosey on over to [](#experienced-researchers).
 
 :::{note}
-If you haven't already read [](getting-started), we recommend starting there.
+If you haven't already read [](#getting-started), we recommend starting there.
 Some technical terminology related to the QIIME 2 Framework (Q2F) used in this document is introduced there.
 :::
 
 Welcome all newcomers! 👋
-This guide will give you a conceptual overview of many of the [plugins and actions](getting-started:plugins) available in QIIME 2, and guide you to relevant documentation for deeper exploration.
+This guide will give you a conceptual overview of many of the [plugins and actions](#getting-started:plugins) available in QIIME 2, and guide you to relevant documentation for deeper exploration.
 As an *Explanation* article, this document doesn't provide specific commands to run, but rather discusses at a higher level what your analysis workflow might entail.
 If you want specific commands that you can run and then adapt for your own work, our *Tutorial* articles are more aligned with what you're looking for.
-We generally recommend starting with the [](moving-pictures-tutorial).
+We generally recommend starting with the [](#moving-pictures-tutorial).
 
 Consider this document to be your treasure map: QIIME 2 actions are the stepping stones on your path, and the flowcharts below will tell you where all the goodies are buried.
 🗺️
@@ -35,15 +35,15 @@ And before we look at that overview, we must look at the key to our treasure map
 :label: flowchart-key
 :alt: Key of symbols used in flowcharts.
 
-Each type of {term}`Result` (i.e., [Artifacts and Visualizations](getting-started:artifacts-and-visualizations)) and {term}`Action` (i.e., {term}`methods <method>`, {term}`visualizers <visualizer>`, and {term}`pipelines <pipeline>`) is represented by a different color-coded node.
+Each type of {term}`Result` (i.e., [Artifacts and Visualizations](#getting-started:artifacts-and-visualizations)) and {term}`Action` (i.e., {term}`methods <method>`, {term}`visualizers <visualizer>`, and {term}`pipelines <pipeline>`) is represented by a different color-coded node.
 The edges connecting each node are either solid (representing either required input or output) or dashed (representing optional input).
 ```
 
 In the flowcharts below:
 
 - Actions are labeled with the name of the plugin and the name of the action.
-  To learn more about how to use a specific plugin and action, you can look it up in [](available-plugins).
-- Artifacts are labeled by their [artifact class](getting-started:artifact-classes).
+  To learn more about how to use a specific plugin and action, you can look it up in [](#available-plugins).
+- Artifacts are labeled by their [artifact class](#getting-started:artifact-classes).
 - Visualizations are variously labeled as "visualization," some name that represents the information shown in that visualization, or replaced with an image representing some of the tasty information you might find inside that visualization...
  🍙
 
@@ -55,13 +55,13 @@ Just a few more **important points** before we go further:
    It only covers some of the chief actions in the QIIME 2 amplicon distribution.
    There are many more actions and plugins to discover.
    Curious to learn more?
-   Refer to [](available-plugins), or if you're working on the command line, call `qiime --help`.
+   Refer to [](#available-plugins), or if you're working on the command line, call `qiime --help`.
 1. The flowcharts below are designed to be as simple as possible, and hence omit many of the inputs (particularly optional inputs and metadata) and outputs (particularly statistical summaries and other minor outputs) and all of the possible parameters from most actions.
    Many additional actions (e.g., for displaying statistical summaries or fiddling with feature tables 🎻) are also omitted.
-   Now that you know all about the help documentation ([](available-plugins)), use it to learn more about individual actions, and other actions present in a plugin (hint: if a plugin has additional actions not described here, they are probably used to examine the output of other actions in that plugin).
+   Now that you know all about the help documentation ([](#available-plugins)), use it to learn more about individual actions, and other actions present in a plugin (hint: if a plugin has additional actions not described here, they are probably used to examine the output of other actions in that plugin).
 1. Metadata is a central concept in QIIME 2.
    We do not extensively discuss metadata in this guide.
-   Instead, find discussion of metadata in []().
+   Instead, find discussion of metadata in [our documentation of the metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
 1. There is no one way to do things in QIIME 2.
    Nor is there a "QIIME 2" approach.
    *Many paths lead from the foot of the mountain...* ⛰️
@@ -91,12 +91,12 @@ The edges and nodes in this overview do not represent specific actions or data t
 Discussion of these steps and terms follows.
 ```
 
-All data must be [imported](import-explanation) into a QIIME 2 artifact to be used by a QIIME 2 action (with the exception of metadata).
+All data must be [imported](#import-explanation) into a QIIME 2 artifact to be used by a QIIME 2 action (with the exception of metadata).
 Most users start with either multiplexed (e.g., between one and three FASTQ files) or demuliplexed (e.g., a collection of `n` `.fastq` files, where `n` is the number of samples, or two-times the number of samples) raw sequence data.
 If possible, we recommend starting with demultiplexed sequence data - this prevents you from having to understand how sequences were multiplexed and how they need to be demultiplexed.
 Whoever did your sequencing should already have that information and know how to do this.
 Others users may start downstream, because some data processing has already been performed. For example, you can also start your QIIME 2 analysis with a feature table (`.biom` or `.tsv` file) generated with some other tool.
-[](how-to-import) helps you identify what type of data you have, and provides specific instructions on importing different types of data.
+[](#how-to-import) helps you identify what type of data you have, and provides specific instructions on importing different types of data.
 
 Now that we understand that we can actually enter into this overview workflow at nearly *any* of the nodes, let us walk through individual sections.
 
@@ -118,7 +118,7 @@ Common analyses include:
    If you are sequencing phylogenetic markers (e.g., 16S rRNA genes), you can construct a phylogenetic tree from your feature sequences to use when calculating phylogenetic diversity metrics.
 1. Differential abundance testing, to determine which features (OTUs, ASVs, taxa, etc) are significantly more/less abundant in different experimental groups.
 
-This is just the beginning, and [many other statistical tests and plotting methods are at your finger tips in QIIME 2](fun-with-feature-tables) and in the lands beyond.
+This is just the beginning, and [many other statistical tests and plotting methods are at your finger tips in QIIME 2](#fun-with-feature-tables) and in the lands beyond.
 The world is your oyster.
 Let's dive in.
 🏊
@@ -138,7 +138,7 @@ Whoever did your sequencing may have already demultiplexed your sequences for yo
 In our opinion: whoever did the sequencing knows how the sequences were multiplexed and how they should be demultiplexed, so this is something that's easier for them to do than for you to do.
 
 If you are demultiplexing with QIIME 2 (or just want to understand how it works - never a bad thing!), read on.
-Otherwise, you can jump to [](conceptual-overview:denoising-and-clustering).
+Otherwise, you can jump to [](#conceptual-overview:denoising-and-clustering).
 :::
 
 You (or whoever prepared and sequenced your samples) should know which barcode is associated with each sample -- if you do not know, talk to your lab mates or sequencing center.
@@ -156,7 +156,7 @@ Flowchart of demultiplexing and denoising workflows in QIIME 2.
 This flowchart describes all demultiplexing steps that are currently possible in QIIME 2, depending on the type of raw data you have imported.
 Usually only one of the different demultiplexing actions available in `q2-demux` or `q2-cutadapt` will be applicable for your data, and that is all you will need.
 
-Read more about demultiplexing and give it a spin with the [](moving-pictures-tutorial).
+Read more about demultiplexing and give it a spin with the [](#moving-pictures-tutorial).
 That tutorials covers the Earth Microbiome Project format data.
 
 If instead you have barcodes and primers in-line in your reads, see the [cutadapt tutorials](https://forum.qiime2.org/t demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313) for using the demux methods in `q2-cutadapt`.
@@ -167,7 +167,7 @@ Search the [QIIME 2 Forum](https://forum.qiime2.org) for advice.
 ### Paired-end read joining
 
 If you're working with Illumina paired-end reads, they will typically need to be joined at some point in the analysis.
-If you read [](merge-paired-end-reads), you will see that this happens automatically during denoising with `q2-dada2`.
+If you read [](#merge-paired-end-reads), you will see that this happens automatically during denoising with `q2-dada2`.
 However, if you want to use `q2-deblur` or an OTU clustering method (as described in more detail below), use `q2-vsearch` to join these reads before proceeding, as shown in the {ref}`overview-demux-denoise`.
 
 If you are beginning to pull your hair and foam at the mouth, do not despair: QIIME 2 tends to get easier the further we travel in the "general overview" ({ref}`overview-marker-gene`).
@@ -198,7 +198,7 @@ Let's start with denoising, which is depicted on the right-hand side of {ref}`ov
 
 The denoising methods currently available in QIIME 2 include [DADA2](https://doi.org/10.1038/nmeth.3869) and [Deblur](https://doi.org/10.1128/msystems.00191-16).
 You can learn more about those methods by reading the original publications for each.
-Examples of using both are presented in [](moving-pictures-tutorial).
+Examples of using both are presented in [](#moving-pictures-tutorial).
 Note that deblur (and also `vsearch dereplicate-sequences`) should be preceded by [basic quality-score-based filtering](https://doi.org/10.1038/nmeth.2276), but this is unnecessary for DADA2.
 Both Deblur and DADA2 contain internal chimera checking methods and abundance filtering, so additional filtering should not be necessary following these methods.
 🦁🐐🐍
@@ -226,7 +226,7 @@ Flowchart of OTU clustering, chimera filtering, and abundance filtering workflow
 All should be preceded by [basic quality-score-based filtering](https://doi.org/10.1038/nmeth.2276) and followed by chimera filtering and [aggressive OTU filtering](https://doi.org/10.1038/nmeth.2276) (the treacherous trio, a.k.a. the Bokulich method).
 🙈🙉🙊
 
-[](docs/how-to-guides/cluster-reads-into-otus.md) demonstrates use of several `q2-vsearch` clustering methods.
+[](#cluster-reads-into-otus) demonstrates use of several `q2-vsearch` clustering methods.
 Don't forget to read the [chimera filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/chimera/) as well.
 
 :::{warning}
@@ -240,14 +240,7 @@ If you're thinking about including a clustering step in your workflow, reach out
 The final products of all denoising and clustering methods/workflows are a `FeatureTable` (feature table) artifact and a `FeatureData[Sequence]` (representative sequences) artifact.
 These are two of the most important artifact classes in a marker gene sequencing workflow, and are used for many downstream analyses, as discussed below.
 Indeed, feature tables are crucial to any QIIME 2 analysis, as the central record of the counts of features per sample.
-Such an important artifact deserves its own powerful plugin:
-
-::::{tip} q2-feature-table plugin documentation
-:class: dropdown
-:::{describe-plugin} feature-table
-:::
-::::
-
+Such an important artifact deserves its own powerful plugin, and you can reference the full documentation of that plugin [here](#q2-plugin-feature-table).
 We will not discuss all actions of this plugin in detail here (some are mentioned below), but it performs many useful operations on feature tables so familiarize yourself with its documentation!
 
 :::{tip} Reviewing information about observed sequences
@@ -333,11 +326,11 @@ If you want to hang some numbers on there, [check out our benchmarks](https://do
 Generally at least 8 GB of RAM are required, though 16GB is better.
 The is generally related to the size of the reference database, and in some cases 32 GB of RAM or more are required.
 
-Examples of using `classify-sklearn` are shown in the [](moving-pictures-tutorial).
+Examples of using `classify-sklearn` are shown in the [](#moving-pictures-tutorial).
 {ref}`overview-taxonomy` should make the other classifier methods reasonably clear.
 
 All classifiers produce a `FeatureData[Taxonomy]` artifact, tabulating the taxonomic annotation for each query sequence.
-If you want to review those, or compare them across different classifiers, refer back to [](overview-tabulate-seqs).
+If you want to review those, or compare them across different classifiers, refer back to [](#overview-tabulate-seqs).
 
 ### Taxonomic analysis
 
@@ -348,7 +341,7 @@ Here are some popular actions that are enabled by having a `FeatureData[Taxonomy
 1. **Collapse your feature table** with `taxa collapse`!
    This groups all features that share the same taxonomic assignment into a single feature.
    That taxonomic assignment becomes the feature ID in the new feature table.
-   This feature table [can be used in all the same ways as the original](fun-with-feature-tables).
+   This feature table [can be used in all the same ways as the original](#fun-with-feature-tables).
    Some users may be specifically interested in performing, e.g., taxonomy-based diversity analyses, but at the very least anyone assigning taxonomy is probably interested in assessing [differential abundance](overview-differential-abundance) of those taxa.
    Comparing differential abundance analyses using taxa as features versus using ASVs or OTUs as features can be diagnostic and informative for various analyses.
 1. **Plot your taxonomic composition** to see the abundance of various taxa in each of your samples.
@@ -390,7 +383,7 @@ Alpha diversity measures the level of diversity within individual samples.
 Beta diversity measures assess the dissimilarity between samples.
 We can then use this information to statistically test whether alpha diversity is different between groups of samples (indicating, for example, that those groups have more/less species richness) and whether beta diversity is greater across groups (indicating, for example, that samples within a group are more similar to each other than those in another group, suggesting that membership within these groups is shaping the microbial composition of those samples).
 
-Different types of diversity analyses in QIIME 2 are exemplified in the [](moving-pictures-tutorial).
+Different types of diversity analyses in QIIME 2 are exemplified in the [](#moving-pictures-tutorial).
 The actions used to generate diversity artifacts are shown in {ref}`overview-diversity`, and many other tools can operate on these results.
 
 :::{figure} ../_static/overview-diversity.png
@@ -425,8 +418,8 @@ Try it out!
 :::
 
 These are the main diversity-related artifacts.
-We can re-use these data in [all sorts of downstream analyses](fun-with-feature-tables), or in the various actions of `q2-diversity` shown in the flowchart.
-Many of these actions are demonstrated in the [](moving-pictures-tutorial) so head on over there to learn more!
+We can re-use these data in [all sorts of downstream analyses](#fun-with-feature-tables), or in the various actions of `q2-diversity` shown in the flowchart.
+Many of these actions are demonstrated in the [](#moving-pictures-tutorial) so head on over there to learn more!
 
 Note that there are [many different alpha- and beta-diversity metrics](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282) that are available in QIIME 2.
 To learn more (and figure out whose paper you should be citing!), check out that neat resource, which was contributed by a friendly QIIME 2 user to enlighten all of us.
@@ -491,7 +484,7 @@ has its own in-depth tutorial to guide us:
 And that's just a brief overview!
 QIIME 2 continues to grow, so stay tuned for more plugins in future releases 📻, and keep your [eyes peeled](https://library.qiime2.org) for {term}`stand-alone plugins <stand-alone plugin>` that will continue to expand the functionality availability in QIIME 2.
 
-A good next step is to work through the [](moving-pictures-tutorial), if you haven't done so already.
+A good next step is to work through the [](#moving-pictures-tutorial), if you haven't done so already.
 That will help you learn how to actually use all of the functionality discussed here on real microbiome sequence data.
 
 Now go forth an have fun!

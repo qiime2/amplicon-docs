@@ -20,8 +20,8 @@ Transitioning of this content to usage examples, which will then present importi
 :::
 
 A QIIME 2 analysis almost always starts with importing data for use in QIIME 2, and this can also unfortunately be one of the most difficult steps of using QIIME 2 for users.
-Importing creates a [QIIME 2 artifact](getting-started:artifacts-and-visualizations) from data in another format, such as a `.biom` file or one or more `.fastq` files.
-You can learn about why this is needed and why it's hard in [](import-explanation).
+Importing creates a [QIIME 2 artifact](#getting-started:artifacts-and-visualizations) from data in another format, such as a `.biom` file or one or more `.fastq` files.
+You can learn about why this is needed and why it's hard in [](#import-explanation).
 
 The first step in determining how to import your data is figuring out what artifact class you're trying to import.
 The following sections present importing of different artifact classes, ordered by how common we think they are to import in practice.
@@ -131,7 +131,7 @@ You're almost certainly interested in one of two variants of this format: one fo
 ::::{margin}
 :::{warning}
 If you're working with data generated roughly in 2020 or earlier, you may need to know the [PHRED offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants) used in the quality scores.
-As discussed in [](import-explanation), this is required to accurately interpret the quality scores in your fastq files, and this information is not present in the fastq files themselves - so the only way QIIME 2 can know is if you explicitly provide that information.
+As discussed in [](#import-explanation), this is required to accurately interpret the quality scores in your fastq files, and this information is not present in the fastq files themselves - so the only way QIIME 2 can know is if you explicitly provide that information.
 For most modern sequencing data, the PHRED offset is 33, but for some legacy data it may be 64.
 
 The import commands in this section would be adapted to use 64 in place of 33 in the two format names - i.e., you'd pass `SingleEndFastqManifestPhred64V2` or `PairedEndFastqManifestPhred64V2` as the *input format*.
@@ -191,7 +191,7 @@ qiime tools import \
   --output-path demux.qza
 :::
 
-More often, if you have demultiplexed sequence data, you'll need to [import using a fastq manifest file](import-fastq-manifest).
+More often, if you have demultiplexed sequence data, you'll need to [import using a fastq manifest file](#import-fastq-manifest).
 
 ## Importing "-omics feature tables"
 

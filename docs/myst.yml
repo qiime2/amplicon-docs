@@ -26,12 +26,10 @@ project:
     - file: intro.md
     - title: Tutorials
       children:
-        - file: tutorials/intro.md
         - file: tutorials/moving-pictures.md
         - file: tutorials/gut-to-soil.md
     - title: How To Guides
       children:
-        - file: how-to-guides/intro.md
         - file: how-to-guides/install.md
         - file: how-to-guides/how-to-import.md
         - file: how-to-guides/how-to-export.md
@@ -42,7 +40,6 @@ project:
         - file: how-to-guides/how-to-deploy.md
     - title: Explanations
       children:
-        - file: explanations/intro.md
         - file: explanations/getting-started.md
         - file: explanations/experienced-researchers.md
         - file: explanations/conceptual-overview.md
@@ -50,7 +47,6 @@ project:
         - file: explanations/archives.md
     - title: References
       children:
-        - file: references/intro.md
         - file: references/available-plugins.md
     - title: Back Matter
       children:

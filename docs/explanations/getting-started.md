@@ -8,13 +8,13 @@ This chapter will briefly introduce a few concepts that should help you learn QI
 To date, most people think of QIIME 2 as a microbiome marker gene (i.e., amplicon) analysis tool.
 That is where the project started, and what its predecessor [QIIME 1](https://doi.org/10.1038/nmeth.f.303) was.
 QIIME 2 began as a complete rewrite of QIIME 1, where we were attempting to address common feature requests from our users and reduce challenges that we saw our users encountering.
-This resulted in our developing unique functionality including our [data provenance tracking system](getting-started:provenance), a [decentralized plugin-based ecosystem of tools](getting-started:plugins), and the ability to use those through [interfaces](getting-started:interfaces) designed to support users with different computational backgrounds ([](#multiple-interfaces)).
+This resulted in our developing unique functionality including our [data provenance tracking system](#getting-started:provenance), a [decentralized plugin-based ecosystem of tools](#getting-started:plugins), and the ability to use those through [interfaces](#getting-started:interfaces) designed to support users with different computational backgrounds ([](#multiple-interfaces)).
 Much of this functionality is not unique to microbiome marker gene analysis, but rather general to biological data science, and as result the scope of QIIME 2 is now broader than when we started.
 So, what is QIIME 2?
 
 What most people think of as "QIIME 2" is what we refer to in our documentation as the *amplicon distribution of QIIME 2*, or simply the *amplicon distribution*.
 This is the microbiome marker gene analysis toolkit.
-**This documentation site is for the *amplicon distribution* specifically.**
+**This documentation site is for the *amplicon distribution* specifically, and we're going to get to that very shortly.**
 
 The *amplicon distribution* is built on what we call the QIIME 2 Framework (or *the framework*).
 The framework is where the general-purpose functionality exists, including data provenance tracking, the plugin manager, and more.
@@ -23,9 +23,9 @@ The amplicon distribution, and other tools such as [MOSHPIT](https://moshpit.rea
 
 **The amplicon distribution of QIIME 2 includes a suite of plugins that provide broad analytic functionality that supports microbiome marker gene analysis from raw sequencing data through publication quality visualizations and statistics.**
 There is not a single QIIME 2 workflow or command - rather it is a series of steps, and you choose which ones to apply.
-We provide general guidance through tutorials, like the [](moving-pictures-tutorial), and can provide more specific guidance on the [QIIME 2 Forum](https://forum.qiime2.org).
+We provide general guidance through tutorials, like the [](#moving-pictures-tutorial), and can provide more specific guidance on the [QIIME 2 Forum](https://forum.qiime2.org).
 Any amplicon is supported - not just the 16S rRNA gene.
-The plugins that come with the amplicon distribution are listed in [](available-plugins).
+The plugins that come with the amplicon distribution are listed in [](#available-plugins).
 Other plugins can also be installed independently - your main source for discovery and installation instructions for these is the [QIIME 2 Library](https://library.qiime2.org)[^developing-plugins].
 
 ## Important concepts
@@ -95,7 +95,7 @@ Here is what you need to know about these:
 - `.qza` and `.qzv` files can be loaded with [QIIME 2 View](https://view.qiime2.org)[^view-options].
 - Because `.qza` and `.qzv` files are simple `zip` files, you can open them with any *unzip* utility, such as WinZip, 7Zip, or `unzip`.
   You don't need to have QIIME 2 installed to access the information in these files.
-  For an example of how to get data out of these files using `unzip`, see [](explanations-archives).
+  For an example of how to get data out of these files using `unzip`, see [](#explanations-archives).
 
 :::{tip} Confused by the term "artifact"?
 :class: dropdown
@@ -181,17 +181,17 @@ The goal of this chapter was to introduce these ideas, and they'll be revisited 
 
 You may now be wondering where and how you'll deploy QIIME 2.
 QIIME 2 can be deployed on your personal computer (e.g., your laptop or desktop computer), a cluster computer such as one owned and maintained by your university or company, or on cloud computing resources.
-In [](how-to-deploy) these options for deploying QIIME 2 are described, and relevant references to the installation instructions are referenced.
+In [](#how-to-deploy) these options for deploying QIIME 2 are described, and relevant references to the installation instructions are referenced.
 I recommend having a working deployment of QIIME 2 when you're ready to start working through tutorials, so you can follow along on your own.
 
 ### Learning with the tutorials
 
-After you have a working deployment of QIIME 2, you can read and work through the [](moving-pictures-tutorial).
+After you have a working deployment of QIIME 2, you can read and work through the [](#moving-pictures-tutorial).
 This is the resource that most new users start with to learn.
 In this tutorial, you'll carry out a full microbiome analysis, from raw sequence data through visualizations and statistics.
 This is a fairly typical amplicon analysis workflow, so after you understand it you can adapt it for your own analysis.
 
-If you'd like to get more of a feel for what QIIME 2 can do before you invest in installing it, we also recommend the [](moving-pictures-tutorial).
+If you'd like to get more of a feel for what QIIME 2 can do before you invest in installing it, we also recommend the [](#moving-pictures-tutorial).
 That document has all of the results pre-generated and linked from the document, so as you read you can interact with the results that would be generated by each step.
 
 ### Getting help

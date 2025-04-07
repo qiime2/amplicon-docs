@@ -222,7 +222,7 @@ The first approach involves aligning reads to reference databases directly:
 
 The second approach uses a machine learning classifier to assign likely taxonomies to reads, and can be used through [`classify-sklearn`](q2-method-feature-classifier-classify-sklearn).
 This method needs a pre-trained model to classify the sequences.
-You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://resources.qiime2.org), or train one yourself as described in [](#train-feature-classifier).
+You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://library.qiime2.org/data-resources), or train one yourself as described in [*Training feature classifiers with q2-feature-classifier*](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).[^new-classifier-training-docs-coming-soon]
 [`rescript`](xref:q2doc-library-target#q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
 
 ## Generating phylogenetic trees
@@ -248,7 +248,7 @@ In both cases, we consider the trees to be rough estimates of the evolutionary r
 
 Relevant plugins:
 - [Many in the amplicon distribution](#available-plugins)
-- [Many more on the QIIME 2 Library](https://library.qiime2.org)
+- [Many more on the QIIME 2 Library](https://library.qiime2.org/plugins)
 
 At this point, you should be ready to analyze your feature table to answer your scientific questions.
 QIIME 2 offers multiple built-in functions to analyze your data.
@@ -270,7 +270,7 @@ Some of those include:
 ## A library of plugins
 
 The amplicon distribution is intended as a base of stable analytic functionality for microbiome marker gene analysis, but there are many other plugins that you can install in your amplicon distribution deployment that expand its functionality.
-These plugins can generally be found on the [QIIME 2 Library](https://library.qiime2.org) and/or the [Community Contributions](https://forum.qiime2.org/c/community-contributions/15) category on the QIIME 2 Forum.
+These plugins can generally be found on the [QIIME 2 Library](https://library.qiime2.org/plugins) and/or the [Community Contributions](https://forum.qiime2.org/c/community-contributions/15) category on the QIIME 2 Forum.
 Some cool new plugins (as of 28 February 2025) include:
 
 - [`q2-kmerizer`](https://github.com/bokulich-lab/q2-kmerizer): Enables diversity calculations that approximate those of phylogenetic methods without the use of a phylogenetic tree ([](https://doi.org/10.1128/msystems.01550-24)).
@@ -283,3 +283,6 @@ Some cool new plugins (as of 28 February 2025) include:
  `q2-boots` allows you to make diversity estimates based on all of your data.
 
 Have fun! 😎
+
+[^new-classifier-training-docs-coming-soon]: As of 7 April 2025, we are currently planning a re-write of our documentation for training feature classifiers.
+ More on this topic is coming soon!

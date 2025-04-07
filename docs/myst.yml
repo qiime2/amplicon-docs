@@ -31,12 +31,11 @@ project:
     - title: How To Guides
       children:
         - file: how-to-guides/install.md
+        - file: how-to-guides/how-to-deploy.md
         - file: how-to-guides/how-to-import.md
         - file: how-to-guides/how-to-export.md
         - file: how-to-guides/merge-multiple-sequencing-runs.md
-        - file: how-to-guides/train-a-feature-classifier.md
         - file: how-to-guides/cluster-reads-into-otus.md
-        - file: how-to-guides/how-to-deploy.md
     - title: Explanations
       children:
         - file: explanations/getting-started.md

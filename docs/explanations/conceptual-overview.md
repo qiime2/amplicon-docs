@@ -297,14 +297,14 @@ Classifier training is **reference database- and marker-gene-specific** and only
 If you're working with an uncommon marker gene, you may need to train your own feature classifier.
 This is possible following the steps in the [classifier training tutorial](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).
 The [`rescript` plugin](../references/plugin-reference/plugins/rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
-Most users don't need to train their own classifiers however, as the QIIME 2 developers [provide classifiers to the public for common marker genes in the QIIME 2 Library](https://resources.qiime2.org).
+Most users don't need to train their own classifiers however, as the QIIME 2 developers [provide classifiers to the public for common marker genes in the QIIME 2 Library](https://library.qiime2.org/data-resources).
 🎅🎁🎅🎁🎅🎁
 
 #### Environment-weighted classifiers
 Typical Naive Bayes classifiers treat all reference sequences as being equally likely to be observed in a sample.
 [Environment-weighted taxonomic classifiers](https://doi.org/10.1038/s41467-019-12669-6), on the other hand, use public microbiome data to weight taxa by their past frequency of being observed in specific sample types.
 This can improve the accuracy and the resolution of marker gene classification, and we recommend using weighted classifiers when possible.
-You can find environment-weighted classifiers [for 16S rRNA in the QIIME 2 Library](https://resources.qiime2.org).
+You can find environment-weighted classifiers [for 16S rRNA in the QIIME 2 Library](https://library.qiime2.org/data-resources).
 If the environment type that you're studying isn't one of the ones that pre-trained classifiers are provided for, the "diverse weighted" classifiers may still be relevant.
 These are trained on weights from multiple different environment types, and have been shown to perform better than classifiers that assume equal weights for all taxa.
 

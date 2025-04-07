@@ -8,7 +8,7 @@ A newick file doesn't include explicit information in it on which of these varia
 A user importing data into QIIME 2 needs to have an understanding of what format their data is in, and then learn how to provide that information to QIIME 2.
 
 Importing fastq files is likely the most common importing task for QIIME 2 users, so I'll discuss why importing is necessary using fastq as an example.
-(You can learn how to do this in [](import-fastq-sequencing-data).)
+(You can learn how to do this in [](#import-fastq-sequencing-data).)
 Fastq files store sequence and associated sequence quality information.
 They use a clever approach for representing quality information that enables the quality information to be represented in the same number of characters as the sequence itself.
 For example, here is a single sequence and quality record from a fastq file:

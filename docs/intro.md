@@ -1,50 +1,58 @@
 # Microbiome marker gene analysis with QIIME 2
 
 Welcome! 👋
-
 This is the primary documentation introducing the use of QIIME 2 for marker gene (i.e., amplicon) based microbiome analysis.
-This site replaces the old QIIME 2 user documentation, `https://docs.qiime2.org`.
-If you're looking for content from the old QIIME 2 user documentation, you can find it at https://docs.qiime2.org/2024.10/ (but do [let us know](https://github.com/qiime2/amplicon-docs/issues) what that content is, as we're trying to transition everything that's needed to this site).
 
-## Navigating this documentation
+:::{note} Transition from "the old docs"
+As of April 2025, this site replaces the old QIIME 2 user documentation, `https://docs.qiime2.org`.
+We've prioritized content to transition from the old documentation based on our website analytics, so the most frequently accessed content is already here.
+If you're looking for content from the old QIIME 2 user documentation, you can find it at https://docs.qiime2.org/2024.10/ (but please consider [letting us know](https://github.com/qiime2/amplicon-docs/issues) what that content is, as we're trying to transition everything that's needed to this site).
+:::
 
-Based on our website analytics, these are the topics users are most frequently looking for in our documentation:
+Based on our website analytics, these are the questions that most frequently drive readers to our documentation:
 
-- **New to QIIME 2?**
-  We recommend that all newcomers read [](explanations/getting-started) for a high-level discussion about what QIIME 2 is, an introduction to concepts that will help you understand QIIME 2 quickly, and references to resources you can use for learning.
+:::{dropdown} I'm completely new to QIIME 2. Where should I start?
+:open:
+We recommend that all newcomers read [](#getting-started) for a high-level discussion about what QIIME 2 is, an introduction to concepts that will help you understand QIIME 2 quickly, and references to resources you can use for learning.
+:::
 
-- **Learning, or just exploring?**
-  The [](tutorials/moving-pictures) is the resource that most users start with to learn how to use QIIME 2.
-  It's written for readers who are also new to microbiome analysis.
-  If you want to try or learn QIIME 2, we recommend starting with the [](tutorials/moving-pictures).
-  All of the outputs generated during the tutorial are linked in the tutorial document, so you can also read through it and interact with the results without running any of the commands on your own.
-  If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](explanations/experienced-researchers) and [](explanations/conceptual-overview).
+:::{dropdown} How can I analyze my data with QIIME 2?
+Historically, the [](#moving-pictures-tutorial) is the resource that most users have started with to learn how to use QIIME 2.
+More recently, we've developed the [](#gut-to-soil-tutorial).
+Both are written for readers who are also new to microbiome analysis.
+If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](#experienced-researchers) and [](#conceptual-overview).
+:::
 
-- **Ready to install QIIME 2?**
-  See [](how-to-guides/install).
+:::{dropdown} How do I install QIIME 2?
+![](#install-pointer)
+:::
 
-- **Need information on specific tools?**
-  If you're looking for reference material on the plugins and actions installed in the QIIME 2 amplicon distribution, see [](references/available-plugins).
-  If you're looking for data resources, such as pre-trained taxonomic classifiers, see our [Data Resources](https://resources.qiime2.org) website.
-  If you're looking for other tools available for the QIIME 2 Framework (🌳), see the [QIIME 2 Library](https://library.qiime2.org).
+:::{dropdown} Where can I find reference materials or other resources?
+If you're looking for reference material on the plugins and actions installed in the QIIME 2 amplicon distribution, see [](#available-plugins).
+If you're looking for data resources, such as pre-trained taxonomic classifiers, see [*Data Resources* on the QIIME 2 Library](https://library.qiime2.org/data-resources) website.
+If you're looking for other tools available for the QIIME 2 Framework (Q2F), see [*Plugins* on the QIIME 2 Library](https://library.qiime2.org/plugins).
+:::
 
-- **Need help with your metadata?**
-  See our documentation of the [Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
+:::{dropdown} How should I prepare my metadata?
+See our documentation of the [Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
+:::
 
-- **Need to import or export data?**
-  See [](how-to-guides/import-export).
+:::{dropdown} Where can I find help?
+Head over to the [QIIME 2 Forum](https://forum.qiime2.org), where you can browse nearly 10 years of discussion, questions, and answers related to microbiome data science with QIIME 2.
+You can ask your own questions if you don't find existing answers, and give back by answering someone else's questions when you're ready.
+:::
 
-- **Need technical support?**
-  Head over to the [QIIME 2 Forum](https://forum.qiime2.org), where you can browse nearly 10 years of discussion, questions, and answers related to microbiome data science with QIIME 2.
-  You can ask your own questions if you don't find existing answers, and give back by answering someone else's questions when you're ready.
-  "The Forum" is also where we make important [Announcements](https://forum.qiime2.org/c/announcements/8) - if you register for a (free) account, you can get those announcements by email.
-  For the most up-to-date information on how to get help with QIIME 2, as a user or developer, see [here](https://github.com/qiime2/.github/blob/main/SUPPORT.md).
+:::{dropdown} Where can I find announcements and other news?
+Important announcements (e.g., new releases, bug reports, upcoming changes) are shared through the [Announcements](https://forum.qiime2.org/c/announcements/8) feed on the QIIME 2 Forum.
+If you register for a (free) account, you can get those announcements by email.
+Alternatively, you can [subscribe by RSS](https://qiime2.org/rss.xml).
+:::
 
 For other topics, read on...
 
-## How this documentation is organized
+## Navigating this documentation
 
-This documentation is organized under the [Diátaxis](https://diataxis.fr/) framework {cite}`diataxis` for technical documentation, which categorizes content into *sections* containing *Tutorials*, *How-To-Guides*, *Explanations*, and *References*.
+This documentation is organized under the [Diátaxis](https://diataxis.fr/) framework for technical documentation, which categorizes content into *sections* containing *Tutorials*, *How-To-Guides*, *Explanations*, and *References*.
 Each serves a different goal for the reader:
 
 :::{list-table}
@@ -53,19 +61,20 @@ Each serves a different goal for the reader:
 * - Chapter
   - Purpose
 
-* - [Tutorials](tutorials/intro)
+* - Tutorials
   - Provide a guided exploration of a topic for **learning**.
 
-* - [How To Guides](how-to-guides/intro)
+* - How To Guides
   - Provide step-by-step instructions on how to **accomplish specific goals**.
 
-* - [Explanations](explanations/intro)
+* - Explanations
   - Provide a discussion intended to aid in **understanding** a specific topic.
 
-* - [References](references/intro)
-  - Provide specific **information** (e.g., the list of [available plugins](available-plugins)).
+* - References
+  - Provide specific **information** (e.g., the list of [available plugins](#available-plugins)).
 :::
 
+(contributors)=
 ## Contributors
 
 This documentation is the result of past, present, and future (🤞) collaborative efforts.
@@ -86,10 +95,10 @@ Initial support for the development of QIIME 2 was provided through a [grant](ht
 ## Citing QIIME 2
 
 If you use QIIME 2 in your work, please cite [Bolyen, Rideout, Dillon, Bokulich, et al (2019)](https://doi.org/10.1038/s41587-019-0209-9), as well as the underlying tools that are used by QIIME 2.
-To get the list of relevant citations, load a QIIME 2 Result (i.e., a `.qza` or `.qzv`) file with [QIIME 2 View](https://view.qiime2.org) and navigate to the *Citations* tab.
+To get a list of citations that are specifically relevant to a QIIME 2 Result you created (i.e., a `.qza` or `.qzv`), load that Result with [QIIME 2 View](https://view.qiime2.org) and navigate to the *Citations* tab.
 
 ## License
 
-*Microbiome Marker Gene Analysis with QIIME 2* (©2025) and the project's predecessors have many @Contributors.
-Content development and maintenance is led by the [Caporaso Lab](https://cap-lab.bio) at [Northern Arizona University](https://nau.edu).
+*Microbiome Marker Gene Analysis with QIIME 2* (©2025) and the project's predecessors have many @contributors.
+Content development and maintenance is led by the [Caporaso Lab](https://caplab.bio) at [Northern Arizona University](https://nau.edu).
 This content is licensed under CC BY-NC-ND 4.0

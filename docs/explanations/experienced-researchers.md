@@ -4,8 +4,8 @@
 This document is intended for experienced microbiome researchers who already know how to process microbiome marker gene data and need to know the QIIME 2 commands pertaining to specific steps.
 
 :::{tip}
-We recommend reading [](getting-started) before this document, as it provides some background information on QIIME 2 itself that is helpful for learning the platform quickly.
-[](conceptual-overview) contains a more theoretical overview of microbiome data processing, and can be read either before or after this document.
+We recommend reading [](#getting-started) before this document, as it provides some background information on QIIME 2 itself that is helpful for learning the platform quickly.
+[](#conceptual-overview) contains a more theoretical overview of microbiome data processing, and can be read either before or after this document.
 :::
 
 :::{note}
@@ -57,7 +57,7 @@ The processing steps we'll cover in this discussion include:
 - Generating phylogenetic trees
 - Analyzing data and gaining insight into your microbiomes!
 
-[](conceptual-overview) and [](available-plugins) can give you ideas for additional possible processing and analysis steps.
+[](#conceptual-overview) and [](#available-plugins) can give you ideas for additional possible processing and analysis steps.
 
 ### Preparing your metadata
 
@@ -71,18 +71,18 @@ You can find an example in the *Gut-to-Soil Tutorial* [here](xref:q2doc-gut-to-s
 ### Importing data into QIIME 2: `qiime tools import`
 
 If you're using QIIME 2 to process your data, the first thing you need to do is get that data into a format that QIIME 2 can understand.
-The need for importing is explained in [](import-explanation), and examples illustrating the most common import needs of users are presented in [](how-to-import).
+The need for importing is explained in [](#import-explanation), and examples illustrating the most common import needs of users are presented in [](#how-to-import).
 
 This step has the potential to be the most confusing part of the QIIME 2 pipeline as there are dozens of import and format types to choose from.
 To see a full list of available import/format types use:
 - `qiime tools list-types`
 - `qiime tools list-formats`
 
-If you're importing FASTQ data that you've generated, the most straight-forward approach is using a [manifest file](import-fastq-manifest): a text file that maps your sample identifiers to file paths to their forward and reverse (if applicable) read FASTQ files.
+If you're importing FASTQ data that you've generated, the most straight-forward approach is using a [manifest file](#import-fastq-manifest): a text file that maps your sample identifiers to file paths to their forward and reverse (if applicable) read FASTQ files.
 If you have sequencing data with one of two very specific formats, you may alternatively be able to use [other import formats](importing-fastq), but importing with a manifest file will always work.
 
 If you want to import FASTA files or a feature table directly, you can also do that by using a different `--type` flag for `qiime tools import`.
-[](how-to-import) provides examples for these imports.
+[](#how-to-import) provides examples for these imports.
 
 ### Demultiplexing sequences
 
@@ -133,7 +133,7 @@ All of DADA2's `denoise` actions have some sort of `--p-trim` parameter you can 
 ### Grouping similar sequences
 
 There are two main approaches for grouping similar sequences together: denoising and clustering.
-[*Some theory: denoising and clustering*](conceptual-overview:denoising-and-clustering) provides more in-depth discussion of these approaches.
+[*Some theory: denoising and clustering*](#conceptual-overview:denoising-and-clustering) provides more in-depth discussion of these approaches.
 
 Regardless of how you group your sequences, the grouping methods will output:
 
@@ -199,12 +199,12 @@ This can include simple dereplication of sequences using [`dereplicate-sequences
 
 Before dereplicating or clustering your sequences, you should ensure that:
 
--   paired-end reads are merged (see [](experienced-researchers:merging))
--   non-biological sequences are removed (see [](experienced-researchers:removing-nonbio-sequences))
--   reads have undergone quality control, either [by denoising](experienced-researchers:denoising) or using [`q2-quality-filter`](xref:q2doc-library-target#q2-plugin-quality-filter)
+-   paired-end reads are merged (see [](#experienced-researchers:merging))
+-   non-biological sequences are removed (see [](#experienced-researchers:removing-nonbio-sequences))
+-   reads have undergone quality control, either [by denoising](#experienced-researchers:denoising) or using [`q2-quality-filter`](xref:q2doc-library-target#q2-plugin-quality-filter)
 -   if you want to strictly dereplicate your sequences, all reads should be trimmed to the same length using [`q2-cutadapt`](xref:q2doc-library-target#q2-plugin-cutadapt)
 
-For additional information, see [](cluster-reads-into-otus).
+For additional information, see [](#cluster-reads-into-otus).
 
 ### Taxonomic annotation
 
@@ -222,7 +222,7 @@ The first approach involves aligning reads to reference databases directly:
 
 The second approach uses a machine learning classifier to assign likely taxonomies to reads, and can be used through [`classify-sklearn`](q2-method-feature-classifier-classify-sklearn).
 This method needs a pre-trained model to classify the sequences.
-You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://resources.qiime2.org), or train one yourself as described in [](train-feature-classifier).
+You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://resources.qiime2.org), or train one yourself as described in [](#train-feature-classifier).
 [`rescript`](xref:q2doc-library-target#q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
 
 ## Generating phylogenetic trees
@@ -247,13 +247,13 @@ In both cases, we consider the trees to be rough estimates of the evolutionary r
 ## Analyzing data and gaining insight into your microbiomes!
 
 Relevant plugins:
-- [Many in the amplicon distribution](available-plugins)
+- [Many in the amplicon distribution](#available-plugins)
 - [Many more on the QIIME 2 Library](https://library.qiime2.org)
 
 At this point, you should be ready to analyze your feature table to answer your scientific questions.
 QIIME 2 offers multiple built-in functions to analyze your data.
-If you don't find what you're looking for, you can also [export your data](how-to-export) for analysis with other tools.
-The [](moving-pictures-tutorial) has good examples of the types of visualizations and statistics that you can apply to your data.
+If you don't find what you're looking for, you can also [export your data](#how-to-export) for analysis with other tools.
+The [](#moving-pictures-tutorial) has good examples of the types of visualizations and statistics that you can apply to your data.
 
 Some of those include:
 - [generating taxonomic composition barplots](xref:q2doc-library-target#q2-action-taxa-barplot),

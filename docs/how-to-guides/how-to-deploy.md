@@ -5,7 +5,7 @@ This document discusses those, and provides references for how to use each.
 
 QIIME 2 can be installed natively on macOS or Linux personal computers, and on Windows personal computers that support the Windows Subsystem for Linux.
 QIIME 2 can also be used through Docker or Podman.
-The most up-to-date installation instructions are referenced from [](install).
+The most up-to-date installation instructions are referenced from [](#install).
 
 ## Using QIIME 2 on your personal computer
 Using QIIME 2 on your personal computer is a very convenient option, but may be impractical for some steps of your analysis workflow.
@@ -43,7 +43,7 @@ The server we're most familar with is [cancer.usegalaxy.org](https://cancer.useg
 
 ## Combinations of the above approaches
 
-I ([@gregcaporaso](https://forum.qiime2.org/u/gregcaporaso)) personally find it convenient to use both a cluster computer and my personal computer for running QIIME 2.
+I ([`@gregcaporaso`](https://forum.qiime2.org/u/gregcaporaso)) personally find it convenient to use both a cluster computer and my personal computer for running QIIME 2.
 My university has a cluster computer that all researchers at the university have access to, and our high performance computing team keeps an up-to-date version of QIIME 2 installed on that computer.
 I typically run the long-running steps of my workflows on the cluster and then download the results to my personal computer.
 Then, when I'm at a more iterative stage of my analysis (for example, when generating visualizations and running statistical tests), I'll run those commands locally so I can easily view the results.

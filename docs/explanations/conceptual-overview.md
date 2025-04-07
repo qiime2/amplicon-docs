@@ -229,10 +229,12 @@ All should be preceded by [basic quality-score-based filtering](https://doi.org/
 [](#cluster-reads-into-otus) demonstrates use of several `q2-vsearch` clustering methods.
 Don't forget to read the [chimera filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/chimera/) as well.
 
+(otu-warning)=
 :::{warning}
-Clustering methods produce lower-resolution, lower-quality features than the newer denoising/ASV-based approaches.
+Clustering methods produce lower-resolution features than the newer denoising/ASV-based approaches.
 We recommend against using clustering, but we provide the functionality because there are some cases where it is still relevant.
-If you're thinking about including a clustering step in your workflow, reach out on the [QIIME 2 Forum](https://forum.qiime2.org) - we can try to help you figure out an alternative.
+If you're thinking about including a clustering step in your workflow, reach out on the [QIIME 2 Forum](https://forum.qiime2.org).
+We can try to help you figure out an alternative.
 :::
 
 ## The feature table

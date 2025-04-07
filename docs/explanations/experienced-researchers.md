@@ -191,6 +191,8 @@ Note that deblur *can* take in *merged* reads and treat them as single-end reads
 
 ### OTU Clustering
 
+![](#otu-warning)
+
 Relevant plugins:
 - [`q2-vsearch`](xref:q2doc-library-target#q2-plugin-vsearch)
 

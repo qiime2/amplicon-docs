@@ -167,7 +167,7 @@ Search the [QIIME 2 Forum](https://forum.qiime2.org) for advice.
 ### Paired-end read joining
 
 If you're working with Illumina paired-end reads, they will typically need to be joined at some point in the analysis.
-If you read [](#merge-paired-end-reads), you will see that this happens automatically during denoising with `q2-dada2`.
+If you read [](#gut-to-soil-tutorial), you will see that this happens automatically during denoising with `q2-dada2`.
 However, if you want to use `q2-deblur` or an OTU clustering method (as described in more detail below), use `q2-vsearch` to join these reads before proceeding, as shown in the {ref}`overview-demux-denoise`.
 
 If you are beginning to pull your hair and foam at the mouth, do not despair: QIIME 2 tends to get easier the further we travel in the "general overview" ({ref}`overview-marker-gene`).

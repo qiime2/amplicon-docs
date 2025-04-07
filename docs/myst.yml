@@ -33,7 +33,6 @@ project:
         - file: how-to-guides/install.md
         - file: how-to-guides/how-to-import.md
         - file: how-to-guides/how-to-export.md
-        - file: how-to-guides/merge-paired-end-reads.md
         - file: how-to-guides/merge-multiple-sequencing-runs.md
         - file: how-to-guides/train-a-feature-classifier.md
         - file: how-to-guides/cluster-reads-into-otus.md

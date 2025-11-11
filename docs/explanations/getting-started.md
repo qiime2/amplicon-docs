@@ -5,34 +5,51 @@ This chapter will briefly introduce a few concepts that should help you learn QI
 
 ## What is QIIME 2?
 
-To date, most people think of QIIME 2 as a microbiome marker gene (i.e., amplicon) analysis tool.
-That is where the project started, and what its predecessor [QIIME 1](https://doi.org/10.1038/nmeth.f.303) was.
+QIIME 2 is a microbiome marker gene (i.e., amplicon) analysis tool.
+It provides a suite of analytic tools that support microbiome marker gene analysis from raw sequencing data through publication quality visualizations and statistics.
+Any amplicon is supported - not just the 16S rRNA gene.
+
+There is not a single QIIME 2 workflow or command - rather it is a series of steps, and you choose which ones to apply[^choose-your-own-adventure].
+We provide general guidance through tutorials, like the [](#gut-to-soil-tutorial), and can provide more specific guidance on the [QIIME 2 Forum](https://forum.qiime2.org).
+
+The tools that come with QIIME 2 are listed in [](#available-plugins).
+Plugins that provide additional analytic functionality can be created, distributed, and installed independently[^developing-plugins].
+Your main source for discovery and installation instructions for plugins is the [QIIME 2 Library](https://library.qiime2.org/plugins/).
+
+:::{note} Disambiguation: QIIME 2 Framework, MOSHPIT, and `rachis`; oh my...
+:class: dropdown
+
+To reduce ambiguity, we are currently (November 2025) in the process of [a minor rebrand](https://news.rachis.org/en/latest/2025-10-23-q2f-transition.html). <!-- xref:rachis-news-target#q2f-transition -->
+If you're a new user, or even a long-time user, you can safely skip this disambiguation unless you're interested.
+
+QIIME 2 started as a microbiome marker gene analysis tool, and that's also what its predecessor [QIIME 1](https://doi.org/10.1038/nmeth.f.303) was.
 QIIME 2 began as a complete rewrite of QIIME 1, where we were attempting to address common feature requests from our users and reduce challenges that we saw our users encountering.
 This resulted in our developing unique functionality including our [data provenance tracking system](#getting-started:provenance), a [decentralized plugin-based ecosystem of tools](#getting-started:plugins), and the ability to use those through [interfaces](#getting-started:interfaces) designed to support users with different computational backgrounds ([](#multiple-interfaces)).
-Much of this functionality is not unique to microbiome marker gene analysis, but rather general to biological data science, and as result the scope of QIIME 2 is now broader than when we started.
-So, what is QIIME 2?
+Much of this functionality is not unique to microbiome marker gene analysis, but rather general to biological data science, and as result the scope of QIIME 2 became broader than when we started.
 
-What most people think of as "QIIME 2" is what we refer to in our documentation as the *amplicon distribution of QIIME 2*, or simply the *amplicon distribution*.
+What most people think of as "QIIME 2" is what we've referred to in our documentation as the *amplicon distribution of QIIME 2*, or simply the *amplicon distribution*.
+For clarity, going forward, we will refer to this as *QIIME 2*.
 This is the microbiome marker gene analysis toolkit.
-**This documentation site is for the *amplicon distribution* specifically, and we're going to get to that very shortly.**
+**This documentation site is for *QIIME 2* (formerly the *amplicon distribution*) specifically, and we're going to get to that very shortly.**
 
-The *amplicon distribution* is built on what we call the QIIME 2 Framework (or *the framework*).
-The framework is where the general-purpose functionality exists, including data provenance tracking, the plugin manager, and more.
-As an end user, you don't really need to know anything about this, but it's helpful to know that it exists and is different from the amplicon distribution to understand the ecosystem of tools.
-The amplicon distribution, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *metagenome distribution*) and [genome-sampler](https://genome-sampler.readthedocs.io/), are technically *built on top of the QIIME 2 Framework*.
+*QIIME 2* is built on what we called the QIIME 2 Framework (or *the framework*), and are in the process of rebranding as `rachis`.
+From here on, we'll refer to the QIIME 2 Framework as `rachis`.
+`rachis` is where the general-purpose functionality exists, including data provenance tracking, the plugin manager, and more.
+There is no microbiome-specific functionality (or even bioinformatics-specific functionality) in `rachis`.
+As an end user, you don't really need to know anything about this, but it's helpful to know that `rachis` exists and is different from QIIME 2 to understand the ecosystem of tools and how they can build on each other.
+QIIME 2, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *QIIME 2 metagenome distribution*) and [genome-sampler](https://genome-sampler.readthedocs.io/), are technically *built on top of `rachis`*.
 
-**The amplicon distribution of QIIME 2 includes a suite of plugins that provide broad analytic functionality that supports microbiome marker gene analysis from raw sequencing data through publication quality visualizations and statistics.**
-There is not a single QIIME 2 workflow or command - rather it is a series of steps, and you choose which ones to apply.
-We provide general guidance through tutorials, like the [](#moving-pictures-tutorial), and can provide more specific guidance on the [QIIME 2 Forum](https://forum.qiime2.org).
-Any amplicon is supported - not just the 16S rRNA gene.
-The plugins that come with the amplicon distribution are listed in [](#available-plugins).
-Other plugins can also be installed independently - your main source for discovery and installation instructions for these is the [QIIME 2 Library](https://library.qiime2.org)[^developing-plugins].
+If you want to learn more about how `rachis` works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org)[^using-qiime2-rename].
+*Using QIIME 2* provides information that is relevant across all `rachis` distributions (QIIME 2, MOSHPIT) and stand-alone plugins.
+
+🐦‍⬛ 🪓 🦁
+:::
 
 ## Important concepts
 
 The following sections briefly present some important concepts for understanding QIIME 2 tools.
 You don't need to fully understand these to start using QIIME 2, but we think it will help you learn and build your bioinformatics skills if you have some brief exposure to these ideas.
-Links to where you can learn more are provided[^power-user].
+Links to where you can learn more are provided.
 
 (getting-started:interfaces)=
 ### Interfaces
@@ -137,11 +154,10 @@ For example, subject names should be replaced with anonymized subject identifier
 (getting-started:plugins)=
 ### Plugins and actions
 
-There is no microbiome-specific functionality (or even bioinformatics-specific functionality) in the QIIME 2 Framework.
-Rather all of the analysis functionality comes in the form of {term}`plugins <plugin>` to the framework.
+All of the analysis functionality in QIIME 2 comes in the form of {term}`plugins <plugin>`.
 
 Plugins define {term}`actions <action>`, which are the individual commands that you'll run in an analysis workflow.
-For example, the `q2-feature-table` plugin, which is included in the amplicon distribution, defines the actions listed [here](../references/plugin-reference/plugins/feature-table/index).
+For example, the `q2-feature-table` plugin defines the actions listed [here](../references/plugin-reference/plugins/feature-table/index).
 If you did't have the `q2-feature-table` plugin installed, you wouldn't have access to those actions.
 
 Three types of actions can be defined by plugins: {term}`methods <method>`, {term}`visualizers <visualizer>`, and {term}`pipelines <pipeline>`.
@@ -186,12 +202,12 @@ I recommend having a working deployment of QIIME 2 when you're ready to start wo
 
 ### Learning with the tutorials
 
-After you have a working deployment of QIIME 2, you can read and work through the [](#moving-pictures-tutorial).
+After you have a working deployment of QIIME 2, you can read and work through the [](#gut-to-soil-tutorial).
 This is the resource that most new users start with to learn.
 In this tutorial, you'll carry out a full microbiome analysis, from raw sequence data through visualizations and statistics.
 This is a fairly typical amplicon analysis workflow, so after you understand it you can adapt it for your own analysis.
 
-If you'd like to get more of a feel for what QIIME 2 can do before you invest in installing it, we also recommend the [](#moving-pictures-tutorial).
+If you'd like to get more of a feel for what QIIME 2 can do before you invest in installing it, we also recommend the [](#gut-to-soil-tutorial).
 That document has all of the results pre-generated and linked from the document, so as you read you can interact with the results that would be generated by each step.
 
 ### Getting help
@@ -204,10 +220,11 @@ We look forward to seeing you there!
 
 [^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
 
-[^power-user]: When you're ready to learn more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
-  Using QIIME 2 provides information that is relevant across all QIIME 2 distributions and plugins, not just the amplicon distribution.
-
 [^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).
 
 [^provenance-in-artifacts]: Data provenance is some of the metadata that is stored alongside your data in `.qza` and `.qzv` files.
   Retaining provenance information without a centralized database is one of the reasons why QIIME 2 produces `.qza` and `.qzv` files, as opposed to just outputting data on its own (e.g., in `.fasta` or `.biom` files).
+
+[^choose-your-own-adventure]: It's like a [**Choose Your Own Adventure**](https://en.wikipedia.org/wiki/Choose_Your_Own_Adventure) novel. 🏔️
+
+[^using-qiime2-rename]: For clarity, this will be renamed to something like *Using `rachis`*.

@@ -5,3 +5,5 @@ docs/_build/
 docs/data/
 .locks/
 docs/deblur.log
+
+_build/

@@ -19,8 +19,9 @@ Your main source for discovery and installation instructions for plugins is the 
 :::{note} Disambiguation: QIIME 2 Framework, MOSHPIT, and `rachis`; oh my...
 :class: dropdown
 
-To reduce ambiguity, we are currently (November 2025) in the process of [a minor rebrand](https://news.rachis.org/en/latest/2025-10-23-q2f-transition.html). <!-- xref:rachis-news-target#q2f-transition -->
-If you're a new user, or even a long-time user, you can safely skip this disambiguation unless you're interested.
+To improve clarity, we are currently (November 2025) in the process of [renaming the *QIIME 2 Framework*](https://news.rachis.org/en/latest/2025-10-23-q2f-transition.html) (which was sometimes referred to as Q2F). <!-- xref:rachis-news-target#q2f-transition -->
+Q2F is different than QIIME 2 - we're  not renaming QIIME 2.
+If you're a new user, or even a long-time user, you can safely skip this disambiguation section unless you're confused about these names, or are interested in what we're changing.
 
 QIIME 2 started as a microbiome marker gene analysis tool, and that's also what its predecessor [QIIME 1](https://doi.org/10.1038/nmeth.f.303) was.
 QIIME 2 began as a complete rewrite of QIIME 1, where we were attempting to address common feature requests from our users and reduce challenges that we saw our users encountering.

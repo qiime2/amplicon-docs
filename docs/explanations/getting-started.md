@@ -14,9 +14,9 @@ We provide general guidance through tutorials, like the [](#gut-to-soil-tutorial
 
 The tools that come with QIIME 2 are listed in [](#available-plugins).
 Plugins that provide additional analytic functionality can be created, distributed, and installed independently[^developing-plugins].
-Your main source for discovery and installation instructions for plugins is the [QIIME 2 Library](https://library.qiime2.org/plugins/).
+Your main source for discovery and installation instructions for plugins not included in QIIME 2 is the [QIIME 2 Library](https://library.qiime2.org/plugins/); for this reason we often refer to these as *Library plugins*.
 
-:::{note} Disambiguation: QIIME 2 Framework, MOSHPIT, and `rachis`; oh my...
+:::{note} Disambiguation: QIIME 2 Framework and MOSHPIT and `rachis`; oh my...
 :class: dropdown
 
 To improve clarity, we are currently (November 2025) in the process of [renaming the *QIIME 2 Framework*](https://news.rachis.org/en/latest/2025-10-23-q2f-transition.html) (which was sometimes referred to as Q2F). <!-- xref:rachis-news-target#q2f-transition -->
@@ -37,11 +37,12 @@ This is the microbiome marker gene analysis toolkit.
 From here on, we'll refer to the QIIME 2 Framework as `rachis`.
 `rachis` is where the general-purpose functionality exists, including data provenance tracking, the plugin manager, and more.
 There is no microbiome-specific functionality (or even bioinformatics-specific functionality) in `rachis`.
-As an end user, you don't really need to know anything about this, but it's helpful to know that `rachis` exists and is different from QIIME 2 to understand the ecosystem of tools and how they can build on each other.
-QIIME 2, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *QIIME 2 metagenome distribution*) and [genome-sampler](https://genome-sampler.readthedocs.io/), are technically *built on top of `rachis`*.
+As an end user, you don't really need to know anything about this, but it's helpful to know that `rachis` exists and is different from QIIME 2 to understand the ecosystem of tools, how they can build on each other, and how they can be used together.
 
+QIIME 2, and other tools such as [MOSHPIT](https://moshpit.readthedocs.io/) (formerly referred to as the *QIIME 2 metagenome distribution*) and [genome-sampler](https://genome-sampler.readthedocs.io/), are technically *built on top of `rachis`*.
+Outside of the analytic functionality, much of what makes these distributions and other tools so powerful is inherited from `rachis` - for example, things like data provenance tracking and the support for multiple interfaces.
 If you want to learn more about how `rachis` works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org)[^using-qiime2-rename].
-*Using QIIME 2* provides information that is relevant across all `rachis` distributions (QIIME 2, MOSHPIT) and stand-alone plugins.
+*Using QIIME 2* provides information that is relevant across all `rachis` distributions (QIIME 2, MOSHPIT) and stand-alone tools like [genome-sampler](https://genome-sampler.readthedocs.io/).
 
 🐦‍⬛ 🪓 🦁
 :::
@@ -128,7 +129,7 @@ The definitions quoted here were obtained [from Wiktionary](https://en.wiktionar
 (getting-started:provenance)=
 ### Data provenance
 
-QIIME 2 was designed to automatically document analysis workflows for users, ensuring that their bioinforamtics work is **reproducible**.
+QIIME 2 was designed to automatically document analysis workflows for users, ensuring that their bioinformatics work is **reproducible**.
 This allows you, or consumers of your research, to discover exactly how any QIIME 2 result (i.e., Artifact or Visualization) was produced.
 
 To achieve this, each QIIME 2 command is recorded when it is run, and that information is stored in all Artifacts and Visualizations that are created[^provenance-in-artifacts].
@@ -169,7 +170,7 @@ They take artifacts and/or metadata as input, and they generate one or more arti
 
 Another thing to know about plugins is that anyone can create and distribute them.
 This is what makes QIIME 2 **extensible**.
-For example, if a student develops new analysis functionality that they want to use with QIIME 2, they can create their own QIIME 2 plugin[^developing-plugins].
+For example, if a student develops new analysis functionality that they want to use with QIIME 2, they can create their own plugin[^developing-plugins].
 If they want others to be able to use it, they can distribute that plugin on the [QIIME 2 Library](https://library.qiime2.org), or through any other means that they choose.
 
 (getting-started:artifact-classes)=
@@ -194,11 +195,16 @@ Ok, that's enough discussion about QIIME 2 for now: it's time to start using it.
 Don't worry if you feel like you don't fully understand some of the details that were covered in this chapter right now.
 The goal of this chapter was to introduce these ideas, and they'll be revisited throughout the documentation.
 
-### Deploying QIIME 2
+### Where to install QIIME 2
 
-You may now be wondering where and how you'll deploy QIIME 2.
+You may now be wondering where you'll install QIIME 2.
 QIIME 2 can be deployed on your personal computer (e.g., your laptop or desktop computer), a cluster computer such as one owned and maintained by your university or company, or on cloud computing resources.
-In [](#how-to-deploy) these options for deploying QIIME 2 are described, and relevant references to the installation instructions are referenced.
+In [](#how-to-deploy) these options for deploying QIIME 2 are described.
+
+### Installing QIIME 2
+```{embed} #install-pointer
+```
+
 I recommend having a working deployment of QIIME 2 when you're ready to start working through tutorials, so you can follow along on your own.
 
 ### Learning with the tutorials
@@ -219,7 +225,7 @@ We look forward to seeing you there!
 [^tutorial-interfaces]: Transitioning all of our tutorials to provide instructions for different interfaces is a work in progress (as of 26 February 2025).
  In the meantime, some may include only command line instructions.
 
-[^developing-plugins]: If you become interested in building and distributing your own QIIME 2 plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
+[^developing-plugins]: If you become interested in building and distributing your own plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
 
 [^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).
 

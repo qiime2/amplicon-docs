@@ -27,7 +27,7 @@ At a high level, this process works as follows if merging data from two or more 
 
 The following commands will download the sample metadata as tab-separated text, and two demultiplexed sequence artifacts representing two different sequencing runs.
 Note that in this example, all sample metadata from the full study is contained in a single sample metadata file.
-If that were not the case, you can merge your sample metadata (see [How to merge metadata](https://use.qiime2.org/en/latest/how-to-guides/merge-metadata.html)).
+If that were not the case, you can merge your sample metadata (see [How to merge metadata](https://use.qiime2.org/en/stable/how-to-guides/merge-metadata.html)).
 
 :::{tip}
 It's always a good idea to include a column in your metadata indicating which sequencing run a sample was on.

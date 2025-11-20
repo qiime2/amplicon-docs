@@ -61,7 +61,7 @@ Just a few more **important points** before we go further:
    Now that you know all about the help documentation ([](#available-plugins)), use it to learn more about individual actions, and other actions present in a plugin (hint: if a plugin has additional actions not described here, they are probably used to examine the output of other actions in that plugin).
 1. Metadata is a central concept in QIIME 2.
    We do not extensively discuss metadata in this guide.
-   Instead, find discussion of metadata in [our documentation of the metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
+   Instead, find discussion of metadata in [our documentation of the metadata file format](https://use.qiime2.org/en/stable/references/metadata.html).
 1. There is no one way to do things in QIIME 2.
    Nor is there a "QIIME 2" approach.
    *Many paths lead from the foot of the mountain...* ⛰️
@@ -142,7 +142,7 @@ Otherwise, you can jump to [](#conceptual-overview:denoising-and-clustering).
 :::
 
 You (or whoever prepared and sequenced your samples) should know which barcode is associated with each sample -- if you do not know, talk to your lab mates or sequencing center.
-Include this barcode information in your [sample metadata](https://use.qiime2.org/en/latest/references/metadata.html) file.
+Include this barcode information in your [sample metadata](https://use.qiime2.org/en/stable/references/metadata.html) file.
 
 The process of demultiplexing (as it occurs in QIIME 2) will look something like {ref}`overview-demux-denoise` (ignore the right-hand side of this flow chart for now).
 
@@ -252,7 +252,7 @@ See an example from the gut-to-soil axis study [here](https://view.qiime2.org/vi
 After taxonomically annotating the sequences (coming up next!) you can integrate that information in this report as well.
 
 This is a little advanced, so don't worry if you're not able to answer this yet: referring to the help text of the `summarize-plus` and `tabulate-seqs` actions, which output(s) of `summarize-plus` would be passed as which input(s) to `tabulate-seqs`?
-Hint: read about [using Artifacts as metadata](https://use.qiime2.org/en/latest/how-to-guides/artifacts-as-metadata.html) - this is a very powerful concept in QIIME 2, and opens up many diverse analysis possibilities.
+Hint: read about [using Artifacts as metadata](https://use.qiime2.org/en/stable/how-to-guides/artifacts-as-metadata.html) - this is a very powerful concept in QIIME 2, and opens up many diverse analysis possibilities.
 :::
 
 Congratulations!

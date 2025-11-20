@@ -34,7 +34,7 @@ If you're looking for other tools available for the QIIME 2 Framework (Q2F), see
 :::
 
 :::{dropdown} How should I prepare my metadata?
-See our documentation of the [Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
+See our documentation of the [Metadata file format](https://use.qiime2.org/en/stable/references/metadata.html).
 :::
 
 :::{dropdown} Where can I find help?

@@ -9,11 +9,10 @@ project:
   github: https://github.com/qiime2/amplicon-docs
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
   references:
-    q2doc-api-target: https://develop.qiime2.org/en/latest/
+    q2doc-api-target: https://develop.qiime2.org/en/stable/
     q2doc-library-target: https://library.qiime2.org
-    q2doc-gut-to-soil-target: https://gut-to-soil-tutorial.readthedocs.io/en/latest/
-    q2doc-moving-pictures-target: https://moving-pictures-tutorial.readthedocs.io/en/latest/
-    rachis-news-target: https://news.rachis.org/en/latest/
+    q2doc-gut-to-soil-target: https://gut-to-soil-tutorial.readthedocs.io/en/stable/
+    q2doc-moving-pictures-target: https://moving-pictures-tutorial.readthedocs.io/en/stable/
 
   plugins:
     - type: executable

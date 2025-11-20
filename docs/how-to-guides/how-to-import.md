@@ -95,7 +95,7 @@ This file should be easy for your sequencing center to generate for you, so you 
 :::
 ::::
 
-A fastq manifest file is a type of [sample metadata file](https://use.qiime2.org/en/latest/references/metadata.html) that maps sample identifiers to one or two absolute filepaths pointing at `.fastq.gz` (or `.fastq`) files, depending on whether you're importing data from a single- or paried-end run.
+A fastq manifest file is a type of [sample metadata file](https://use.qiime2.org/en/stable/references/metadata.html) that maps sample identifiers to one or two absolute filepaths pointing at `.fastq.gz` (or `.fastq`) files, depending on whether you're importing data from a single- or paried-end run.
 
 ::::{margin}
 :::{tip}
@@ -438,7 +438,7 @@ instead.
 ## Importing metadata (tl;dr: metadata doesn't get imported)
 
 Sample metadata and feature metadata don't need to be imported, but rather can be loaded and used directly from `.tsv` files.
-To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](https://use.qiime2.org/en/latest/references/metadata.html).
+To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](https://use.qiime2.org/en/stable/references/metadata.html).
 
 [^import-statistics]: It would be possible for us to compile this information because imports are recorded in data provenance, and we could assess that across the user community when provenance is parsed by [QIIME 2 View](https://view.qiime2.org).
  To date though, we've never collected usage information (or any other data) through QIIME 2 View.

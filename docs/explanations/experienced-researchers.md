@@ -39,7 +39,7 @@ They contain your data, as well as some QIIME 2 generated metadata.
 Learn more about these in [](archives).
 
 **Pro-tip #2: The QIIME 2 command line interface tools can be slow because they unzip input data each time you call them.**
-If you need to process your data more interactively, you might want to use the Python 3 API, and/or an [Artifact Cache](https://use.qiime2.org/en/latest/tutorials/use-the-artifact-cache.html).
+If you need to process your data more interactively, you might want to use the Python 3 API, and/or an [Artifact Cache](https://use.qiime2.org/en/stable/tutorials/use-the-artifact-cache.html).
 These can make your analysis workflows much quicker.
 
 ## Data processing steps
@@ -65,7 +65,7 @@ QIIME 2 has little in the way of opinions in terms of how your metadata must be 
 Briefly, the data should be in a tab-separated text file (`.tsv`), where the first row contains metadata column headers, and the first column contains sample ids.
 Sample ids must be unique, and the column header for the first column should be `sample-id` or `id` (there are a few other options as well).
 
-The metadata file format is defined in *Using QIIME 2* [here](https://use.qiime2.org/en/latest/references/metadata.html).
+The metadata file format is defined in *Using QIIME 2* [here](https://use.qiime2.org/en/stable/references/metadata.html).
 You can find an example in the *Gut-to-Soil Tutorial* [here](xref:q2doc-gut-to-soil-target#gut-to-soil-tutorial:sample-metadata).
 
 ### Importing data into QIIME 2: `qiime tools import`

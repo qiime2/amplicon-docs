@@ -187,7 +187,7 @@ If another action can take a rooted or an unrooted phylogenetic tree, that input
 In graphical QIIME 2 interfaces, it's possible to view the available actions based on what Artifact Class(es) they accept as input.
 This can allow a user to query the system with questions like "What actions are available to apply to a rooted phylogenetic tree?", or "What actions are available to create a rooted phylogenetic tree from an unrooted phylogenetic tree?".
 
-If you'd like to learn more about Artifact Classes, see [*Semantic types, data types, file formats, and artifact classes*](https://develop.qiime2.org/en/latest/plugins/explanations/types-of-types.html) in *Developing with QIIME 2*.
+If you'd like to learn more about Artifact Classes, see [*Semantic types, data types, file formats, and artifact classes*](https://develop.qiime2.org/en/stable/plugins/explanations/types-of-types.html) in *Developing with QIIME 2*.
 
 ## Next steps
 
@@ -226,6 +226,9 @@ We look forward to seeing you there!
  In the meantime, some may include only command line instructions.
 
 [^developing-plugins]: If you become interested in building and distributing your own plugins, for marker gene or any other type of analysis, you can refer to our developer manual, [Developing with QIIME 2](https://develop.qiime2.org).
+
+[^power-user]: When you're ready to learn more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
+  Using QIIME 2 provides information that is relevant across all QIIME 2 distributions and plugins, not just the amplicon distribution.
 
 [^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).
 

@@ -230,7 +230,7 @@ We look forward to seeing you there!
 [^power-user]: When you're ready to learn more about how the QIIME 2 Framework works, and how you can leverage it to become a QIIME 2 power user, you can refer to our book on that topic, [Using QIIME 2](https://use.qiime2.org).
   Using QIIME 2 provides information that is relevant across all QIIME 2 distributions and plugins, not just the amplicon distribution.
 
-[^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/latest/how-to-guides/view-visualizations.html).
+[^view-options]: Other options for viewing `.qza` and `.qzv` files are discussed [here](https://use.qiime2.org/en/stable/how-to-guides/view-visualizations.html).
 
 [^provenance-in-artifacts]: Data provenance is some of the metadata that is stored alongside your data in `.qza` and `.qzv` files.
   Retaining provenance information without a centralized database is one of the reasons why QIIME 2 produces `.qza` and `.qzv` files, as opposed to just outputting data on its own (e.g., in `.fasta` or `.biom` files).

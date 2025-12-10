@@ -11,6 +11,7 @@ project:
   references:
     q2doc-api-target: https://develop.qiime2.org/en/stable/
     q2doc-library-target: https://library.qiime2.org
+    q2doc-using-qiime2-target: https://use.qiime2.org/en/stable/
     q2doc-gut-to-soil-target: https://gut-to-soil-tutorial.readthedocs.io/en/stable/
     q2doc-moving-pictures-target: https://moving-pictures-tutorial.readthedocs.io/en/stable/
 

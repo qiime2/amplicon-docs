@@ -247,11 +247,11 @@ We will not discuss all actions of this plugin in detail here (some are mentione
 
 :::{tip} Reviewing information about observed sequences
 :label: overview-tabulate-seqs
-A very useful pair of actions here are `summarize-plus` and `tabulate-seqs`: when used together, these allow you to generate a summary of which sequences were observed how many times and in how many samples.
+A very useful pair of actions here are `summarize` and `tabulate-seqs`: when used together, these allow you to generate a summary of which sequences were observed how many times and in how many samples.
 See an example from the gut-to-soil axis study [here](https://view.qiime2.org/visualization/?src=https://zenodo.org/api/records/13887457/files/asv-seqs-ms10.qzv/content).
 After taxonomically annotating the sequences (coming up next!) you can integrate that information in this report as well.
 
-This is a little advanced, so don't worry if you're not able to answer this yet: referring to the help text of the `summarize-plus` and `tabulate-seqs` actions, which output(s) of `summarize-plus` would be passed as which input(s) to `tabulate-seqs`?
+This is a little advanced, so don't worry if you're not able to answer this yet: referring to the help text of the `summarize` and `tabulate-seqs` actions, which output(s) of `summarize` would be passed as which input(s) to `tabulate-seqs`?
 Hint: read about [using Artifacts as metadata](https://use.qiime2.org/en/stable/how-to-guides/artifacts-as-metadata.html) - this is a very powerful concept in QIIME 2, and opens up many diverse analysis possibilities.
 :::
 

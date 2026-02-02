@@ -64,7 +64,7 @@ You should use the same parameters for each run.
 
 :::{describe-usage}
 
-asv_seqs_nano1, asv_table_nano1, stats_nano1 = use.action(
+asv_seqs_nano1, asv_table_nano1, denoising_stats_nano1, base_transition_stats_nano1 = use.action(
     use.UsageAction(plugin_id='dada2',
                     action_id='denoise_paired'),
     use.UsageInputs(demultiplexed_seqs=demux_nano1,
@@ -74,9 +74,10 @@ asv_seqs_nano1, asv_table_nano1, stats_nano1 = use.action(
                     trunc_len_r=250),
     use.UsageOutputNames(representative_sequences='asv_seqs_nano1',
                          table='asv_table_nano1',
-                         denoising_stats='stats_nano1'))
+                         denoising_stats='denoising_stats_nano1',
+                         base_transition_stats='base_transition_stats_nano1'))
 
-asv_seqs_nano2, asv_table_nano2, stats_nano2 = use.action(
+asv_seqs_nano2, asv_table_nano2, denoising_stats_nano2, base_transition_stats_nano2 = use.action(
     use.UsageAction(plugin_id='dada2',
                     action_id='denoise_paired'),
     use.UsageInputs(demultiplexed_seqs=demux_nano2,
@@ -86,7 +87,8 @@ asv_seqs_nano2, asv_table_nano2, stats_nano2 = use.action(
                     trunc_len_r=250),
     use.UsageOutputNames(representative_sequences='asv_seqs_nano2',
                          table='asv_table_nano2',
-                         denoising_stats='stats_nano2'))
+                         denoising_stats='denoising_stats_nano2',
+                         base_transition_stats='base_transition_stats_nano2'))
 :::
 
 ## Merging data

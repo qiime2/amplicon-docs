@@ -51,7 +51,7 @@ To generate the `FeatureTable[Frequency]` and a corresponding `FeatureData[Seque
 
 :::{describe-usage}
 
-asv_seqs, asv_table, stats = use.action(
+asv_seqs, asv_table, denoising_stats, base_transition_stats = use.action(
     use.UsageAction(plugin_id='dada2',
                     action_id='denoise_paired'),
     use.UsageInputs(demultiplexed_seqs=demux,
@@ -61,7 +61,8 @@ asv_seqs, asv_table, stats = use.action(
                     trunc_len_r=250),
     use.UsageOutputNames(representative_sequences='asv_seqs',
                          table='asv_table',
-                         denoising_stats='stats'))
+                         denoising_stats='denoising_stats',
+                         base_transition_stats='base_transition_stats'))
 :::
 
 ## Cluster features

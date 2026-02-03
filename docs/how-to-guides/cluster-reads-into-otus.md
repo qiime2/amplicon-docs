@@ -97,7 +97,7 @@ For example, let's summarize the OTU table.
 :::{describe-usage}
 use.action(
     use.UsageAction(plugin_id='feature_table',
-                    action_id='summarize_plus'),
+                    action_id='summarize'),
     use.UsageInputs(table=clustered_table,
                     metadata=sample_metadata),
     use.UsageOutputNames(summary='clustered_table',

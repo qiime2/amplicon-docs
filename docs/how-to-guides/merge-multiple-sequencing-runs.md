@@ -127,7 +127,7 @@ For example, you can generate a summary of the merged feature table as follows.
 :::{describe-usage}
 use.action(
     use.UsageAction(plugin_id='feature_table',
-                    action_id='summarize_plus'),
+                    action_id='summarize'),
     use.UsageInputs(table=asv_table,
                     metadata=sample_metadata),
     use.UsageOutputNames(summary='asv_table',

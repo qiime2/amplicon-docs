@@ -1,4 +1,4 @@
-(decontam-tutorial)=
+(decontam-howto)=
 
 # How to Perform Deconamination Analysis with Decontam
 
@@ -38,7 +38,7 @@ This tutorial's example commands reference the following example data.
 To download the example table, representative_sequences, and metadata follow the below steps.
 
 :::{describe-usage}
-:scope: decontam-tutorial
+:scope: decontam-howto
 
 table = use.init_artifact_from_url(
     'table',
@@ -196,17 +196,11 @@ It is located below the histogram and the fasta download buttons:
 To run `decontam-score-viz` perform the following.
 
 :::{describe-usage}
-def table_collection_factory():
-    import rachis
-    return rachis.ResultCollection({'1': table.execute()})
-
-def decontam_score_collection_factory():
-    import rachis
-    return rachis.ResultCollection({'1': comb_decontam_scores.execute()})
-
-tables = use.init_artifact_collection('tables', table_collection_factory)
-decontam_scores = use.init_artifact_collection(
-    'decontam_scores', decontam_score_collection_factory
+decontam_scores_collection = use.construct_artifact_collection(
+    'decontam_scores_collection', {'first': comb_decontam_scores}
+)
+table_collection = use.construct_artifact_collection(
+    'tables_collection', {'first': table}
 )
 
 use.action(
@@ -214,8 +208,8 @@ use.action(
         plugin_id='quality_control', action_id='decontam_score_viz'
     ),
     use.UsageInputs(
-        decontam_scores=decontam_scores,
-        table=tables,
+        decontam_scores=decontam_scores_collection,
+        table=table_collection,
         rep_seqs=rep_seqs,
         threshold=0.1,
         weighted=False,
@@ -234,12 +228,8 @@ This allows accurate and contaminant-free downstream analysis.
 More information about the `q2-feature-table` plugin is available here [here](https://library.qiime2.org/plugins/qiime2/q2-feature-table/overview).
 
 :::{describe-usage}
-def decontam_as_md_factory():
-    import rachis
-    return comb_decontam_scores.execute().view(rachis.Metadata)
-
-comb_decontam_scores_md = use.init_metadata(
-    'comb_decontam_scores_md', decontam_as_md_factory
+comb_decontam_scores_md = use.view_as_metadata(
+    'comb_decontam_scores_md', comb_decontam_scores
 )
 
 filtered_table, = use.action(

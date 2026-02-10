@@ -2,6 +2,7 @@
 # How to merge data from multiple sequencing runs
 
 This document illustrates how to integrate data for a single study that was generated on more than one sequencing run.
+Importantly, these steps require that the same PCR primers were used for all sequencing runs.[^different-pcr-primers]
 Our general recommendation is that this be done at the feature table stage, rather than prior to quality control.
 With some quality control methods (notably DADA2) this is required, while with others it's optional.
 
@@ -134,3 +135,5 @@ use.action(
                          sample_frequencies='sample_frequencies',
                          feature_frequencies='asv_frequencies'))
 :::
+
+[^different-pcr-primers]: If you're interested in combining sequencing runs where different PCR primers were used, the process is more challenging as you must be strategic about managing the known bias that this introduces. See [Li et al (2025)](https://doi.org/10.1101/2025.02.11.637740) for a discussion of this topic. Table 1 in particular outlines different approaches (this paper does not explicitly evaluate the methods but describes them and how commonly they have been used). 

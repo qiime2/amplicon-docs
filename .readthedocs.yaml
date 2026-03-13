@@ -9,6 +9,10 @@ build:
   os: ubuntu-24.04
   tools:
     python: "mambaforge-latest"
+
+  environment:
+    HOST: 127.0.0.1
+
   jobs:
     create_environment:
       - conda env create -p .env/ --file environment-files/readthedocs.yml

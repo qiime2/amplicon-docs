@@ -28,7 +28,7 @@ At a high level, this process works as follows if merging data from two or more 
 
 The following commands will download the sample metadata as tab-separated text, and two demultiplexed sequence artifacts representing two different sequencing runs.
 Note that in this example, all sample metadata from the full study is contained in a single sample metadata file.
-If that were not the case, you can merge your sample metadata (see [How to merge metadata](https://use.qiime2.org/en/stable/how-to-guides/merge-metadata.html)).
+If that were not the case, you can merge your sample metadata (see [How to merge metadata](xref:using-rachis-target#metadata-merge)).
 
 :::{tip}
 It's always a good idea to include a column in your metadata indicating which sequencing run a sample was on.
@@ -136,4 +136,4 @@ use.action(
                          feature_frequencies='asv_frequencies'))
 :::
 
-[^different-pcr-primers]: If you're interested in combining sequencing runs where different PCR primers were used, the process is more challenging as you must be strategic about managing the known bias that this introduces. See [Li et al (2025)](https://doi.org/10.1101/2025.02.11.637740) for a discussion of this topic. Table 1 in particular outlines different approaches (this paper does not explicitly evaluate the methods but describes them and how commonly they have been used). 
+[^different-pcr-primers]: If you're interested in combining sequencing runs where different PCR primers were used, the process is more challenging as you must be strategic about managing the known bias that this introduces. See [Li et al (2025)](https://doi.org/10.1101/2025.02.11.637740) for a discussion of this topic. Table 1 in particular outlines different approaches (this paper does not explicitly evaluate the methods but describes them and how commonly they have been used).

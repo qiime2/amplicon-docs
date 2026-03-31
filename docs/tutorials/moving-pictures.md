@@ -1,7 +1,7 @@
 (moving-pictures-tutorial)=
 # *Moving Pictures* tutorial 🎥
 
-```{embed} xref:q2doc-moving-pictures-target#tutorial
+```{embed} xref:moving-pictures-target#tutorial
 ```
 
 <!--

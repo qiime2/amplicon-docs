@@ -187,7 +187,7 @@ If another action can take a rooted or an unrooted phylogenetic tree, that input
 In graphical QIIME 2 interfaces, it's possible to view the available actions based on what Artifact Class(es) they accept as input.
 This can allow a user to query the system with questions like "What actions are available to apply to a rooted phylogenetic tree?", or "What actions are available to create a rooted phylogenetic tree from an unrooted phylogenetic tree?".
 
-If you'd like to learn more about Artifact Classes, see [*Semantic types, data types, file formats, and artifact classes*](xref:q2doc-api-target#types-of-types) in *Developing with QIIME 2*.
+If you'd like to learn more about Artifact Classes, see [*Semantic types, data types, file formats, and artifact classes*](xref:developing-with-rachis-target#types-of-types) in *Developing with QIIME 2*.
 
 ## Next steps
 

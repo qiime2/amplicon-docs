@@ -28,8 +28,8 @@ project:
         - file: intro.md
         - title: Tutorials
           children:
-              - file: tutorials/moving-pictures.md
               - file: tutorials/gut-to-soil.md
+              - file: tutorials/moving-pictures.md
         - title: How To Guides
           children:
               - file: how-to-guides/install.md

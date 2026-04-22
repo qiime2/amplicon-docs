@@ -1,9 +1,9 @@
 channels:
-- https://packages.qiime2.org/qiime2/2026.4/amplicon/passed
+- https://packages.qiime2.org/qiime2/2026.7/qiime2/passed
 - conda-forge
 - bioconda
 dependencies:
-  - qiime2-amplicon
+  - rachis-qiime2
   - nodejs
   - pip
   - pip:

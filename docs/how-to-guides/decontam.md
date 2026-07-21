@@ -15,7 +15,7 @@ If you use decontam through `q2-quality-control` in your work, please cite the [
 
 ## QIIME 2 Basics
 
-If you're completely new to QIIME 2, we recommend reading [Getting Started with QIIME 2](https://amplicon-docs.qiime2.org/en/latest/explanations/getting-started.html) to familiarize yourself with concepts that may be helpful.
+If you're completely new to QIIME 2, we recommend reading [Getting Started with QIIME 2](https://amplicon-docs.qiime2.org/en/2026.7/explanations/getting-started.html) to familiarize yourself with concepts that may be helpful.
 To install QIIME 2 or MOSHPIT, both of which will include the `q2-quality-control` decontam functionality by default, follow the instructions [here](https://library.qiime2.org/quickstart).
 
 ## Installation and base actions

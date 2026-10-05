@@ -2,7 +2,7 @@ autodoc:
 	q2doc autodoc --singlepage --output references docs
 
 html:
-	cd docs && jupyter book build --html
+	cd docs && Q2DOC_BASE_COMMAND='qiime' jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
 
 fast-preview:
@@ -10,7 +10,7 @@ fast-preview:
 	cp -r docs/data/ docs/_build/html/data/
 
 preview:
-	cd docs && Q2DOC_PREVIEW= jupyter book build --html
+	cd docs && Q2DOC_BASE_COMMAND='qiime' Q2DOC_PREVIEW= jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
 
 serve:

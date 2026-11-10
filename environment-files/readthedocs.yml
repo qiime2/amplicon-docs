@@ -7,5 +7,5 @@ dependencies:
   - nodejs
   - pip
   - pip:
-    - q2doc@git+https://github.com/qiime2/q2doc@dev
+    - q2doc@git+https://github.com/rachis-org/rachis-doc@dev
     - jupyter-book

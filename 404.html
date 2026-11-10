@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--
+  Not-found page for docs.qiime2.org (and amplicon-docs.qiime2.org).
+
+  `make html` copies this file to the top of the build output, where Read the
+  Docs finds it and serves it, with status 404, at any URL that does not exist.
+  Because it is served at arbitrary paths, everything it needs is inline (CSS,
+  JavaScript, the logo as a data URI) and every link is absolute.
+
+  Paths shaped like the retired Sphinx docs (/2024.10/..., /2017.2/..., /2.0.6/...)
+  get the "old docs" section, with links to the current docs and the Zenodo archive.
+  For 2024.10, the last version and the only one verified complete on archive.org,
+  it also links the archive.org copy of the requested page. For older versions it
+  offers, in order, archive.org's copies of the requested page, the archive.org
+  copy of the same address in 2024.10 (which may not exist; the text says so), and
+  Zenodo. Tutorial data files
+  (/<version>/data/...) are pointed to Zenodo only. Any other path gets a plain
+  not-found message. The page cannot tell whether an old-docs address was ever a
+  real page, so its text for them is conditional ("if this page was part of ...").
+
+  Read the Docs takes this page from the default version (`stable`), so a change
+  here reaches production only when the `stable` tag moves.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page not found · QIIME 2 documentation</title>
+<style>
+	body {
+		padding: 20px;
+		font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'Courier New', monospace;
+		background-color: #DDD9D9;
+		color: #222;
+		line-height: 1.5;
+	}
+	#content {
+		max-width: 760px;
+	}
+	header img {
+		max-width: 100%;
+		height: auto;
+	}
+	h1 {
+		font-size: 1.6em;
+		margin-top: 1em;
+	}
+	h2 {
+		font-size: 1.15em;
+		margin-top: 2em;
+		margin-bottom: 0.25em;
+	}
+	a {
+		color: #1f6feb;
+	}
+	code {
+		background-color: #cfcaca;
+		padding: 1px 4px;
+		border-radius: 3px;
+		font-size: 0.95em;
+		overflow-wrap: anywhere;
+	}
+	/* Sections switched on by the script below. */
+	.old-only, .data-only, .final-only, .older-only {
+		display: none;
+	}
+	html.old-docs .old-only, html.old-data .data-only,
+	html.final-version .final-only, html.older-version .older-only {
+		display: block;
+	}
+	html.old-docs .generic-only {
+		display: none;
+	}
+</style>
+</head>
+<body>
+	<header>
+		<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PgoKPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0ODAiIGhlaWdodD0iMTU0IiB2aWV3Qm94PSIwIDAgNDgwIDE1NCI+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9ImN1dC1ib3R0b20iPgogICAgICA8cmVjdCB4PSIyMTciIHk9IjE3NyIgd2lkdGg9IjEwOCIgaGVpZ2h0PSIzMCIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8Y2xpcFBhdGggaWQ9ImN1dC1lIj4KICAgICAgPHJlY3QgeD0iMzU1IiB5PSItMTYwIiB3aWR0aD0iNTAiIGhlaWdodD0iOTAiIHRyYW5zZm9ybT0icm90YXRlKDQ1KSIgLz4KICAgICAgPHJlY3QgeD0iMzU1IiB5PSItMTEyIiB3aWR0aD0iOTAiIGhlaWdodD0iNTAiIHRyYW5zZm9ybT0icm90YXRlKDQ1KSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8Y2xpcFBhdGggaWQ9ImN1dC10d28iPgogICAgICA8cmVjdCB4PSIzNjUiIHk9Ii01MCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjgwIiB0cmFuc2Zvcm09InJvdGF0ZSg0NSkiIC8+CiAgICAgIDxyZWN0IHg9IjM2NSIgeT0iLTUwIiB3aWR0aD0iODAiIGhlaWdodD0iNDAiIHRyYW5zZm9ybT0icm90YXRlKDQ1KSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMTgsLTEwNSkiPgogICAgPCEtLSB0cmVlIC0tPgogICAgPHJlY3QgeD0iMTY5IiB5PSIxMDYiIHdpZHRoPSIxMiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzdGN0Y3RiIgLz4KICAgIDxyZWN0IHg9IjE0NCIgeT0iMTI2IiB3aWR0aD0iNjIiIGhlaWdodD0iMTIiIGZpbGw9IiM3RjdGN0YiIC8+CiAgICA8cmVjdCB4PSIxNDQiIHk9IjEyNiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjQ0IiBmaWxsPSIjN0Y3RjdGIiAvPgogICAgPHJlY3QgeD0iMTg3IiB5PSIxNTMiIHdpZHRoPSIyNyIgaGVpZ2h0PSIxMiIgZmlsbD0iIzdGN0Y3RiIgLz4KICAgIDxyZWN0IHg9IjE5NSIgeT0iMTI5IiB3aWR0aD0iMTEiIGhlaWdodD0iMzYiIGZpbGw9IiM3RjdGN0YiIC8+CgogICAgPHJlY3QgeD0iMTM4IiB5PSIxODUiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyMCIgZmlsbD0iI0ZGMDAwMCIgLz4KICAgIDxyZWN0IHg9IjE0NCIgeT0iMTcwIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIGZpbGw9IiNGRjAwMDAiIC8+CgogICAgPHJlY3QgeD0iMTg3IiB5PSIxNjUiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzAwRkYwMCIgLz4KCiAgICA8cmVjdCB4PSIyMDIiIHk9IjE2NSIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMDAwMEZGIiAvPgoKICAgIDwhLS0gUSAobWFnbmlmeWluZyBnbGFzcykgLS0+CiAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIyMDkiIHI9IjI0IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMTIiIGZpbGw9Im5vbmUiIC8+CiAgICA8bGluZSB4MT0iMTYzIiB5MT0iMjIyIiB4Mj0iMTkwIiB5Mj0iMjU0IiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2U9IiMwMDAwMDAiLz4KICAgIDwhLS0gaWkgLS0+CiAgICA8bGluZSB4MT0iMTkzIiB5MT0iMTc5IiB4Mj0iMTkzIiB5Mj0iMjM3IiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2U9IiMwMDAwMDAiLz4KICAgIDxsaW5lIHgxPSIyMDgiIHkxPSIxNzkiIHgyPSIyMDgiIHkyPSIyMzciIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZT0iIzAwMDAwMCIvPgogICAgPCEtLSBtIC0tPgogICAgPGNpcmNsZSBjeD0iMjQ3IiBjeT0iMjA5IiByPSIyNCIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjEyIiBmaWxsPSJub25lIiBjbGlwLXBhdGg9InVybCgjY3V0LWJvdHRvbSkiIC8+CiAgICA8Y2lyY2xlIGN4PSIyOTUiIGN5PSIyMDkiIHI9IjI0IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMTIiIGZpbGw9Im5vbmUiIGNsaXAtcGF0aD0idXJsKCNjdXQtYm90dG9tKSIgLz4KICAgIDxsaW5lIHgxPSIyMjMiIHkxPSIyMDYuNSIgeDI9IjIyMyIgeTI9IjIzNyIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlPSIjMDAwMDAwIi8+CiAgICA8bGluZSB4MT0iMjcxIiB5MT0iMjA2LjUiIHgyPSIyNzEiIHkyPSIyMzciIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZT0iIzAwMDAwMCIvPgogICAgPGxpbmUgeDE9IjMxOSIgeTE9IjIwNi41IiB4Mj0iMzE5IiB5Mj0iMjM3IiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2U9IiMwMDAwMDAiLz4KICAgIDwhLS0gZSAtLT4KICAgIDxjaXJjbGUgY3g9IjM1OCIgY3k9IjIwOSIgcj0iMjQiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIxMiIgZmlsbD0ibm9uZSIgY2xpcC1wYXRoPSJ1cmwoI2N1dC1lKSIgLz4KICAgIDxsaW5lIHgxPSIzNzciIHkxPSIxODciIHgyPSIzMzkiIHkyPSIyMjgiIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZT0iIzAwMDAwMCIvPgoKICAgIDwhLS0gMiAtLT4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEzMCwtMTA4KSI+CiAgICAgIDxjaXJjbGUgY3g9IjI5NSIgY3k9IjI4MCIgcj0iMjQiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIxMiIgZmlsbD0ibm9uZSIgY2xpcC1wYXRoPSJ1cmwoI2N1dC10d28pIiAvPgogICAgICA8bGluZSB4MT0iMzEyIiB5MT0iMjk3IiB4Mj0iMjcwIiB5Mj0iMzM5IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMTIiIC8+CiAgICAgIDxsaW5lIHgxPSIyNjYiIHkxPSIzNDAiIHgyPSIzMjUiIHkyPSIzNDAiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIxMiIgLz4KICAgIDwvZz4KICAgIDx0ZXh0IHg9IjQ2MCIgeT0iMjM4IiBmb250LWZhbWlseT0iVmVyZGFuYSIgZm9udC1zaXplPSI2MCI+CiAgICAgIGRvY3MKICAgIDwvdGV4dD4KICA8L2c+Cjwvc3ZnPgo=" width="300" height="96" alt="QIIME 2 docs logo">
+	</header>
+
+	<div id="content">
+
+	<!-- Shown for any path that is not an old-docs path. -->
+	<section class="generic-only">
+		<h1>Page not found</h1>
+		<p>There's no page at this address. The <a href="/">documentation home page</a> is a good place to start.</p>
+		<noscript>
+			<p>If you followed a link into the old documentation (an address like <code>docs.qiime2.org/2024.10/...</code>), those pages have been retired. Copies are on <a href="https://web.archive.org/web/*/docs.qiime2.org/*">archive.org</a> and <a href="https://doi.org/10.5281/zenodo.24082639">Zenodo</a>.</p>
+		</noscript>
+	</section>
+
+	<!-- Shown for old-docs paths (/<version>/...). -->
+	<section class="old-only">
+		<h1>The old QIIME 2 documentation has been succeeded</h1>
+		<p>You followed a link into the old <a href="https://qiime2.org">QIIME 2</a> documentation, which covered releases up to 2024.10. Those pages are no longer online: our more recent content contains many improvements and more modern workflows, but the old documentation often appeared in search results ahead of the more recent and relevant content.</p>
+		<p>The address you followed: <code id="old-url"></code></p>
+		<!-- Only for old tutorial data files (/<version>/data/...). -->
+		<p class="data-only">That address is for a tutorial data file. If the file was part of that release, it is in the Zenodo archive described below, at <code id="data-path"></code> in that release's files.</p>
+
+		<h2>Interested in the most up-to-date documentation?</h2>
+		<p>Start from the <a href="/">documentation home page</a>. If you can't find what you were looking for there, ask on the <a href="https://forum.qiime2.org">QIIME 2 Forum</a>.</p>
+
+		<!-- Only for the last version (2024.10), every page of which was verified to be on archive.org. -->
+		<div class="final-only">
+			<h2>Need this page as it was?</h2>
+			<p>The 2024.10 documentation in its entirety is available on archive.org.</p>
+			<ul>
+				<li>If this page was part of that release, you can find it here: <a id="archive-link" href="https://web.archive.org/web/*/docs.qiime2.org/*">this page on archive.org</a> (archive.org can be slow to load).</li>
+			</ul>
+		</div>
+
+		<!-- Only for versions before 2024.10. -->
+		<div class="older-only">
+			<h2>Need a page from the outdated documentation?</h2>
+			<p>If this page was part of the outdated documentation, there are three places to look for it, in this order:</p>
+			<ol>
+				<li>archive.org may have saved this page as it was in <span id="old-version"></span>: <a id="exact-version-link" href="https://web.archive.org/web/*/docs.qiime2.org/*">archive.org's copies of this page</a> (its coverage of releases before 2024.10 is incomplete).</li>
+				<li>Otherwise, the same page may have been part of the 2024.10 documentation, which archive.org has in its entirety: <a id="final-version-link" href="https://web.archive.org/web/*/docs.qiime2.org/2024.10/*">this page in 2024.10, on archive.org</a>.</li>
+				<li>If neither of those works, the Zenodo archive described below has every release in full.</li>
+			</ol>
+		</div>
+
+		<h2>Want all of the old documentation?</h2>
+		<p>A complete copy of the old documentation, including every release with its tutorial data files, is archived on Zenodo. Download the file for the release you need; the record explains how to browse it on your own computer.</p>
+		<ul>
+			<li>DOI: <a href="https://doi.org/10.5281/zenodo.24082639">10.5281/zenodo.24082639</a></li>
+		</ul>
+	</section>
+
+	</div>
+
+<script>
+(function () {
+	// Date (YYYYMMDD) by which every 2024.10 page had a fresh archive.org capture
+	// (saved and checked by hand in the Save Page Now form, starting 2026-11-09).
+	// Links ask for the snapshot nearest this date, so they land on a copy of the
+	// real page rather than a capture of this 404 made after the takedown, which
+	// must therefore come at least a week after this date.
+	var ARCHIVE_DATE = '20261110';
+	// The last version of the old docs.
+	var FINAL_VERSION = '2024.10';
+	var OLD_HOST = 'https://docs.qiime2.org';
+
+	// Pull-request previews (*.readthedocs.build) serve everything under
+	// /<language>/<version>/, so drop that prefix there to let old-docs addresses be
+	// tried on a preview. In production old links arrive at the top level, where Read
+	// the Docs serves the default version's 404 page.
+	var path = location.pathname;
+	if (/\.readthedocs\.build$/.test(location.hostname)) {
+		path = path.replace(/^\/[^\/]+\/[^\/]+(?=\/)/, '');
+	}
+
+	var match = path.match(/^\/(2\.0\.\d+|20\d\d\.\d+)(\/.*)?$/);
+	if (!match) {
+		return;
+	}
+	var version = match[1];
+	var rest = match[2] || '/';
+	var root = document.documentElement;
+	// Always the old host, even when this page is served from amplicon-docs or a preview.
+	var oldUrl = OLD_HOST + path;
+
+	// archive.org redirects a dated address like this to its capture of url nearest
+	// that date.
+	function wayback(url) {
+		return 'https://web.archive.org/web/' + ARCHIVE_DATE + '/' + url + location.hash;
+	}
+
+	root.classList.add('old-docs');
+	document.getElementById('old-url').textContent = oldUrl;
+
+	if (rest.indexOf('/data/') === 0) {
+		// Tutorial data files are pointed to the Zenodo archive only: archive.org's
+		// copies of data files were never checked.
+		root.classList.add('old-data');
+		document.getElementById('data-path').textContent = version + rest;
+	} else if (version === FINAL_VERSION) {
+		root.classList.add('final-version');
+		document.getElementById('archive-link').href = wayback(oldUrl);
+	} else {
+		// Older versions: archive.org's list of captures of the requested address (not
+		// a dated address: those captures are scattered over years, and after the
+		// takedown archive.org may capture this 404 there), then the same address in
+		// 2024.10, which may not exist (pages were renamed and removed between
+		// versions; the text allows for it), then Zenodo.
+		root.classList.add('older-version');
+		document.getElementById('old-version').textContent = version;
+		document.getElementById('exact-version-link').href = 'https://web.archive.org/web/*/' + oldUrl;
+		document.getElementById('final-version-link').href =
+			wayback(OLD_HOST + '/' + FINAL_VERSION + rest);
+	}
+})();
+</script>
+</body>
+</html>

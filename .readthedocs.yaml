@@ -15,7 +15,12 @@ build:
     build:
       html:
         - PATH=$(pwd)/.env/bin/:$PATH make autodoc
-        - PATH=$(pwd)/.env/bin/:$PATH make html
+        # mystmd derives the base URL (/en/<version>) from READTHEDOCS_CANONICAL_URL
+        # but doesn't seem to pass it as BASE_URL to book-theme v2 (released on 2026-11-10).
+        # So, set BASE_URL to the same value here. If/when this is fixed in mystmd,
+        # setting BASE_URL can be removed from this line (but it should also continue
+        # to work as is).
+        - BASE_URL=$(echo "$READTHEDOCS_CANONICAL_URL" | sed -E -e "s#^https?://[^/]+##" -e "s#/\$##") PATH=$(pwd)/.env/bin/:$PATH make html
         - mkdir -p $READTHEDOCS_OUTPUT
         - cp -a docs/_build/* $READTHEDOCS_OUTPUT/
 

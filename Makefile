@@ -4,14 +4,17 @@ autodoc:
 html:
 	cd docs && Q2DOC_BASE_COMMAND='qiime' jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
+	cp 404.html docs/_build/html/404.html
 
 fast-preview:
 	cd docs && Q2DOC_FASTMODE= jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
+	cp 404.html docs/_build/html/404.html
 
 preview:
 	cd docs && Q2DOC_BASE_COMMAND='qiime' Q2DOC_PREVIEW= jupyter book build --html
 	cp -r docs/data/ docs/_build/html/data/
+	cp 404.html docs/_build/html/404.html
 
 serve:
 	npx serve docs/_build/html/ -p 4000

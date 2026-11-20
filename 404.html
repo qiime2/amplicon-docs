@@ -13,7 +13,9 @@
   or its Jupyter Book tutorials (/jupyterbooks/...) get the "old docs" section,
   with links to the current docs and to the Zenodo archive, and the download
   (<release>.zip or jupyterbooks.zip) and path in which the requested page or file
-  would be. Any other path gets a plain not-found message. The page cannot tell
+  would be. These paths also count under a /<language>/<version>/ prefix, which
+  pull-request previews and the project's "HTML to clean URL" redirect add (see
+  the script). Any other path gets a plain not-found message. The page cannot tell
   whether an old-docs address was ever a real page or file, so its text for them
   is conditional ("if the old documentation had a page or file at ...").
 
@@ -111,19 +113,33 @@
 (function () {
 	var OLD_HOST = 'https://docs.qiime2.org';
 
-	// Pull-request previews (*.readthedocs.build) serve everything under
-	// /<language>/<version>/, so drop that prefix there to let old-docs addresses be
-	// tried on a preview. In production old links arrive at the top level, where Read
-	// the Docs serves the default version's 404 page.
-	var path = location.pathname;
-	if (/\.readthedocs\.build$/.test(location.hostname)) {
-		path = path.replace(/^\/[^\/]+\/[^\/]+(?=\/)/, '');
-	}
-
 	// A release (/2024.10/...) or the Jupyter Book tutorials (/jupyterbooks/...).
-	var match = path.match(/^\/(2\.0\.\d+|20\d\d\.\d+|jupyterbooks)(\/.*)?$/);
+	var OLD_PATH = /^\/(2\.0\.\d+|20\d\d\.\d+|jupyterbooks)(\/.*)?$/;
+
+	// Old links usually arrive at the top level, where Read the Docs serves the
+	// default version's 404 page. Some arrive under a /<language>/<version>/ prefix
+	// instead: pull-request previews (*.readthedocs.build) serve everything there,
+	// and the project's "HTML to clean URL" redirect sends a missing /<page>.html to
+	// /<language>/<default version>/<page>/. So when the path isn't an old-docs
+	// address, drop such a prefix and try again; the current docs have no
+	// directories named like old-docs ones, so nothing current is caught.
+	var path = location.pathname;
+	var match = path.match(OLD_PATH);
+	if (!match) {
+		path = path.replace(/^\/[^\/]+\/[^\/]+(?=\/)/, '');
+		match = path.match(OLD_PATH);
+	}
 	if (!match) {
 		return;
+	}
+
+	// That redirect turns an old Jupyter Book page, /jupyterbooks/<book>/<page>.html,
+	// into /jupyterbooks/<book>/<page>/. Jupyter Book wrote every page as a .html
+	// file, with an index page only at each book's top, so put the .html back for
+	// anything deeper.
+	if (match[1] === 'jupyterbooks') {
+		path = path.replace(/^(\/jupyterbooks\/[^\/]+\/.+)\/$/, '$1.html');
+		match = path.match(OLD_PATH);
 	}
 	var top = match[1];
 	var rest = match[2] || '/';

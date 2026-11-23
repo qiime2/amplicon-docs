@@ -2,13 +2,6 @@
 
 Welcome! 👋
 This is the primary documentation introducing the use of QIIME 2 for marker gene (i.e., amplicon) based microbiome analysis.
-
-:::{note} Transition from "the old docs"
-As of April 2025, this site replaces the old QIIME 2 user documentation, `https://docs.qiime2.org`.
-We've prioritized content to transition from the old documentation based on our website analytics, so the most frequently accessed content is already here.
-If you're looking for content from the old QIIME 2 user documentation, you can find it at https://docs.qiime2.org/2024.10/ (but please consider [letting us know](https://github.com/qiime2/amplicon-docs/issues) what that content is, as we're trying to transition everything that's needed to this site).
-:::
-
 Based on our website analytics, these are the questions that most frequently drive readers to our documentation:
 
 :::{dropdown} I'm completely new to QIIME 2. Where should I start?
@@ -17,9 +10,11 @@ We recommend that all newcomers read [](#getting-started) for a high-level discu
 :::
 
 :::{dropdown} How can I analyze my data with QIIME 2?
-Historically, the [](#moving-pictures-tutorial) is the resource that most users have started with to learn how to use QIIME 2.
-More recently, we've developed the [](#gut-to-soil-tutorial).
-Both are written for readers who are also new to microbiome analysis.
+After reading [](#getting-started), we recommend jumping in with the [](#gut-to-soil-tutorial).
+This replaces the *Moving Pictures* tutorial as our recommended starting point for learning to use QIIME 2.
+The [](#gut-to-soil-tutorial) is written for readers who are new to microbiome analysis, and walks through a standard analysis.
+Many users learn QIIME 2 by working through this tutorial and then adapting the commands to run on their own data.
+
 If you're already familiar with microbiome analysis but new to QIIME 2, we recommend also looking at [](#experienced-researchers) and [](#conceptual-overview).
 :::
 
@@ -81,6 +76,7 @@ This documentation is the result of past, present, and future (🤞) collaborati
 
 The authors would like to thank [those who have contributed](https://github.com/qiime2/docs/graphs/contributors) to the writing of the original QIIME 2 User Documentation, as well as [those who have contributed to this documentation](https://github.com/qiime2/amplicon-docs/graphs/contributors).
 Some of the content in this documentation is sourced directly from the older material.
+The original QIIME 2 User Documentation is now [archived on Zenodo](https://zenodo.org/records/24082639), and there are instructions in that archive for how to read its content if needed.
 
 The QIIME 2 Forum [moderators](https://forum.qiime2.org/g/q2-mods) and [community members](https://forum.qiime2.org/u?order=likes_received&period=all) have also been instrumental to the development of ideas and content presented here.
 
@@ -100,5 +96,5 @@ To get a list of citations that are specifically relevant to a QIIME 2 Result yo
 ## License
 
 *Microbiome Marker Gene Analysis with QIIME 2* (©2025) and the project's predecessors have many @contributors.
-Content development and maintenance is led by the [Caporaso Lab](https://caplab.bio) at [Northern Arizona University](https://nau.edu).
+Content development and maintenance is led by the [Caporaso Lab](https://caplab.dev) at [Northern Arizona University](https://nau.edu).
 This content is licensed under CC BY-NC-ND 4.0

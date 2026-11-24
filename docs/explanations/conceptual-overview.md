@@ -227,7 +227,7 @@ All should be preceded by [basic quality-score-based filtering](https://doi.org/
 🙈🙉🙊
 
 [](#cluster-reads-into-otus) demonstrates use of several `q2-vsearch` clustering methods.
-Don't forget to read the [chimera filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/chimera/) as well.
+Don't forget to read [](#filter-chimeric-sequences) as well.
 
 (otu-warning)=
 :::{warning}

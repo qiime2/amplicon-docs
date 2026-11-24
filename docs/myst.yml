@@ -39,6 +39,7 @@ project:
               - file: how-to-guides/merge-multiple-sequencing-runs.md
               - file: how-to-guides/cluster-reads-into-otus.md
               - file: how-to-guides/filter-chimeric-sequences.md
+              - file: how-to-guides/longitudinal-comparisons.md
               - file: how-to-guides/predict-sample-metadata.md
               - file: how-to-guides/decontam.md
         - title: Explanations

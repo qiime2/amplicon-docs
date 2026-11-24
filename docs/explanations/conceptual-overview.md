@@ -454,6 +454,7 @@ has its own in-depth tutorial to guide us:
 - **Analyze longitudinal data:**
   `q2-longitudinal` is a plugin for performing statistical analyses of [longitudinal experiments](https://en.wikipedia.org/wiki/Longitudinal_study), i.e., where samples are collected from individual patients/subjects/sites repeatedly over time.
   This includes longitudinal studies of alpha and beta diversity, and some really awesome, interactive plots.
+  [](#longitudinal-comparisons) demonstrates its use.
 📈🍝
  - **Predict the future (or the past) 🔮:**
    `q2-sample-classifier` is a plugin for machine-learning 🤖 analyses of feature data.

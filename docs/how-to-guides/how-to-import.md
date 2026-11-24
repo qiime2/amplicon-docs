@@ -330,8 +330,7 @@ for more information about the FASTA format.
 
 ##### Obtaining example data
 
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/sequences.fna" saveas="sequences.fna"}
-:::
+[`sequences.fna`](https://data.qiime2.org/2025.4/tutorials/importing/sequences.fna)
 
 #### Importing data
 
@@ -354,8 +353,7 @@ for more information about the FASTA format.
 
 ##### Obtaining example data
 
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/aligned-sequences.fna" saveas="aligned-sequences.fna"}
-:::
+[`aligned-sequences.fna`](https://data.qiime2.org/2025.4/tutorials/importing/aligned-sequences.fna)
 
 #### Importing data
 
@@ -378,8 +376,7 @@ for details.
 
 ###### Obtaining example data
 
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v100.biom" saveas="feature-table-v100.biom"}
-:::
+[`feature-table-v100.biom`](https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v100.biom)
 
 ##### Importing data
 
@@ -399,8 +396,7 @@ for details.
 
 ###### Obtaining example data
 
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v210.biom" saveas="feature-table-v210.biom"}
-:::
+[`feature-table-v210.biom`](https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v210.biom)
 
 ##### Importing data
 
@@ -421,8 +417,7 @@ for more information about the newick format.
 
 ##### Obtaining example data
 
-::: {.download url="https://data.qiime2.org/2025.4/tutorials/importing/unrooted-tree.tre" saveas="unrooted-tree.tre"}
-:::
+[`unrooted-tree.tre`](https://data.qiime2.org/2025.4/tutorials/importing/unrooted-tree.tre)
 
 #### Importing data
 

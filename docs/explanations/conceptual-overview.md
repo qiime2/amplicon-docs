@@ -159,7 +159,7 @@ Usually only one of the different demultiplexing actions available in `q2-demux`
 Read more about demultiplexing and give it a spin with the [](#moving-pictures-tutorial).
 That tutorials covers the Earth Microbiome Project format data.
 
-If instead you have barcodes and primers in-line in your reads, see the [cutadapt tutorials](https://forum.qiime2.org/t demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313) for using the demux methods in `q2-cutadapt`.
+If instead you have barcodes and primers in-line in your reads, see the [cutadapt tutorials](https://forum.qiime2.org/t/demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313) for using the demux methods in `q2-cutadapt`.
 
 Have dual-indexed reads or mixed-orientation reads or some other unusual format?
 Search the [QIIME 2 Forum](https://forum.qiime2.org) for advice.
@@ -298,7 +298,7 @@ Classifier training is **reference database- and marker-gene-specific** and only
 #### Training your own feature classifiers.
 If you're working with an uncommon marker gene, you may need to train your own feature classifier.
 This is possible following the steps in the [classifier training tutorial](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).
-The [`rescript` plugin](../references/plugin-reference/plugins/rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
+The [`rescript` plugin](#q2-plugin-rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
 Most users don't need to train their own classifiers however, as the QIIME 2 developers [provide classifiers to the public for common marker genes in the QIIME 2 Library](https://library.qiime2.org/data-resources).
 🎅🎁🎅🎁🎅🎁
 

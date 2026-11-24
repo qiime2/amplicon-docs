@@ -458,6 +458,7 @@ has its own in-depth tutorial to guide us:
  - **Predict the future (or the past) 🔮:**
    `q2-sample-classifier` is a plugin for machine-learning 🤖 analyses of feature data.
    Both classification and regression models are supported.
+   [](#predict-sample-metadata) demonstrates its use.
    This allows you to do things like:
  - predict sample metadata as a function of feature data (e.g., can we use a fecal sample to [predict cancer susceptibility](https://dx.doi.org/10.1128%2FmSphere.00001-15)?
    Or [predict wine quality](https://doi.org/10.1128/mbio.00631-16) based on the microbial composition of grapes before fermentation?).

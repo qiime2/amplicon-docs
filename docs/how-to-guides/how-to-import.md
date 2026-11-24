@@ -265,21 +265,62 @@ Alternatives:
 If you have a feature table in a format that is not one of the two listed above, [we're working on additional options for importing](https://github.com/qiime2/q2-types/issues/140).
 In the meantime, see [forum posts on this topic](https://forum.qiime2.org/search?q=tag%3Afeature-table%20%23import%20order%3Alikes).
 
-<!--
+## Importing metadata (tl;dr: metadata doesn't get imported)
+
+Sample metadata and feature metadata don't need to be imported, but rather can be loaded and used directly from `.tsv` files.
+To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](xref:using-rachis-target#metadata-formatting-reference).
+
+(import-other-formats)=
+## Other import formats
+
 ### Multiplexed sequence data
 
+(import-emp-single-end)=
+#### "EMP protocol" multiplexed single-end fastq
+
+Single-end "[Earth Microbiome Project (EMP) protocol](https://earthmicrobiome.org/protocols-and-standards/)" formatted reads should have two `fastq.gz` files total:
+
+1.  one `sequences.fastq.gz` file that contains the single-end reads,
+2.  one `barcodes.fastq.gz` file that contains the associated barcode reads
+
+In this format, sequence data is still multiplexed (i.e. you have only one `fastq.gz` file containing raw data for all of your samples).
+
+Because you are importing multiple files in a directory, the filenames `sequences.fastq.gz` and `barcodes.fastq.gz` are *required*.
+
+The order of the records in the two `fastq.gz` files defines the association between a sequence read and its barcode read (i.e. the first barcode read corresponds to the first sequence read, the second barcode to the second read, and so on).
+
+:::{describe-usage}
+:scope: how-to-import
+
+def emp_single_end_factory():
+    from urllib import request
+    from q2_types.multiplexed_sequences import EMPSingleEndDirFmt
+
+    url = ('https://data.qiime2.org/2025.4/tutorials/moving-pictures/'
+           'emp-single-end-sequences/')
+    fmt = EMPSingleEndDirFmt(mode='w')
+    for fn in ['sequences.fastq.gz', 'barcodes.fastq.gz']:
+        request.urlretrieve(url + fn, fmt.path / fn)
+    fmt.validate()
+    return fmt
+
+emp_single_end_dir = use.init_format('emp-single-end-sequences',
+                                     emp_single_end_factory)
+
+emp_single_end_sequences = use.import_from_format(
+    'emp-single-end-sequences',
+    semantic_type='EMPSingleEndSequences',
+    variable=emp_single_end_dir)
+:::
+
+(import-emp-paired-end)=
 #### "EMP protocol" multiplexed paired-end fastq
 
-##### Format description
+Paired-end "[Earth Microbiome Project (EMP) protocol](https://earthmicrobiome.org/protocols-and-standards/)" formatted reads should have three `fastq.gz` files total:
 
-Paired-end "[Earth Microbiome Project (EMP) protocol](http://www.earthmicrobiome.org/protocols-and-standards/)" formatted reads should have three `fastq.gz` files total:
-
-1.  one `forward.fastq.gz` file that contains the forward sequence
-    reads,
-2.  one `reverse.fastq.gz` file that contains the reverse sequence
-    reads,
-3.  one `barcodes.fastq.gz` file that contains the associated barcode
-    reads
+1.  one `forward.fastq.gz` file that contains the forward sequence reads,
+2.  one `reverse.fastq.gz` file that contains the reverse sequence reads,
+3.  one `barcodes.fastq.gz` file that contains the associated barcode reads
 
 In this format, sequence data is still multiplexed (i.e. you have only one forward and one reverse `fastq.gz` file containing raw data for all of your samples).
 
@@ -288,150 +329,299 @@ You may need to rename the files obtained from your sequencing center to use the
 
 If those three files are in a directory called `my-sequence-data`, your import command would look like the following:
 
-:::
-qiime tools import \
-  --type EMPPairedEndSequences \
-  --input-path my-sequence-data \
-  --output-path emp-paired-end-sequences.qza
+:::{describe-usage}
+
+def emp_paired_end_factory():
+    from urllib import request
+    from q2_types.multiplexed_sequences import EMPPairedEndDirFmt
+
+    url = 'https://data.qiime2.org/2025.4/tutorials/atacama-soils/1p/'
+    fmt = EMPPairedEndDirFmt(mode='w')
+    for fn in ['forward.fastq.gz', 'reverse.fastq.gz', 'barcodes.fastq.gz']:
+        request.urlretrieve(url + fn, fmt.path / fn)
+    fmt.validate()
+    return fmt
+
+my_sequence_data = use.init_format('my-sequence-data', emp_paired_end_factory)
+
+emp_paired_end_sequences = use.import_from_format(
+    'emp-paired-end-sequences',
+    semantic_type='EMPPairedEndSequences',
+    variable=my_sequence_data)
 :::
 
+(import-barcode-in-sequence-single-end)=
+#### Multiplexed single-end FASTQ with barcodes in sequence
+
+Users with multiplexed single-ended barcodes in sequence reads should have:
+
+1.  one `fastq.gz` file, containing records from multiple samples,
+2.  one [metadata](xref:using-rachis-target#metadata-formatting-reference) file with a column of per-sample barcodes for use in FASTQ demultiplexing
+
+In this format, sequence data is still multiplexed (i.e. you have only one `fastq.gz` file containing raw data for all of your samples).
+
+Because you are importing a single file of sequences, your filenames may be whatever you prefer.
+
+There should be exactly one unique barcode for each sample you wish to demultiplex.
+Barcodes are not required to be in any specific order.
+
+:::{describe-usage}
+
+def muxed_se_factory():
+    from urllib import request
+    from q2_types.per_sample_sequences import FastqGzFormat
+
+    url = ('https://data.qiime2.org/2025.4/tutorials/importing/'
+           'muxed-se-barcode-in-seq.fastq.gz')
+    fmt = FastqGzFormat(mode='w')
+    request.urlretrieve(url, fmt.path)
+    fmt.validate()
+    return fmt
+
+muxed_se_fastq = use.init_format('muxed-se-barcode-in-seq', muxed_se_factory,
+                                 ext='fastq.gz')
+
+muxed_se_barcode_in_seq = use.import_from_format(
+    'muxed-se-barcode-in-seq',
+    semantic_type='MultiplexedSingleEndBarcodeInSequence',
+    variable=muxed_se_fastq)
+:::
+
+(import-barcode-in-sequence-paired-end)=
+#### Multiplexed paired-end FASTQ with barcodes in sequence
+
+Users with multiplexed paired-end barcodes in sequence reads should have:
+
+1.  one `forward.fastq.gz` file, containing forward reads from multiple samples,
+2.  one `reverse.fastq.gz` file, containing reverse reads from the same samples,
+3.  one [metadata](xref:using-rachis-target#metadata-formatting-reference) file with a column of per-sample barcodes for use in FASTQ demultiplexing (or two columns of dual-index barcodes)
+
+In this format, sequence data is still multiplexed (i.e. you have only one forward and one reverse `fastq.gz` file containing raw data for all of your samples).
+
+Because you are importing a multi-file directory, the filenames `forward.fastq.gz` and `reverse.fastq.gz` are *required*.
+
+The order of the records in the `fastq.gz` files defines the association between forward and reverse sequence reads, so a correct order must be preserved.
+Barcodes in the metadata mapping file are not required to be in any specific order.
+
+:::{describe-usage}
+
+def muxed_pe_factory():
+    from urllib import request
+    from q2_types.multiplexed_sequences import (
+        MultiplexedPairedEndBarcodeInSequenceDirFmt)
+
+    url = ('https://data.qiime2.org/2025.4/tutorials/importing/'
+           'muxed-pe-barcode-in-seq/')
+    fmt = MultiplexedPairedEndBarcodeInSequenceDirFmt(mode='w')
+    for fn in ['forward.fastq.gz', 'reverse.fastq.gz']:
+        request.urlretrieve(url + fn, fmt.path / fn)
+    fmt.validate()
+    return fmt
+
+muxed_pe_dir = use.init_format('muxed-pe-barcode-in-seq', muxed_pe_factory)
+
+muxed_pe_barcode_in_seq = use.import_from_format(
+    'muxed-pe-barcode-in-seq',
+    semantic_type='MultiplexedPairedEndBarcodeInSequence',
+    variable=muxed_pe_dir)
+:::
+
+(import-casava-single-end)=
+### Casava 1.8 single-end demultiplexed fastq
+
+In the Casava 1.8 demultiplexed (single-end) format, there is one `fastq.gz` file for each sample in the study which contains the *single-end* reads for that sample.
+The file name includes the sample identifier and should look like `L2S357_15_L001_R1_001.fastq.gz`.
+The underscore-separated fields in this file name are:
+
+1.  the sample identifier,
+2.  the barcode sequence or a barcode identifier,
+3.  the lane number,
+4.  the direction of the read (i.e. only R1, because these are single-end reads), and
+5.  the set number.
+
+:::{describe-usage}
+
+def casava_single_end_factory():
+    import os
+    import tempfile
+    import zipfile
+    from urllib import request
+    from q2_types.per_sample_sequences import (
+        CasavaOneEightSingleLanePerSampleDirFmt)
+
+    url = ('https://data.qiime2.org/2025.4/tutorials/importing/'
+           'casava-18-single-end-demultiplexed.zip')
+    fmt = CasavaOneEightSingleLanePerSampleDirFmt(mode='w')
+    with tempfile.TemporaryDirectory() as tmpdir:
+        zip_fp, _ = request.urlretrieve(url, os.path.join(tmpdir, 'casava.zip'))
+        with zipfile.ZipFile(zip_fp) as zf:
+            for member in zf.namelist():
+                if member.endswith('.fastq.gz'):
+                    fn = os.path.basename(member)
+                    with zf.open(member) as src, open(fmt.path / fn, 'wb') as dst:
+                        dst.write(src.read())
+    fmt.validate()
+    return fmt
+
+casava_dir = use.init_format('casava-18-single-end-demultiplexed',
+                             casava_single_end_factory)
+
+demux_single_end = use.import_from_format(
+    'demux-single-end',
+    semantic_type='SampleData[SequencesWithQuality]',
+    variable=casava_dir,
+    view_type='CasavaOneEightSingleLanePerSampleDirFmt')
+:::
+
+(import-qiime1-seqs-fna)=
 ### Sequences without quality information (i.e. FASTA)
 
-QIIME 2 currently supports importing the QIIME 1 `seqs.fna` file\_
-format, which consists of a single FASTA file with exactly two lines per
-record: header and sequence. Each sequence must span exactly one line
-and cannot be split across multiple lines. The ID in each header must
-follow the format `<sample-id>_<seq-id>`. `<sample-id>` is the
-identifier of the sample the sequence belongs to, and `<seq-id>` is an
-identifier for the sequence *within* its sample.
+QIIME 2 currently supports importing the QIIME 1 `seqs.fna` file format, which consists of a single FASTA file with exactly two lines per record: header and sequence.
+Each sequence must span exactly one line and cannot be split across multiple lines.
+The ID in each header must follow the format `<sample-id>_<seq-id>`.
+`<sample-id>` is the identifier of the sample the sequence belongs to, and `<seq-id>` is an identifier for the sequence *within* its sample.
 
-An example of importing and dereplicating this kind of data can be found
-in the `OTU Clustering tutorial <otu-clustering>`{.interpreted-text
-role="doc"}.
+Other FASTA formats like FASTA files with differently formatted sequence headers or per-sample demultiplexed FASTA files (i.e. one FASTA file per sample) are not currently supported.
 
-Other FASTA formats like FASTA files with differently formatted sequence
-headers or per-sample demultiplexed FASTA files (i.e. one FASTA file per
-sample) are not currently supported.
+An example of importing and dereplicating this kind of data follows.
+The artifact class used here is `SampleData[Sequences]`, indicating that the data represents collections of sequences associated with one or more samples.
 
+:::{describe-usage}
+
+def seqs_fna_factory():
+    from urllib import request
+    from q2_types.per_sample_sequences import QIIME1DemuxFormat
+
+    url = 'https://data.qiime2.org/2025.4/tutorials/otu-clustering/seqs.fna'
+    fmt = QIIME1DemuxFormat(mode='w')
+    request.urlretrieve(url, fmt.path)
+    fmt.validate()
+    return fmt
+
+seqs_fna = use.init_format('seqs', seqs_fna_factory, ext='fna')
+
+seqs = use.import_from_format(
+    'seqs',
+    semantic_type='SampleData[Sequences]',
+    variable=seqs_fna)
+:::
+
+After importing data, you can dereplicate it with the [`dereplicate-sequences`](#q2-action-vsearch-dereplicate-sequences) command.
+
+:::{describe-usage}
+
+table, rep_seqs = use.action(
+    use.UsageAction(plugin_id='vsearch',
+                    action_id='dereplicate_sequences'),
+    use.UsageInputs(sequences=seqs),
+    use.UsageOutputNames(dereplicated_table='table',
+                         dereplicated_sequences='rep-seqs'))
+:::
+
+(import-feature-sequences)=
 ### Per-feature unaligned sequence data (i.e., representative FASTA sequences)
 
-#### Format description
+Unaligned sequence data is imported from a FASTA formatted file containing DNA sequences that are not aligned (i.e., do not contain `-` or `.` characters).
+The sequences may contain degenerate nucleotide characters, such as `N`, but some QIIME 2 actions may not support these characters.
+See the [scikit-bio FASTA format description](https://scikit.bio/docs/latest/generated/skbio.io.format.fasta.html) for more information about the FASTA format.
 
-Unaligned sequence data is imported from a FASTA formatted file
-containing DNA sequences that are not aligned (i.e., do not contain
-[-]{.title-ref} or [.]{.title-ref} characters). The sequences may
-contain degenerate nucleotide characters, such as `N`, but some QIIME 2
-actions may not support these characters. See the [scikit-bio FASTA
-format
-description](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format)
-for more information about the FASTA format.
+:::{describe-usage}
 
-##### Obtaining example data
+def sequences_factory():
+    from urllib import request
+    from q2_types.feature_data import DNAFASTAFormat
 
-[`sequences.fna`](https://data.qiime2.org/2025.4/tutorials/importing/sequences.fna)
+    url = 'https://data.qiime2.org/2025.4/tutorials/importing/sequences.fna'
+    fmt = DNAFASTAFormat(mode='w')
+    request.urlretrieve(url, fmt.path)
+    fmt.validate()
+    return fmt
 
-#### Importing data
+sequences_fna = use.init_format('sequences', sequences_factory, ext='fna')
 
-::: command-block
-qiime tools import \--input-path sequences.fna \--output-path
-sequences.qza \--type \'FeatureData\[Sequence\]\'
+sequences = use.import_from_format(
+    'sequences',
+    semantic_type='FeatureData[Sequence]',
+    variable=sequences_fna)
 :::
 
+(import-aligned-feature-sequences)=
 ### Per-feature aligned sequence data (i.e., aligned representative FASTA sequences)
 
-#### Format description
+Aligned sequence data is imported from a FASTA formatted file containing DNA sequences that are aligned to one another.
+All aligned sequences must be exactly the same length.
+The sequences may contain degenerate nucleotide characters, such as `N`, but some QIIME 2 actions may not support these characters.
+See the [scikit-bio FASTA format description](https://scikit.bio/docs/latest/generated/skbio.io.format.fasta.html) for more information about the FASTA format.
 
-Aligned sequence data is imported from a FASTA formatted file containing
-DNA sequences that are aligned to one another. All aligned sequences
-must be exactly the same length. The sequences may contain degenerate
-nucleotide characters, such as `N`, but some QIIME 2 actions may not
-support these characters. See the [scikit-bio FASTA format
-description](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format)
-for more information about the FASTA format.
+:::{describe-usage}
 
-##### Obtaining example data
+def aligned_sequences_factory():
+    from urllib import request
+    from q2_types.feature_data import AlignedDNAFASTAFormat
 
-[`aligned-sequences.fna`](https://data.qiime2.org/2025.4/tutorials/importing/aligned-sequences.fna)
+    url = ('https://data.qiime2.org/2025.4/tutorials/importing/'
+           'aligned-sequences.fna')
+    fmt = AlignedDNAFASTAFormat(mode='w')
+    request.urlretrieve(url, fmt.path)
+    fmt.validate()
+    return fmt
 
-#### Importing data
+aligned_sequences_fna = use.init_format('aligned-sequences',
+                                        aligned_sequences_factory, ext='fna')
 
-::: command-block
-qiime tools import \--input-path aligned-sequences.fna \--output-path
-aligned-sequences.qza \--type \'FeatureData\[AlignedSequence\]\'
+aligned_sequences = use.import_from_format(
+    'aligned-sequences',
+    semantic_type='FeatureData[AlignedSequence]',
+    variable=aligned_sequences_fna)
 :::
 
-### Feature table data {#importing feature tables}
-
-You can also import pre-processed feature tables into QIIME 2.
-
-#### BIOM v1.0.0
-
-##### Format description
-
-See the [BIOM v1.0.0 format
-specification](http://biom-format.org/documentation/format_versions/biom-1.0.html)
-for details.
-
-###### Obtaining example data
-
-[`feature-table-v100.biom`](https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v100.biom)
-
-##### Importing data
-
-::: command-block
-qiime tools import \--input-path feature-table-v100.biom \--type
-\'FeatureTable\[Frequency\]\' \--input-format BIOMV100Format
-\--output-path feature-table-1.qza
-:::
-
-#### BIOM v2.1.0
-
-##### Format description
-
-See the [BIOM v2.1.0 format
-specification](http://biom-format.org/documentation/format_versions/biom-2.1.html)
-for details.
-
-###### Obtaining example data
-
-[`feature-table-v210.biom`](https://data.qiime2.org/2025.4/tutorials/importing/feature-table-v210.biom)
-
-##### Importing data
-
-::: command-block
-qiime tools import \--input-path feature-table-v210.biom \--type
-\'FeatureTable\[Frequency\]\' \--input-format BIOMV210Format
-\--output-path feature-table-2.qza
-:::
-
+(import-phylogenetic-trees)=
 ### Phylogenetic trees
 
-#### Format description
+Phylogenetic trees are imported from newick formatted files.
+See the [scikit-bio newick format description](https://scikit.bio/docs/latest/generated/skbio.io.format.newick.html) for more information about the newick format.
 
-Phylogenetic trees are imported from newick formatted files. See the
-[scikit-bio newick format
-description](http://scikit-bio.org/docs/latest/generated/skbio.io.format.newick.html)
-for more information about the newick format.
+:::{describe-usage}
 
-##### Obtaining example data
+def unrooted_tree_factory():
+    from urllib import request
+    from q2_types.tree import NewickFormat
 
-[`unrooted-tree.tre`](https://data.qiime2.org/2025.4/tutorials/importing/unrooted-tree.tre)
+    url = 'https://data.qiime2.org/2025.4/tutorials/importing/unrooted-tree.tre'
+    fmt = NewickFormat(mode='w')
+    request.urlretrieve(url, fmt.path)
+    fmt.validate()
+    return fmt
 
-#### Importing data
+unrooted_tree_tre = use.init_format('unrooted-tree', unrooted_tree_factory,
+                                    ext='tre')
 
-::: command-block
-qiime tools import \--input-path unrooted-tree.tre \--output-path
-unrooted-tree.qza \--type \'Phylogeny\[Unrooted\]\'
+unrooted_tree = use.import_from_format(
+    'unrooted-tree',
+    semantic_type='Phylogeny[Unrooted]',
+    variable=unrooted_tree_tre)
 :::
 
-If you have a rooted tree, you can use `--type 'Phylogeny[Rooted]'`
-instead.
--->
+If you have a rooted tree, you can use `--type 'Phylogeny[Rooted]'` instead.
 
-## Importing metadata (tl;dr: metadata doesn't get imported)
+(import-other-data-types)=
+### Other data types
 
-Sample metadata and feature metadata don't need to be imported, but rather can be loaded and used directly from `.tsv` files.
-To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](xref:using-rachis-target#metadata-formatting-reference).
+QIIME 2 can import many other data types not covered in this guide.
+You can see which formats of input data are importable with the following command:
+
+:::
+qiime tools list-formats --importable
+:::
+
+And which QIIME 2 types you can import these formats as:
+
+:::
+qiime tools list-types
+:::
+
+Unfortunately, there isn't currently documentation detailing which data formats can be imported as which QIIME 2 data types, but hopefully the names of these formats and types should be self-explanatory enough to figure it out.
+If you have any questions, please post to the [QIIME 2 Forum](https://forum.qiime2.org) for help!
 
 [^import-statistics]: It would be possible for us to compile this information because imports are recorded in data provenance, and we could assess that across the user community when provenance is parsed by [QIIME 2 View](https://view.qiime2.org).
  To date though, we've never collected usage information (or any other data) through QIIME 2 View.

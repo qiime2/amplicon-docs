@@ -93,7 +93,7 @@ This file should be easy for your sequencing center to generate for you, so you 
 :::
 ::::
 
-A fastq manifest file is a type of [sample metadata file](xref:using-rachis-target#metadata-formatting-reference) that maps sample identifiers to one or two absolute filepaths pointing at `.fastq.gz` (or `.fastq`) files, depending on whether you're importing data from a single- or paried-end run.
+A fastq manifest file is a type of [sample metadata file](xref:using-rachis-target#metadata-formatting-reference) that maps sample identifiers to one or two absolute filepaths pointing at `.fastq.gz` (or `.fastq`) files, depending on whether you're importing data from a single- or paired-end run.
 
 ::::{margin}
 :::{tip}
@@ -124,11 +124,11 @@ sample-2  /scratch/microbiome/sample2_R1.fastq.gz  /scratch/microbiome/sample2_R
 ::::
 :::::
 
-You're almost certainly interested in one of two variants of this format: one for single-end read data and one for pair-end read data.
+You're almost certainly interested in one of two variants of this format: one for single-end read data and one for paired-end read data.
 
 ::::{margin}
 :::{warning}
-If you're working with data generated roughly in 2020 or earlier, you may need to know the [PHRED offset](http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants) used in the quality scores.
+If you're working with data generated roughly in 2020 or earlier, you may need to know the [PHRED offset](https://scikit.bio/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants) used in the quality scores.
 As discussed in [](#import-explanation), this is required to accurately interpret the quality scores in your fastq files, and this information is not present in the fastq files themselves - so the only way QIIME 2 can know is if you explicitly provide that information.
 For most modern sequencing data, the PHRED offset is 33, but for some legacy data it may be 64.
 
@@ -268,7 +268,7 @@ In the meantime, see [forum posts on this topic](https://forum.qiime2.org/search
 ## Importing metadata (tl;dr: metadata doesn't get imported)
 
 Sample metadata and feature metadata don't need to be imported, but rather can be loaded and used directly from `.tsv` files.
-To learn more about metadata in QIIME 2, refer to refer to [*Using QIIME 2*'s Metadata file format](xref:using-rachis-target#metadata-formatting-reference).
+To learn more about metadata in QIIME 2, refer to [*Using QIIME 2*'s Metadata file format](xref:using-rachis-target#metadata-formatting-reference).
 
 (import-other-formats)=
 ## Other import formats

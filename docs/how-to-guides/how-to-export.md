@@ -39,7 +39,7 @@ All files and directories outside of the `data` directory represent QIIME 2-spec
 
 If you're working with the Python 3 API, exporting generally isn't necessary.
 When you `view` an Artifact, you'll have that object in a data structure that you can work with directly.
-You can learn more about this in the [Python 3 API documentation](https://docs.qiime2.org/2024.10/interfaces/artifact-api/#interoperability-with-other-python-libraries).
+You can learn more about this in the [Python 3 API documentation](xref:rachis-glossary-target#term-python-3-api).
 
 ### Command line interface
 

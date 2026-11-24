@@ -359,7 +359,7 @@ Some diversity metrics - notably [Faith's Phylogenetic Diversity (PD)](https://d
 If you are sequencing phylogenetic markers (e.g., 16S rRNA genes), you can build a phylogenetic tree that can be used for computing these metrics.
 
 The different options for aligning sequences and producing a phylogeny are shown in the flowchart below, and can be classified as *de novo* or reference-based.
-For a detailed discussion of alignment and phylogeny building, see the [q2-phylogeny tutorial](https://docs.qiime2.org/2024.10/tutorials/phylogeny/) and [q2-fragment-insertion](https://doi.org/10.1128/mSystems.00021-18).
+For a detailed discussion of alignment and phylogeny building, see [](#infer-phylogenies) and [q2-fragment-insertion](https://doi.org/10.1128/mSystems.00021-18).
 🌳
 
 :::{figure} ../_static/overview-alignment-phylogeny.png

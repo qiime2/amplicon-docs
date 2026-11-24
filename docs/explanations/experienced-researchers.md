@@ -224,7 +224,7 @@ The first approach involves aligning reads to reference databases directly:
 
 The second approach uses a machine learning classifier to assign likely taxonomies to reads, and can be used through [`classify-sklearn`](q2-method-feature-classifier-classify-sklearn).
 This method needs a pre-trained model to classify the sequences.
-You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://library.qiime2.org/data-resources), or train one yourself as described in [*Training feature classifiers with q2-feature-classifier*](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).[^new-classifier-training-docs-coming-soon]
+You can either download one of the pre-trained taxonomy classifiers from our [data resources page](https://library.qiime2.org/data-resources), or train one yourself as described in [*Training a taxonomic classifier*](xref:gut-to-soil-target#training-a-taxonomic-classifier) in the *Gut-to-Soil Tutorial* and in the [RESCRIPt tutorials](https://github.com/bokulich-lab/RESCRIPt#using-rescript).
 [`rescript`](#q2-plugin-rescript) provides many utilities that can help you access and prepare data for use in building your own taxonomic reference databases and classifiers.
 
 ## Generating phylogenetic trees
@@ -285,6 +285,3 @@ Some cool new plugins (as of 28 February 2025) include:
  `q2-boots` allows you to make diversity estimates based on all of your data.
 
 Have fun! 😎
-
-[^new-classifier-training-docs-coming-soon]: As of 7 April 2025, we are currently planning a re-write of our documentation for training feature classifiers.
- More on this topic is coming soon!

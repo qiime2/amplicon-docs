@@ -297,7 +297,7 @@ Classifier training is **reference database- and marker-gene-specific** and only
 
 #### Training your own feature classifiers.
 If you're working with an uncommon marker gene, you may need to train your own feature classifier.
-This is possible following the steps in the [classifier training tutorial](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).
+This is possible following the steps in [*Training a taxonomic classifier*](xref:gut-to-soil-target#training-a-taxonomic-classifier) in the [](#gut-to-soil-tutorial) and in the [RESCRIPt tutorials](https://github.com/bokulich-lab/RESCRIPt#using-rescript).
 The [`rescript` plugin](#q2-plugin-rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
 Most users don't need to train their own classifiers however, as the QIIME 2 developers [provide classifiers to the public for common marker genes in the QIIME 2 Library](https://library.qiime2.org/data-resources).
 🎅🎁🎅🎁🎅🎁

@@ -2,7 +2,7 @@
 # Conceptual overview of marker gene (i.e., amplicon) data analysis
 
 :::{note}
-This document was partially updated when transferred from `https://docs.qiime2.org` (1-6 March 2025), but [some improvements should still be made to highlight the most recent methods](https://github.com/qiime2/amplicon-docs/issues/7).
+This document was partially updated in March 2025, but [some improvements should still be made to highlight the most recent methods](https://github.com/qiime2/amplicon-docs/issues/7).
 :::
 
 This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research.
@@ -351,7 +351,7 @@ Here are some popular actions that are enabled by having a `FeatureData[Taxonomy
 1. **Filter your feature table and feature sequences** to remove certain taxonomic groups.
    This is useful for removing known contaminants or non-target groups, e.g., host DNA including mitochondrial or chloroplast sequences.
    It can also be useful for focusing on specific groups for deeper analysis.
-   See the [filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/filtering/) for more details and examples. 🌿🐀
+   See [`taxa filter-table`](#q2-action-taxa-filter-table), [`taxa filter-seqs`](#q2-action-taxa-filter-seqs), and [this QIIME 2 Forum post on filtering organelle sequences](https://forum.qiime2.org/t/using-multiple-taxonomy-classifiers-for-comparison-or-in-filtering-workflows/34349) for more details and examples. 🌿🐀
 
 ## Sequence alignment and phylogenetic reconstruction
 
@@ -448,8 +448,8 @@ Flowchart of "downstream" analysis workflows in QIIME 2.
 Specifically, gneiss was deprecated and is no longer part of the *amplicon distribution*.
 :::
 
-We are only going to give a brief overview, since each of these analyses
-has its own in-depth tutorial to guide us:
+We are only going to give a brief overview, since several of these analyses
+have their own in-depth guides:
 
 - **Analyze longitudinal data:**
   `q2-longitudinal` is a plugin for performing statistical analyses of [longitudinal experiments](https://en.wikipedia.org/wiki/Longitudinal_study), i.e., where samples are collected from individual patients/subjects/sites repeatedly over time.
@@ -476,7 +476,7 @@ has its own in-depth tutorial to guide us:
   👾👾👾
 
 - **Evaluate and control data quality:**
-  `q2-quality-control` is a plugin for evaluating and controlling sequence data quality.
+  [`q2-quality-control`](#q2-plugin-quality-control) is a plugin for evaluating and controlling sequence data quality.
   This includes actions that:
  - test the accuracy of different bioinformatic or molecular methods, or of run-to-run quality variation.
    These actions are typically used if users have samples with known compositions, e.g., [mock communities](http://mockrobiota.caporasolab.us/), since accuracy is calculated as the similarity between the observed and expected compositions, sequences, etc.

@@ -2,8 +2,6 @@
 # How to import data for use with QIIME 2
 
 :::{warning}
-Transfer of this document from `https://docs.qiime2.org` is in progress (as of 17 March 2025). 🪚
-
 The goal of this document is to provide specific examples on how to carry out the most commonly used imports of data into QIIME 2 Artifacts.
 It's challenging to compile this though, because I don't have good data on the frequency at which the different imports are used.[^import-statistics]
 I'm therefore going to consider this document a work in progress, focusing on compiling the most relevant information in consultation with users and developers, and based on [the most viewed forum posts on importing](https://forum.qiime2.org/tag/import?ascending=false&order=views).

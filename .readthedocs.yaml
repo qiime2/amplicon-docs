@@ -11,7 +11,7 @@ build:
     python: "mambaforge-latest"
   jobs:
     create_environment:
-      - conda env create -p .env/ --file environment-files/readthedocs.yml
+      - mamba env create -p .env/ --file environment-files/readthedocs.yml
     build:
       html:
         - PATH=$(pwd)/.env/bin/:$PATH make autodoc

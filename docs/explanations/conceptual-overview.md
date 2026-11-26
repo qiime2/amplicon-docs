@@ -2,7 +2,7 @@
 # Conceptual overview of marker gene (i.e., amplicon) data analysis
 
 :::{note}
-This document was partially updated when transferred from `https://docs.qiime2.org` (1-6 March 2025), but [some improvements should still be made to highlight the most recent methods](https://github.com/qiime2/amplicon-docs/issues/7).
+This document was partially updated in March 2025, but [some improvements should still be made to highlight the most recent methods](https://github.com/qiime2/amplicon-docs/issues/7).
 :::
 
 This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research.
@@ -159,7 +159,7 @@ Usually only one of the different demultiplexing actions available in `q2-demux`
 Read more about demultiplexing and give it a spin with the [](#moving-pictures-tutorial).
 That tutorials covers the Earth Microbiome Project format data.
 
-If instead you have barcodes and primers in-line in your reads, see the [cutadapt tutorials](https://forum.qiime2.org/t demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313) for using the demux methods in `q2-cutadapt`.
+If instead you have barcodes and primers in-line in your reads, see the [cutadapt tutorials](https://forum.qiime2.org/t/demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313) for using the demux methods in `q2-cutadapt`.
 
 Have dual-indexed reads or mixed-orientation reads or some other unusual format?
 Search the [QIIME 2 Forum](https://forum.qiime2.org) for advice.
@@ -227,7 +227,7 @@ All should be preceded by [basic quality-score-based filtering](https://doi.org/
 🙈🙉🙊
 
 [](#cluster-reads-into-otus) demonstrates use of several `q2-vsearch` clustering methods.
-Don't forget to read the [chimera filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/chimera/) as well.
+Don't forget to read [](#filter-chimeric-sequences) as well.
 
 (otu-warning)=
 :::{warning}
@@ -297,8 +297,8 @@ Classifier training is **reference database- and marker-gene-specific** and only
 
 #### Training your own feature classifiers.
 If you're working with an uncommon marker gene, you may need to train your own feature classifier.
-This is possible following the steps in the [classifier training tutorial](https://docs.qiime2.org/2024.10/tutorials/feature-classifier/).
-The [`rescript` plugin](../references/plugin-reference/plugins/rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
+This is possible following the steps in [*Training a taxonomic classifier*](xref:gut-to-soil-target#training-a-taxonomic-classifier) in the [](#gut-to-soil-tutorial) and in the [RESCRIPt tutorials](https://github.com/bokulich-lab/RESCRIPt#using-rescript).
+The [`rescript` plugin](#q2-plugin-rescript) also contains many tools that can be useful in preparing reference data for training classifiers.
 Most users don't need to train their own classifiers however, as the QIIME 2 developers [provide classifiers to the public for common marker genes in the QIIME 2 Library](https://library.qiime2.org/data-resources).
 🎅🎁🎅🎁🎅🎁
 
@@ -351,7 +351,7 @@ Here are some popular actions that are enabled by having a `FeatureData[Taxonomy
 1. **Filter your feature table and feature sequences** to remove certain taxonomic groups.
    This is useful for removing known contaminants or non-target groups, e.g., host DNA including mitochondrial or chloroplast sequences.
    It can also be useful for focusing on specific groups for deeper analysis.
-   See the [filtering tutorial](https://docs.qiime2.org/2024.10/tutorials/filtering/) for more details and examples. 🌿🐀
+   See [`taxa filter-table`](#q2-action-taxa-filter-table), [`taxa filter-seqs`](#q2-action-taxa-filter-seqs), and [this QIIME 2 Forum post on filtering organelle sequences](https://forum.qiime2.org/t/using-multiple-taxonomy-classifiers-for-comparison-or-in-filtering-workflows/34349) for more details and examples. 🌿🐀
 
 ## Sequence alignment and phylogenetic reconstruction
 
@@ -359,7 +359,7 @@ Some diversity metrics - notably [Faith's Phylogenetic Diversity (PD)](https://d
 If you are sequencing phylogenetic markers (e.g., 16S rRNA genes), you can build a phylogenetic tree that can be used for computing these metrics.
 
 The different options for aligning sequences and producing a phylogeny are shown in the flowchart below, and can be classified as *de novo* or reference-based.
-For a detailed discussion of alignment and phylogeny building, see the [q2-phylogeny tutorial](https://docs.qiime2.org/2024.10/tutorials/phylogeny/) and [q2-fragment-insertion](https://doi.org/10.1128/mSystems.00021-18).
+For a detailed discussion of alignment and phylogeny building, see [](#infer-phylogenies) and [q2-fragment-insertion](https://doi.org/10.1128/mSystems.00021-18).
 🌳
 
 :::{figure} ../_static/overview-alignment-phylogeny.png
@@ -448,16 +448,18 @@ Flowchart of "downstream" analysis workflows in QIIME 2.
 Specifically, gneiss was deprecated and is no longer part of the *amplicon distribution*.
 :::
 
-We are only going to give a brief overview, since each of these analyses
-has its own in-depth tutorial to guide us:
+We are only going to give a brief overview, since several of these analyses
+have their own in-depth guides:
 
 - **Analyze longitudinal data:**
   `q2-longitudinal` is a plugin for performing statistical analyses of [longitudinal experiments](https://en.wikipedia.org/wiki/Longitudinal_study), i.e., where samples are collected from individual patients/subjects/sites repeatedly over time.
   This includes longitudinal studies of alpha and beta diversity, and some really awesome, interactive plots.
+  [](#longitudinal-comparisons) demonstrates its use.
 📈🍝
  - **Predict the future (or the past) 🔮:**
    `q2-sample-classifier` is a plugin for machine-learning 🤖 analyses of feature data.
    Both classification and regression models are supported.
+   [](#predict-sample-metadata) demonstrates its use.
    This allows you to do things like:
  - predict sample metadata as a function of feature data (e.g., can we use a fecal sample to [predict cancer susceptibility](https://dx.doi.org/10.1128%2FmSphere.00001-15)?
    Or [predict wine quality](https://doi.org/10.1128/mbio.00631-16) based on the microbial composition of grapes before fermentation?).
@@ -474,7 +476,7 @@ has its own in-depth tutorial to guide us:
   👾👾👾
 
 - **Evaluate and control data quality:**
-  `q2-quality-control` is a plugin for evaluating and controlling sequence data quality.
+  [`q2-quality-control`](#q2-plugin-quality-control) is a plugin for evaluating and controlling sequence data quality.
   This includes actions that:
  - test the accuracy of different bioinformatic or molecular methods, or of run-to-run quality variation.
    These actions are typically used if users have samples with known compositions, e.g., [mock communities](http://mockrobiota.caporasolab.us/), since accuracy is calculated as the similarity between the observed and expected compositions, sequences, etc.

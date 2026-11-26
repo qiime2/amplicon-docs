@@ -20,14 +20,14 @@ The data artifacts that we'll download are a "demux artifact" (i.e., `SampleData
 
 sample_metadata = use.init_metadata_from_url(
    'sample-metadata',
-   'https://www.dropbox.com/scl/fi/irosimbb1aud1aa7frzxf/sample-metadata.tsv?rlkey=f45jpxzajjz9xx9vpvfnf1zjx&st=nahafuvy&dl=1')
+   'https://zenodo.org/records/15390940/files/gut-to-soil-tutorial-sample-metadata.tsv?download=1')
 :::
 
 :::{describe-usage}
 
 demux = use.init_artifact_from_url(
    'demux',
-   'https://www.dropbox.com/scl/fi/hpsl1hxa0kj3njhes7p64/demux-10p.qza?rlkey=e5brlu9xn4qcrqaan11z2oi7d&st=r9or2kur&dl=1')
+   'https://zenodo.org/records/15390940/files/gut-to-soil-tutorial-nano1-demux-10p.qza?download=1')
 :::
 
 :::{describe-usage}
